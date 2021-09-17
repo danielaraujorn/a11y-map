@@ -1,1 +1,1 @@
-export { Home as Navigation } from "../screens/Home";
+export { NewPoint as Navigation } from "../screens/NewPoint";

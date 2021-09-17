@@ -2,20 +2,29 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { ThemeProvider as MuiThemeProvider, StylesProvider } from "@mui/styles";
 import { ThemeProvider } from "styled-components";
+import { IntlProvider } from "react-intl";
 import { Navigation } from "./Navigation";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import { theme } from "./theme";
+import ptMessages from "./lang/pt.json";
+
+const locale = navigator.language;
+const messages: { [key: string]: { [key: string]: string } } = {
+  "pt-BR": ptMessages
+};
 
 ReactDOM.render(
   <React.StrictMode>
-    <StylesProvider injectFirst>
-      <MuiThemeProvider theme={theme}>
-        <ThemeProvider theme={theme}>
-          <Navigation />
-        </ThemeProvider>
-      </MuiThemeProvider>
-    </StylesProvider>
+    <IntlProvider locale={locale} messages={messages[locale] || ptMessages}>
+      <StylesProvider injectFirst>
+        <MuiThemeProvider theme={theme}>
+          <ThemeProvider theme={theme}>
+            <Navigation />
+          </ThemeProvider>
+        </MuiThemeProvider>
+      </StylesProvider>
+    </IntlProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

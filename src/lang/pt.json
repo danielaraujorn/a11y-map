@@ -1,0 +1,8 @@
+{
+  "type": "Tipo",
+  "description": "Descrição",
+  "status": "Estado",
+  "cancel": "Cancelar",
+  "newPoint.headerTitle": "Novo ponto",
+  "newPoint.create": "Criar"
+}
