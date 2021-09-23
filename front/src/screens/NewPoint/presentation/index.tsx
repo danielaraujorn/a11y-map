@@ -12,7 +12,13 @@ import { useIntl } from "react-intl";
 
 export const NewPointPresentation = () => {
   const { formatMessage } = useIntl();
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues: {
+      types: [],
+      description: "",
+      status: 1
+    }
+  });
   const { handleSubmit } = methods;
   const onSubmit = useCallback((data) => {
     console.log(data);
@@ -33,9 +39,13 @@ export const NewPointPresentation = () => {
         <FormProvider {...methods}>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Select
-              name="type"
+              name="types"
+              multiple
               label={formatMessage({ id: "type" })}
-              options={[{ value: 1, label: "Visual" }]}
+              options={[
+                { value: 1, label: "Visual" },
+                { value: 2, label: "Mobilidade" }
+              ]}
             />
             <Input
               name="description"

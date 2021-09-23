@@ -15,6 +15,7 @@ export const Select = ({
 }: {
   name: string;
   label: string;
+  multiple?: boolean;
   disabled?: boolean;
   options: { value: number | string; label: string }[];
 }) => {
