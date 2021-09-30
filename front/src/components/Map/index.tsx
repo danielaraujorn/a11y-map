@@ -17,7 +17,6 @@ export const Map = ({
 }) => {
   const theme = useTheme();
   const scrollWheelZoom = useMediaQuery(theme.breakpoints.up("sm"));
-  console.log(scrollWheelZoom);
 
   const [map, setMap] = useState<MapType>();
 

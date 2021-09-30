@@ -13,7 +13,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { Map as MapType } from "leaflet";
 import { Container } from "../../../components/Container";
 import { Input } from "../../../components/Input";
-import { Select } from "../../../components/Select";
+import { SelectInput } from "../../../components/SelectInput";
 import { MaxWidthContainer } from "../../../components/MaxWidthContainer";
 import { ButtonContainer } from "../../../components/ButtonContainer";
 import { Form } from "../../../components/Form";
@@ -76,10 +76,11 @@ export const NewPointPresentation = () => {
             </Box>
             <Box m={2} mt={3}>
               <Box marginY={2}>
-                <Select
+                <SelectInput
                   name="types"
                   multiple
                   label={formatMessage({ id: "type" })}
+                  rules={{ required: true }}
                   options={[
                     { value: 1, label: "Visual" },
                     { value: 2, label: "Mobilidade" }
@@ -90,15 +91,17 @@ export const NewPointPresentation = () => {
                 <Input
                   name="description"
                   label={formatMessage({ id: "description" })}
+                  rules={{ required: true }}
                   multiline
                   minRows={4}
                   maxRows={8}
                 />
               </Box>
               <Box marginY={2}>
-                <Select
+                <SelectInput
                   name="status"
                   label={formatMessage({ id: "status" })}
+                  rules={{ required: true }}
                   options={[{ value: 1, label: "Pendente" }]}
                 />
               </Box>

@@ -1,8 +1,13 @@
 {
+  "email": "Email",
+  "password": "Senha",
   "type": "Tipo",
   "description": "Descrição",
   "status": "Estado",
   "cancel": "Cancelar",
+  "requiredField": "Campo obrigatório",
   "newPoint.headerTitle": "Novo ponto",
-  "newPoint.create": "Criar"
+  "newPoint.create": "Criar",
+  "auth.newAcount": "Criar conta",
+  "auth.login": "Entrar"
 }
