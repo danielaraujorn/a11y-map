@@ -12,6 +12,7 @@ import { MaxWidthContainer } from "../../../components/MaxWidthContainer";
 import { ButtonContainer } from "../../../components/ButtonContainer";
 import { Form } from "../../../components/Form";
 import { VerticalCenter } from "../../../components/VerticalCenter";
+import { MarginWhenMobile } from "../../../components/MarginWhenMobile";
 
 export const SignUpPresentation = () => {
   const { formatMessage } = useIntl();
@@ -31,45 +32,47 @@ export const SignUpPresentation = () => {
     <Container>
       <VerticalCenter>
         <MaxWidthContainer>
-          <FormProvider {...methods}>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <Box marginY={2}>
-                <Input
-                  rules={{ required: true }}
-                  name="firstName"
-                  labelMessage="firstName"
-                />
-              </Box>
-              <Box marginY={2}>
-                <Input
-                  rules={{ required: true }}
-                  name="lastName"
-                  labelMessage="lastName"
-                />
-              </Box>
-              <Box marginY={2}>
-                <Input
-                  rules={{ required: true }}
-                  name="email"
-                  labelMessage="email"
-                />
-              </Box>
-              <Box marginY={2}>
-                <PasswordInput />
-              </Box>
-              <Box marginY={2}>
-                <PasswordConfirmationInput />
-              </Box>
-              <ButtonContainer>
-                <Button>
-                  {formatMessage({ id: "auth.alreadyHaveAccount" })}
-                </Button>
-                <Button variant="contained" type="submit">
-                  {formatMessage({ id: "auth.newAcount" })}
-                </Button>
-              </ButtonContainer>
-            </Form>
-          </FormProvider>
+          <MarginWhenMobile>
+            <FormProvider {...methods}>
+              <Form onSubmit={handleSubmit(onSubmit)}>
+                <Box marginY={2}>
+                  <Input
+                    rules={{ required: true }}
+                    name="firstName"
+                    labelMessage="firstName"
+                  />
+                </Box>
+                <Box marginY={2}>
+                  <Input
+                    rules={{ required: true }}
+                    name="lastName"
+                    labelMessage="lastName"
+                  />
+                </Box>
+                <Box marginY={2}>
+                  <Input
+                    rules={{ required: true }}
+                    name="email"
+                    labelMessage="email"
+                  />
+                </Box>
+                <Box marginY={2}>
+                  <PasswordInput />
+                </Box>
+                <Box marginY={2}>
+                  <PasswordConfirmationInput />
+                </Box>
+                <ButtonContainer>
+                  <Button>
+                    {formatMessage({ id: "auth.alreadyHaveAccount" })}
+                  </Button>
+                  <Button variant="contained" type="submit">
+                    {formatMessage({ id: "auth.newAcount" })}
+                  </Button>
+                </ButtonContainer>
+              </Form>
+            </FormProvider>
+          </MarginWhenMobile>
         </MaxWidthContainer>
       </VerticalCenter>
     </Container>

@@ -9,6 +9,7 @@ import { MaxWidthContainer } from "../../../components/MaxWidthContainer";
 import { ButtonContainer } from "../../../components/ButtonContainer";
 import { Form } from "../../../components/Form";
 import { VerticalCenter } from "../../../components/VerticalCenter";
+import { MarginWhenMobile } from "../../../components/MarginWhenMobile";
 
 export const LoginPresentation = () => {
   const { formatMessage } = useIntl();
@@ -28,26 +29,30 @@ export const LoginPresentation = () => {
     <Container>
       <VerticalCenter>
         <MaxWidthContainer>
-          <FormProvider {...methods}>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <Box marginY={2}>
-                <Input
-                  rules={{ required: true }}
-                  name="email"
-                  labelMessage="email"
-                />
-              </Box>
-              <Box marginY={2}>
-                <PasswordInput />
-              </Box>
-              <ButtonContainer>
-                <Button>{formatMessage({ id: "auth.dontHaveAccount" })}</Button>
-                <Button variant="contained" type="submit">
-                  {formatMessage({ id: "auth.login" })}
-                </Button>
-              </ButtonContainer>
-            </Form>
-          </FormProvider>
+          <MarginWhenMobile>
+            <FormProvider {...methods}>
+              <Form onSubmit={handleSubmit(onSubmit)}>
+                <Box marginY={2}>
+                  <Input
+                    rules={{ required: true }}
+                    name="email"
+                    labelMessage="email"
+                  />
+                </Box>
+                <Box marginY={2}>
+                  <PasswordInput />
+                </Box>
+                <ButtonContainer>
+                  <Button>
+                    {formatMessage({ id: "auth.dontHaveAccount" })}
+                  </Button>
+                  <Button variant="contained" type="submit">
+                    {formatMessage({ id: "auth.login" })}
+                  </Button>
+                </ButtonContainer>
+              </Form>
+            </FormProvider>
+          </MarginWhenMobile>
         </MaxWidthContainer>
       </VerticalCenter>
     </Container>

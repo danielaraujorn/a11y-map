@@ -17,6 +17,7 @@ import { Input } from "../../../components/Input";
 import { SelectInput } from "../../../components/SelectInput";
 import { MaxWidthContainer } from "../../../components/MaxWidthContainer";
 import { ButtonContainer } from "../../../components/ButtonContainer";
+import { MarginWhenMobile } from "../../../components/MarginWhenMobile";
 import { Form } from "../../../components/Form";
 import { Map } from "../../../components/Map";
 import { paths } from "../../../Navigation/paths";
@@ -81,44 +82,46 @@ export const NewPointPresentation = () => {
               />
             </Box>
             <Box mt={3}>
-              <Box marginY={2}>
-                <SelectInput
-                  name="types"
-                  multiple
-                  labelMessage="type"
-                  rules={{ required: true }}
-                  options={[
-                    { value: 1, label: "Visual" },
-                    { value: 2, label: "Mobilidade" }
-                  ]}
-                />
-              </Box>
-              <Box marginY={2}>
-                <Input
-                  name="description"
-                  labelMessage="description"
-                  rules={{ required: true }}
-                  multiline
-                  minRows={4}
-                  maxRows={8}
-                />
-              </Box>
-              <Box marginY={2}>
-                <SelectInput
-                  name="status"
-                  labelMessage="status"
-                  rules={{ required: true }}
-                  options={[{ value: 1, label: "Pendente" }]}
-                />
-              </Box>
-              <ButtonContainer>
-                <Button onClick={onCancelButtonClick}>
-                  {formatMessage({ id: "cancel" })}
-                </Button>
-                <Button variant="contained" type="submit">
-                  {formatMessage({ id: "newPoint.create" })}
-                </Button>
-              </ButtonContainer>
+              <MarginWhenMobile>
+                <Box marginY={2}>
+                  <SelectInput
+                    name="types"
+                    multiple
+                    labelMessage="type"
+                    rules={{ required: true }}
+                    options={[
+                      { value: 1, label: "Visual" },
+                      { value: 2, label: "Mobilidade" }
+                    ]}
+                  />
+                </Box>
+                <Box marginY={2}>
+                  <Input
+                    name="description"
+                    labelMessage="description"
+                    rules={{ required: true }}
+                    multiline
+                    minRows={4}
+                    maxRows={8}
+                  />
+                </Box>
+                <Box marginY={2}>
+                  <SelectInput
+                    name="status"
+                    labelMessage="status"
+                    rules={{ required: true }}
+                    options={[{ value: 1, label: "Pendente" }]}
+                  />
+                </Box>
+                <ButtonContainer>
+                  <Button onClick={onCancelButtonClick}>
+                    {formatMessage({ id: "cancel" })}
+                  </Button>
+                  <Button variant="contained" type="submit">
+                    {formatMessage({ id: "newPoint.create" })}
+                  </Button>
+                </ButtonContainer>
+              </MarginWhenMobile>
             </Box>
           </Form>
         </FormProvider>
