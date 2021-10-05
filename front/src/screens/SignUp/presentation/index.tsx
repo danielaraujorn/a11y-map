@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { Button, Box } from "@mui/material";
+import { useHistory } from "react-router";
 import { useIntl } from "react-intl";
 import { useForm, FormProvider } from "react-hook-form";
 import { Container } from "../../../components/Container";
@@ -13,6 +14,7 @@ import { ButtonContainer } from "../../../components/ButtonContainer";
 import { Form } from "../../../components/Form";
 import { VerticalCenter } from "../../../components/VerticalCenter";
 import { MarginWhenMobile } from "../../../components/MarginWhenMobile";
+import { paths } from "../../../Navigation/paths";
 
 export const SignUpPresentation = () => {
   const { formatMessage } = useIntl();
@@ -28,6 +30,10 @@ export const SignUpPresentation = () => {
     const data = { ...formData };
     console.log(data);
   }, []);
+  const history = useHistory();
+  const onLoginButtonClick = useCallback(() => {
+    history.push(paths.login);
+  }, [history]);
   return (
     <Container>
       <VerticalCenter>
@@ -63,7 +69,7 @@ export const SignUpPresentation = () => {
                   <PasswordConfirmationInput />
                 </Box>
                 <ButtonContainer>
-                  <Button>
+                  <Button onClick={onLoginButtonClick}>
                     {formatMessage({ id: "auth.alreadyHaveAccount" })}
                   </Button>
                   <Button variant="contained" type="submit">
