@@ -1,7 +1,6 @@
 import { useFormContext, Controller } from "react-hook-form";
 import { Rules } from "../../types/Rules";
 import { useInputHelper } from "../../hooks/useInputHelper";
-import { useIntl } from "react-intl";
 
 type Props<ComponentType> = {
   name: string;
@@ -20,13 +19,12 @@ export const InputController = <ComponentType extends Function>({
   component,
   ...props
 }: Props<ComponentType>) => {
-  const { formatMessage } = useIntl();
   const {
     control,
     formState: { errors }
   } = useFormContext();
   const inputProps = useInputHelper({
-    label: formatMessage({ id: labelMessage }),
+    labelMessage,
     rules,
     errors: errors[name],
     errorMessages

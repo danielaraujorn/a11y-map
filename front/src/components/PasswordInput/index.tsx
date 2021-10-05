@@ -31,21 +31,23 @@ const PasswordComponent = forwardRef(
   }
 );
 
-export const PasswordInput = ({
-  rules,
-  ...props
-}: {
-  disabled?: boolean;
-  rules?: Rules;
-}) => {
+export const PasswordInput = ({ ...props }: { disabled?: boolean }) => {
+  const rules = {
+    required: true,
+    minLength: 8,
+    maxLength: 32,
+    pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/
+  };
   return (
     <InputController<typeof PasswordComponent>
       name="password"
       labelMessage="password"
       component={PasswordComponent}
-      rules={{
-        ...rules,
-        required: true
+      rules={rules}
+      errorMessages={{
+        pattern: "error.weakPassword",
+        minLength: "error.smallPassword",
+        maxLength: "error.bigPassword"
       }}
       {...props}
     />
@@ -53,21 +55,20 @@ export const PasswordInput = ({
 };
 
 export const PasswordConfirmationInput = ({
-  rules,
   ...props
 }: {
   disabled?: boolean;
-  rules?: Rules;
 }) => {
+  const rules = {
+    required: true,
+    // @todo: validar corretamente
+    validate: (value: string) => value.length > 4
+  };
   return (
     <InputController<typeof PasswordComponent>
       name="passwordConfirmation"
       labelMessage="confirmPassword"
-      rules={{
-        ...rules,
-        required: true,
-        validate: (value) => value.length > 4
-      }}
+      rules={rules}
       errorMessages={{ validate: "error.passwordConfirmation" }}
       component={PasswordComponent}
       {...props}

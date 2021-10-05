@@ -1,18 +1,20 @@
 import { useMemo } from "react";
+import { useIntl } from "react-intl";
 import { Rules } from "../../types/Rules";
 import { useErrorMessages } from "../useErrorMessages";
 
 export const useInputHelper = ({
-  label,
+  labelMessage,
   rules,
   errors,
   errorMessages
 }: {
-  label: string;
+  labelMessage: string;
   rules?: Rules;
   errors: { type: string };
   errorMessages: { [key: string]: string };
 }) => {
+  const { formatMessage } = useIntl();
   const getErrorMessage = useErrorMessages(errorMessages);
   const isRequired = useMemo(() => rules?.required, [rules]);
   const helperText = useMemo(
@@ -20,8 +22,8 @@ export const useInputHelper = ({
     [errors, getErrorMessage]
   );
   const formatedLabel = useMemo(
-    () => label + (isRequired ? " *" : ""),
-    [label, isRequired]
+    () => formatMessage({ id: labelMessage }) + (isRequired ? " *" : ""),
+    [labelMessage, formatMessage, isRequired]
   );
   const error = useMemo(() => Boolean(errors), [errors]);
 
