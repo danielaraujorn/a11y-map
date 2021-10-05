@@ -12,6 +12,7 @@ import { Form } from "../../../components/Form";
 import { VerticalCenter } from "../../../components/VerticalCenter";
 import { MarginWhenMobile } from "../../../components/MarginWhenMobile";
 import { paths } from "../../../Navigation/paths";
+import { Title } from "../../../components/Title";
 
 export const LoginPresentation = () => {
   const { formatMessage } = useIntl();
@@ -36,6 +37,9 @@ export const LoginPresentation = () => {
       <VerticalCenter>
         <MaxWidthContainer>
           <MarginWhenMobile>
+            <Box mb={4}>
+              <Title>{formatMessage({ id: "auth.loginTitle" })}</Title>
+            </Box>
             <FormProvider {...methods}>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Box marginY={2}>

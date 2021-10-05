@@ -15,6 +15,7 @@ import { Form } from "../../../components/Form";
 import { VerticalCenter } from "../../../components/VerticalCenter";
 import { MarginWhenMobile } from "../../../components/MarginWhenMobile";
 import { paths } from "../../../Navigation/paths";
+import { Title } from "../../../components/Title";
 
 export const SignUpPresentation = () => {
   const { formatMessage } = useIntl();
@@ -39,6 +40,9 @@ export const SignUpPresentation = () => {
       <VerticalCenter>
         <MaxWidthContainer>
           <MarginWhenMobile>
+            <Box mb={4}>
+              <Title>{formatMessage({ id: "auth.signUpTitle" })}</Title>
+            </Box>
             <FormProvider {...methods}>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Box marginY={2}>
@@ -73,7 +77,7 @@ export const SignUpPresentation = () => {
                     {formatMessage({ id: "auth.alreadyHaveAccount" })}
                   </Button>
                   <Button variant="contained" type="submit">
-                    {formatMessage({ id: "auth.newAcount" })}
+                    {formatMessage({ id: "auth.signUp" })}
                   </Button>
                 </ButtonContainer>
               </Form>

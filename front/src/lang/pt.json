@@ -11,8 +11,10 @@
   "requiredField": "Campo obrigatório",
   "newPoint.headerTitle": "Novo ponto",
   "newPoint.create": "Criar",
-  "auth.newAcount": "Criar conta",
   "auth.login": "Entrar",
+  "auth.loginTitle": "Entrar na conta",
+  "auth.signUp": "Cadastrar",
+  "auth.signUpTitle": "Cadastrar conta",
   "auth.alreadyHaveAccount": "Já tenho conta",
   "auth.dontHaveAccount": "Não tenho conta",
 
