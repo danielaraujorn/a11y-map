@@ -5,27 +5,36 @@ import { FloatingView } from "../../../components/FloatingView";
 import { Search } from "../../../components/Search";
 import { Container } from "../../../components/Container";
 import { Map } from "../../../components/Map";
+import { useHistory } from "react-router";
+import { paths } from "../../../Navigation/paths";
+import { useCallback } from "react";
 
-export const HomePresentation = () => (
-  <Container>
-    <AppBar position="static">
-      <Toolbar>
-        <Search>
-          <TextField label="Pesquisar" variant="standard" />
-        </Search>
-      </Toolbar>
-    </AppBar>
-    <Map>
-      <Marker position={[51.505, -0.09]}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker>
-    </Map>
-    <FloatingView>
-      <Fab color="primary" aria-label="add">
-        <AddIcon />
-      </Fab>
-    </FloatingView>
-  </Container>
-);
+export const HomePresentation = () => {
+  const history = useHistory();
+  const onAddButtonClick = useCallback(() => {
+    history.push(paths.newPoint);
+  }, [history]);
+  return (
+    <Container>
+      <AppBar position="static">
+        <Toolbar>
+          <Search>
+            <TextField label="Pesquisar" variant="standard" />
+          </Search>
+        </Toolbar>
+      </AppBar>
+      <Map>
+        <Marker position={[51.505, -0.09]}>
+          <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+          </Popup>
+        </Marker>
+      </Map>
+      <FloatingView>
+        <Fab color="primary" aria-label="add" onClick={onAddButtonClick}>
+          <AddIcon />
+        </Fab>
+      </FloatingView>
+    </Container>
+  );
+};

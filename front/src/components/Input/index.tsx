@@ -6,7 +6,7 @@ export const Input = ({
   ...props
 }: {
   name: string;
-  label: string;
+  labelMessage: string;
   multiline?: boolean;
   minRows?: number;
   maxRows?: number;

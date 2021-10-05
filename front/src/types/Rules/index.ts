@@ -1,3 +1,4 @@
 export type Rules = {
-  required: boolean;
+  required?: boolean;
+  validate?: (value: string) => boolean;
 };

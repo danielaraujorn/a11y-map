@@ -4,13 +4,16 @@ import { useIntl } from "react-intl";
 import { useForm, FormProvider } from "react-hook-form";
 import { Container } from "../../../components/Container";
 import { Input } from "../../../components/Input";
-import { PasswordInput } from "../../../components/PasswordInput";
+import {
+  PasswordInput,
+  PasswordConfirmationInput
+} from "../../../components/PasswordInput";
 import { MaxWidthContainer } from "../../../components/MaxWidthContainer";
 import { ButtonContainer } from "../../../components/ButtonContainer";
 import { Form } from "../../../components/Form";
 import { VerticalCenter } from "../../../components/VerticalCenter";
 
-export const LoginPresentation = () => {
+export const SignUpPresentation = () => {
   const { formatMessage } = useIntl();
   const methods = useForm({
     defaultValues: {
@@ -33,6 +36,20 @@ export const LoginPresentation = () => {
               <Box marginY={2}>
                 <Input
                   rules={{ required: true }}
+                  name="firstName"
+                  labelMessage="firstName"
+                />
+              </Box>
+              <Box marginY={2}>
+                <Input
+                  rules={{ required: true }}
+                  name="lastName"
+                  labelMessage="lastName"
+                />
+              </Box>
+              <Box marginY={2}>
+                <Input
+                  rules={{ required: true }}
                   name="email"
                   labelMessage="email"
                 />
@@ -40,10 +57,15 @@ export const LoginPresentation = () => {
               <Box marginY={2}>
                 <PasswordInput />
               </Box>
+              <Box marginY={2}>
+                <PasswordConfirmationInput />
+              </Box>
               <ButtonContainer>
-                <Button>{formatMessage({ id: "auth.dontHaveAccount" })}</Button>
+                <Button>
+                  {formatMessage({ id: "auth.alreadyHaveAccount" })}
+                </Button>
                 <Button variant="contained" type="submit">
-                  {formatMessage({ id: "auth.login" })}
+                  {formatMessage({ id: "auth.newAcount" })}
                 </Button>
               </ButtonContainer>
             </Form>

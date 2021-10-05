@@ -8,6 +8,7 @@ import {
   Box
 } from "@mui/material";
 import { useIntl } from "react-intl";
+import { useHistory } from "react-router";
 import { ArrowLeft } from "@mui/icons-material";
 import { useForm, FormProvider } from "react-hook-form";
 import { Map as MapType } from "leaflet";
@@ -18,8 +19,13 @@ import { MaxWidthContainer } from "../../../components/MaxWidthContainer";
 import { ButtonContainer } from "../../../components/ButtonContainer";
 import { Form } from "../../../components/Form";
 import { Map } from "../../../components/Map";
+import { paths } from "../../../Navigation/paths";
 
 export const NewPointPresentation = () => {
+  const history = useHistory();
+  const onCancelButtonClick = useCallback(() => {
+    history.push(paths.home);
+  }, [history]);
   const mapPosition = useRef({});
   const { formatMessage } = useIntl();
   const methods = useForm({
@@ -41,7 +47,7 @@ export const NewPointPresentation = () => {
     <Container>
       <AppBar position="static">
         <Toolbar>
-          <IconButton>
+          <IconButton onClick={onCancelButtonClick}>
             <ArrowLeft />
           </IconButton>
           <Typography component="h1" variant="h6">
@@ -74,12 +80,12 @@ export const NewPointPresentation = () => {
                 zoomControl={false}
               />
             </Box>
-            <Box m={2} mt={3}>
+            <Box mt={3}>
               <Box marginY={2}>
                 <SelectInput
                   name="types"
                   multiple
-                  label={formatMessage({ id: "type" })}
+                  labelMessage="type"
                   rules={{ required: true }}
                   options={[
                     { value: 1, label: "Visual" },
@@ -90,7 +96,7 @@ export const NewPointPresentation = () => {
               <Box marginY={2}>
                 <Input
                   name="description"
-                  label={formatMessage({ id: "description" })}
+                  labelMessage="description"
                   rules={{ required: true }}
                   multiline
                   minRows={4}
@@ -100,13 +106,15 @@ export const NewPointPresentation = () => {
               <Box marginY={2}>
                 <SelectInput
                   name="status"
-                  label={formatMessage({ id: "status" })}
+                  labelMessage="status"
                   rules={{ required: true }}
                   options={[{ value: 1, label: "Pendente" }]}
                 />
               </Box>
               <ButtonContainer>
-                <Button>{formatMessage({ id: "cancel" })}</Button>
+                <Button onClick={onCancelButtonClick}>
+                  {formatMessage({ id: "cancel" })}
+                </Button>
                 <Button variant="contained" type="submit">
                   {formatMessage({ id: "newPoint.create" })}
                 </Button>

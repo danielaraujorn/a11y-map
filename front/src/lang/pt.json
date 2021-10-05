@@ -1,6 +1,9 @@
 {
   "email": "Email",
+  "firstName": "Primeiro nome",
+  "lastName": "Sobrenome",
   "password": "Senha",
+  "confirmPassword": "Confirme a senha",
   "type": "Tipo",
   "description": "Descrição",
   "status": "Estado",
@@ -9,5 +12,9 @@
   "newPoint.headerTitle": "Novo ponto",
   "newPoint.create": "Criar",
   "auth.newAcount": "Criar conta",
-  "auth.login": "Entrar"
+  "auth.login": "Entrar",
+  "auth.alreadyHaveAccount": "Já tenho conta",
+  "auth.dontHaveAccount": "Não tenho conta",
+
+  "error.passwordConfirmation": "A senha e a confirmação estão diferentes"
 }

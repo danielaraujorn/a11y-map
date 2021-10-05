@@ -48,7 +48,7 @@ export const SelectInput = ({
   ...props
 }: {
   name: string;
-  label: string;
+  labelMessage: string;
   multiple?: boolean;
   disabled?: boolean;
   options: { value: number | string; label: string }[];

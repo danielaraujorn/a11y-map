@@ -1,11 +1,11 @@
 import { useFormContext, Controller } from "react-hook-form";
 import { Rules } from "../../types/Rules";
 import { useInputHelper } from "../../hooks/useInputHelper";
-import React from "react";
+import { useIntl } from "react-intl";
 
 type Props<ComponentType> = {
   name: string;
-  label: string;
+  labelMessage: string;
   disabled?: boolean;
   rules?: Rules;
   errorMessages?: { [ḱey: string]: string };
@@ -15,17 +15,18 @@ type Props<ComponentType> = {
 export const InputController = <ComponentType extends Function>({
   name,
   rules,
-  label,
+  labelMessage,
   errorMessages = {},
   component,
   ...props
 }: Props<ComponentType>) => {
+  const { formatMessage } = useIntl();
   const {
     control,
     formState: { errors }
   } = useFormContext();
   const inputProps = useInputHelper({
-    label,
+    label: formatMessage({ id: labelMessage }),
     rules,
     errors: errors[name],
     errorMessages
