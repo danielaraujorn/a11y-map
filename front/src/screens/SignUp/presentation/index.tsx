@@ -16,6 +16,7 @@ import { VerticalCenter } from "../../../components/VerticalCenter";
 import { MarginWhenMobile } from "../../../components/MarginWhenMobile";
 import { paths } from "../../../Navigation/paths";
 import { Title } from "../../../components/Title";
+import { EmailInput } from "../../../components/EmailInput";
 
 export const SignUpPresentation = () => {
   const { formatMessage } = useIntl();
@@ -60,11 +61,7 @@ export const SignUpPresentation = () => {
                   />
                 </Box>
                 <Box marginY={2}>
-                  <Input
-                    rules={{ required: true }}
-                    name="email"
-                    labelMessage="email"
-                  />
+                  <EmailInput />
                 </Box>
                 <Box marginY={2}>
                   <PasswordInput />

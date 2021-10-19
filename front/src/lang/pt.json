@@ -21,5 +21,6 @@
   "error.passwordConfirmation": "A senha e a confirmação estão diferentes",
   "error.weakPassword": "Utilize letras maiúsculas, minúsculas e números",
   "error.smallPassword": "A senha deve ter pelo menos 8 caracteres",
-  "error.bigPassword": "A senha deve ter no máximo 32 caracteres"
+  "error.bigPassword": "A senha deve ter no máximo 32 caracteres",
+  "error.notAnEmail": "Você inseriu um email inválido"
 }

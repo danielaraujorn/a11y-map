@@ -2,7 +2,7 @@ import { useState, useCallback, forwardRef } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { InputController } from "../InputController";
-import { Rules } from "../../types/Rules";
+import { useFormContext } from "react-hook-form";
 
 const PasswordComponent = forwardRef(
   (props: object, ref: React.ForwardedRef<HTMLInputElement>) => {
@@ -59,10 +59,17 @@ export const PasswordConfirmationInput = ({
 }: {
   disabled?: boolean;
 }) => {
+  const { getValues } = useFormContext();
+  const validate = useCallback(
+    (passwordConfirmation: string) => {
+      const password = getValues("password");
+      return passwordConfirmation === password;
+    },
+    [getValues]
+  );
   const rules = {
     required: true,
-    // @todo: validar corretamente
-    validate: (value: string) => value.length > 4
+    validate
   };
   return (
     <InputController<typeof PasswordComponent>

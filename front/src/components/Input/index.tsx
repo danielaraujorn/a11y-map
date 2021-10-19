@@ -11,6 +11,7 @@ export const Input = ({
   minRows?: number;
   maxRows?: number;
   rules?: Rules;
+  errorMessages?: { [ḱey: string]: string };
 }) => {
   return <InputController<typeof TextField> component={TextField} {...props} />;
 };
