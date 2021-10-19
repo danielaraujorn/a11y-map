@@ -11,7 +11,7 @@ export const EmailInput = ({
   const emailRules = {
     required: true,
     ...rules,
-    pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
   };
   return (
     <Input

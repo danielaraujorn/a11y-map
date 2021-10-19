@@ -4,7 +4,6 @@ import { useHistory } from "react-router";
 import { useIntl } from "react-intl";
 import { useForm, FormProvider } from "react-hook-form";
 import { Container } from "../../../components/Container";
-import { Input } from "../../../components/Input";
 import { PasswordInput } from "../../../components/PasswordInput";
 import { MaxWidthContainer } from "../../../components/MaxWidthContainer";
 import { ButtonContainer } from "../../../components/ButtonContainer";
