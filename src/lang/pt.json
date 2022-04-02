@@ -9,8 +9,8 @@
   "status": "Estado",
   "cancel": "Cancelar",
   "requiredField": "Campo obrigatório",
-  "newPoint.headerTitle": "Novo ponto",
-  "newPoint.create": "Criar",
+  "newPlace.headerTitle": "Novo ponto",
+  "newPlace.create": "Criar",
   "auth.login": "Entrar",
   "auth.loginTitle": "Entrar na conta",
   "auth.signUp": "Cadastrar",
@@ -18,6 +18,10 @@
   "auth.alreadyHaveAccount": "Já tenho conta",
   "auth.dontHaveAccount": "Não tenho conta",
 
+  "success.signUp": "O cadastro foi feito com suceso, verifique sua caixa de email para confirmar sua conta",
+
+  "error.signUp": "Não foi possivel criar a conta, verifique seus dados e tente novamente",
+  "error.signIn": "Não foi possivel entrar na conta, verifique seus dados e tente novamente",
   "error.passwordConfirmation": "A senha e a confirmação estão diferentes",
   "error.weakPassword": "Utilize letras maiúsculas, minúsculas e números",
   "error.smallPassword": "A senha deve ter pelo menos 8 caracteres",

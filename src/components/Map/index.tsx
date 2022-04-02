@@ -21,7 +21,7 @@ export const Map = ({
   const [map, setMap] = useState<MapType>();
 
   const whenMapIsCreated = useCallback(
-    (map) => {
+    map => {
       setMap(map);
       whenCreated?.(map);
     },
@@ -54,7 +54,7 @@ export const Map = ({
     >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {children}
     </MapContainer>

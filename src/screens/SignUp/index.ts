@@ -1,1 +1,1 @@
-export { SignUpPresentation as SignUp } from './presentation';
+export { SignUpContainer as SignUp } from './container';

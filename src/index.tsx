@@ -8,22 +8,12 @@ import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { theme } from './theme';
 import ptMessages from './lang/pt.json';
-import { configure } from 'axios-hooks';
-import LRU from 'lru-cache';
-import Axios from 'axios';
+import { SnackbarProvider } from 'notistack';
 
 const locale = navigator.language;
 const messages: { [key: string]: { [key: string]: string } } = {
   'pt-BR': ptMessages,
 };
-
-const axios = Axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
-});
-
-const cache = new LRU({ max: 10 });
-
-configure({ axios, cache });
 
 ReactDOM.render(
   <React.StrictMode>
@@ -31,7 +21,9 @@ ReactDOM.render(
       <StylesProvider injectFirst>
         <MuiThemeProvider theme={theme}>
           <ThemeProvider theme={theme}>
-            <Navigation />
+            <SnackbarProvider>
+              <Navigation />
+            </SnackbarProvider>
           </ThemeProvider>
         </MuiThemeProvider>
       </StylesProvider>

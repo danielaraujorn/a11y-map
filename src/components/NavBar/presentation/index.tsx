@@ -79,8 +79,8 @@ export const NavBarPresentation = () => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
-          <Badge badgeContent={4} color='error'>
+        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={4} color="error">
             <MailIcon />
           </Badge>
         </IconButton>
@@ -88,11 +88,11 @@ export const NavBarPresentation = () => {
       </MenuItem>
       <MenuItem>
         <IconButton
-          size='large'
-          aria-label='show 17 new notifications'
-          color='inherit'
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
         >
-          <Badge badgeContent={17} color='error'>
+          <Badge badgeContent={17} color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -103,21 +103,21 @@ export const NavBarPresentation = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static'>
+      <AppBar position="static">
         <Toolbar>
           <IconButton
-            size='large'
-            edge='start'
-            color='inherit'
-            aria-label='open drawer'
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
             sx={{ mr: 2 }}
           >
             <MenuIcon />
           </IconButton>
           <Typography
-            variant='h6'
+            variant="h6"
             noWrap
-            component='div'
+            component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
             A11Y-MAP
@@ -127,7 +127,7 @@ export const NavBarPresentation = () => {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder='Search…'
+              placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>

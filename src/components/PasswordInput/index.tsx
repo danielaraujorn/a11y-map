@@ -8,7 +8,7 @@ const PasswordComponent = forwardRef(
   (props: object, ref: React.ForwardedRef<HTMLInputElement>) => {
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = useCallback(
-      () => setShowPassword((prev) => !prev),
+      () => setShowPassword(prev => !prev),
       [setShowPassword]
     );
 
@@ -18,8 +18,8 @@ const PasswordComponent = forwardRef(
         type={showPassword ? 'text' : 'password'}
         InputProps={{
           endAdornment: (
-            <InputAdornment position='end'>
-              <IconButton onClick={handleClickShowPassword} edge='end'>
+            <InputAdornment position="end">
+              <IconButton onClick={handleClickShowPassword} edge="end">
                 {showPassword ? <VisibilityOff /> : <Visibility />}
               </IconButton>
             </InputAdornment>
@@ -40,8 +40,8 @@ export const PasswordInput = ({ ...props }: { disabled?: boolean }) => {
   };
   return (
     <InputController<typeof PasswordComponent>
-      name='password'
-      labelMessage='password'
+      name="password"
+      labelMessage="password"
       component={PasswordComponent}
       rules={rules}
       errorMessages={{
@@ -73,8 +73,8 @@ export const PasswordConfirmationInput = ({
   };
   return (
     <InputController<typeof PasswordComponent>
-      name='passwordConfirmation'
-      labelMessage='confirmPassword'
+      name="passwordConfirmation"
+      labelMessage="confirmPassword"
       rules={rules}
       errorMessages={{ validate: 'error.passwordConfirmation' }}
       component={PasswordComponent}

@@ -1,6 +1,6 @@
 export const paths = {
   login: '/login',
   home: '/',
-  newPoint: '/new-point',
+  newPlace: '/new-place',
   signUp: '/sign-up',
 };

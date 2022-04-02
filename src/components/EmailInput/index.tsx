@@ -15,8 +15,8 @@ export const EmailInput = ({
   };
   return (
     <Input
-      name='email'
-      labelMessage='email'
+      name="email"
+      labelMessage="email"
       rules={emailRules}
       errorMessages={{
         pattern: 'error.notAnEmail',

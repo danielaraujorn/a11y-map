@@ -34,7 +34,7 @@ export const InputController = <ComponentType extends Function>({
     <Controller
       name={name}
       control={control}
-      defaultValue=''
+      defaultValue=""
       rules={rules}
       render={({ field }) => (
         <Component fullWidth {...props} {...field} {...inputProps} />
