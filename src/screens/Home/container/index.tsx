@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 
 import { HomePresentation } from '../presentation';
 import { paths } from '../../../Navigation/paths';
-import { placesRequest, useAxios } from '../../../api';
+import { usePlacesRequest } from '../../../api';
 
 export const HomeContainer = () => {
   const navigate = useNavigate();
@@ -11,7 +11,11 @@ export const HomeContainer = () => {
     navigate(paths.newPlace);
   }, [navigate]);
 
-  const [{ data, loading }, fetch] = useAxios(placesRequest, { manual: true });
+  const [{ data, loading }, fetch] = usePlacesRequest();
+
+  const places = data?.data?.places || [];
+
+  console.log(places);
 
   const getPlaces = useCallback(async () => {
     try {
@@ -25,6 +29,10 @@ export const HomeContainer = () => {
     getPlaces();
   }, [getPlaces]);
   return (
-    <HomePresentation loading={loading} onAddButtonClick={onAddButtonClick} />
+    <HomePresentation
+      places={places}
+      loading={loading}
+      onAddButtonClick={onAddButtonClick}
+    />
   );
 };

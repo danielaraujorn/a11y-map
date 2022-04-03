@@ -6,7 +6,7 @@ import { ButtonContainer } from '../../../components/ButtonContainer';
 import { Container } from '../../../components/Container';
 import { EmailInput } from '../../../components/EmailInput';
 import { Form } from '../../../components/Form';
-import { LoginParamsType } from '../../../api';
+import { LoginParamsType } from '../../../types/Forms';
 import { MarginWhenMobile } from '../../../components/MarginWhenMobile';
 import { MaxWidthContainer } from '../../../components/MaxWidthContainer';
 import { PasswordInput } from '../../../components/PasswordInput';

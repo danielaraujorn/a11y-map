@@ -13,7 +13,7 @@ import {
   PasswordInput,
   PasswordConfirmationInput,
 } from '../../../components/PasswordInput';
-import { SignUpParamsType } from '../../../api';
+import { SignUpParamsType } from '../../../types/Forms';
 import { Title } from '../../../components/Title';
 import { VerticalCenter } from '../../../components/VerticalCenter';
 

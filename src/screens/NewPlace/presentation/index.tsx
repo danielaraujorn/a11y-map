@@ -18,8 +18,9 @@ import { Input } from '../../../components/Input';
 import { Map } from '../../../components/Map';
 import { MarginWhenMobile } from '../../../components/MarginWhenMobile';
 import { MaxWidthContainer } from '../../../components/MaxWidthContainer';
-import { NewPlaceParamsType } from '../../../api';
+import { NewPlaceParamsType } from '../../../types/Forms';
 import { SelectInput } from '../../../components/SelectInput';
+import { StatusEnum } from '../../../types/Models';
 
 type NewPlacePresentationPropType = {
   formatMessage: (descriptor: MessageDescriptor) => string;
@@ -101,7 +102,20 @@ export const NewPlacePresentation = ({
                   name="status"
                   labelMessage="status"
                   rules={{ required: true }}
-                  options={[{ value: 1, label: 'Pendente' }]}
+                  options={[
+                    {
+                      value: StatusEnum.IN_PROGRESS,
+                      label: formatMessage({ id: 'status.inProgress' }),
+                    },
+                    {
+                      value: StatusEnum.VALIDATED,
+                      label: formatMessage({ id: 'status.validated' }),
+                    },
+                    {
+                      value: StatusEnum.NEED_CHANGES,
+                      label: formatMessage({ id: 'status.needChanges' }),
+                    },
+                  ]}
                 />
               </Box>
               <ButtonContainer>

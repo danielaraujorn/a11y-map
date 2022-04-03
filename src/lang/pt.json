@@ -17,9 +17,14 @@
   "auth.signUpTitle": "Cadastrar conta",
   "auth.alreadyHaveAccount": "Já tenho conta",
   "auth.dontHaveAccount": "Não tenho conta",
+  "status.inProgress": "Em progresso",
+  "status.validated": "Validado",
+  "status.needChanges": "Mudanças pendentes",
 
+  "success.default": "Salvo com sucesso",
   "success.signUp": "O cadastro foi feito com suceso, verifique sua caixa de email para confirmar sua conta",
 
+  "error.default": "Não foi possivel salvar. Por favor verifique os dados e tente novamente",
   "error.signUp": "Não foi possivel criar a conta, verifique seus dados e tente novamente",
   "error.signIn": "Não foi possivel entrar na conta, verifique seus dados e tente novamente",
   "error.passwordConfirmation": "A senha e a confirmação estão diferentes",

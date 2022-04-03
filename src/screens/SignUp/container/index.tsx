@@ -4,14 +4,15 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { useSnackbar } from 'notistack';
 
-import { SignUpParamsType, signUpRequest, useAxios } from '../../../api';
+import { SignUpParamsType } from '../../../types/Forms';
 import { SignUpPresentation } from '../presentation';
 import { paths } from '../../../Navigation/paths';
+import { useSignUpRequest } from '../../../api';
 
 export const SignUpContainer = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const [, register] = useAxios(signUpRequest, { manual: true });
+  const [, register] = useSignUpRequest();
   const { formatMessage } = useIntl();
   const methods = useForm<SignUpParamsType>();
   const onSubmit = useCallback(

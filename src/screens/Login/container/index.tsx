@@ -4,13 +4,14 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { useSnackbar } from 'notistack';
 
-import { LoginParamsType, loginRequest, useAxios } from '../../../api';
+import { LoginParamsType } from '../../../types/Forms';
 import { LoginPresentation } from '../presentation';
 import { paths } from '../../../Navigation/paths';
+import { useLoginRequest } from '../../../api';
 
 export const LoginContainer = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const [, login] = useAxios(loginRequest, { manual: true });
+  const [, login] = useLoginRequest();
   const { formatMessage } = useIntl();
   const methods = useForm<LoginParamsType>();
   const onSubmit = useCallback(

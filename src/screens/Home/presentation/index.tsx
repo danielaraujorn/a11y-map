@@ -1,21 +1,33 @@
 import { Add as AddIcon } from '@mui/icons-material';
 import { Fab, LinearProgress } from '@mui/material';
-import { Marker, Popup } from 'react-leaflet';
+import { Marker } from 'react-leaflet';
+import { useMemo } from 'react';
 
 import { Container } from '../../../components/Container';
 import { FloatingView } from '../../../components/FloatingView';
 import { Map } from '../../../components/Map';
 import { NavBar } from '../../../components/NavBar';
+import { PlaceModelType } from '../../../types/Models';
 
 type HomePresentationPropType = {
   loading: boolean;
   onAddButtonClick: () => void;
+  places: PlaceModelType[];
 };
 
 export const HomePresentation = ({
   loading,
   onAddButtonClick,
+  places,
 }: HomePresentationPropType) => {
+  const markers = useMemo(
+    () =>
+      places.map(({ id, latitude, longitude }) => (
+        <Marker key={id} position={[latitude, longitude]} />
+      )),
+    [places]
+  );
+
   if (loading)
     return (
       <Container>
@@ -27,11 +39,12 @@ export const HomePresentation = ({
     <Container>
       <NavBar />
       <Map>
-        <Marker position={[51.505, -0.09]}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
+        <>{markers}</>
+        {/* <Marker key={id} position={[latitude, longitude]}>
+            <Popup>
+              A pretty CSS3 popup. <br /> Easily customizable.
+            </Popup>
+          </Marker> */}
       </Map>
       <FloatingView>
         <Fab color="primary" aria-label="add" onClick={onAddButtonClick}>
