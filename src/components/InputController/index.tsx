@@ -11,6 +11,7 @@ type Props<ComponentType> = {
   component: ComponentType;
 };
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export const InputController = <ComponentType extends Function>({
   name,
   rules,

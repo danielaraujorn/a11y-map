@@ -3,6 +3,7 @@
   "firstName": "Primeiro nome",
   "lastName": "Sobrenome",
   "password": "Senha",
+  "places": "Locais",
   "confirmPassword": "Confirme a senha",
   "type": "Tipo",
   "description": "Descrição",
