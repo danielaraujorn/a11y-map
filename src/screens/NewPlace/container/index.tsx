@@ -29,6 +29,7 @@ export const NewPlaceContainer = () => {
   });
   const onSubmit = useCallback(async formData => {
     const { lat: latitude, lng: longitude } = mapPosition.current || {};
+    console.log(mapPosition.current);
     const params: NewPlaceParamsType = {
       ...formData,
       latitude,
@@ -46,6 +47,7 @@ export const NewPlaceContainer = () => {
   }, []);
   const setPosition = useCallback((map: MapType) => {
     mapPosition.current = map.getCenter();
+    console.log(map.getCenter());
   }, []);
   return (
     <NewPlacePresentation

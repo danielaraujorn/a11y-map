@@ -1,20 +1,26 @@
-import { useState, useCallback, useEffect } from 'react';
-import { Map as MapType } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { LatLngExpression, Map as MapType } from 'leaflet';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import { useMediaQuery, useTheme } from '@mui/material';
+import { useState, useCallback, useEffect } from 'react';
+
+import { useGeolocation } from '../../hooks/useGeolocation';
 
 export const Map = ({
   onMove,
   whenCreated,
   children,
+  center,
   ...props
 }: {
   onMove?: (map: MapType) => void;
   whenCreated?: (map: MapType) => void;
   children?: JSX.Element;
   zoomControl?: boolean;
+  center?: LatLngExpression;
 }) => {
+  const location = useGeolocation();
+  const [mapMoved, setMapMoved] = useState(false);
   const theme = useTheme();
   const scrollWheelZoom = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -31,8 +37,9 @@ export const Map = ({
   const onMapMove = useCallback(
     ({ target }) => {
       onMove?.(target);
+      setMapMoved(true);
     },
-    [onMove]
+    [onMove, setMapMoved]
   );
 
   useEffect(() => {
@@ -42,9 +49,20 @@ export const Map = ({
     };
   }, [map, onMapMove]);
 
+  useEffect(() => {
+    if (!mapMoved) {
+      const { lat, lng } = location;
+      const latLngExpression: LatLngExpression = [lat, lng];
+      map?.panTo(latLngExpression);
+    }
+  }, [mapMoved, location]);
+
+  const { lat, lng } = location;
+  const latLngExpression: LatLngExpression = [lat, lng];
+
   return (
     <MapContainer
-      center={[51.505, -0.09]}
+      center={center || latLngExpression}
       zoom={20}
       scrollWheelZoom={scrollWheelZoom}
       // maxZoom={20}
