@@ -40,11 +40,6 @@ export const HomePresentation = ({
       <NavBar />
       <Map>
         <>{markers}</>
-        {/* <Marker key={id} position={[latitude, longitude]}>
-            <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-          </Marker> */}
       </Map>
       <FloatingView>
         <Fab color="primary" aria-label="add" onClick={onAddButtonClick}>

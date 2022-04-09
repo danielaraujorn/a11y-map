@@ -6,6 +6,9 @@ import {
 } from '../types/Forms';
 import { PlaceModelType } from '../types/Models';
 import { makeUseAxios } from 'axios-hooks';
+import { useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { paths } from '../Navigation/paths';
 
 export const useAxios = makeUseAxios({
   axios: axios.create({
@@ -46,11 +49,29 @@ type PaginationType = {
   sort?: 'inserted_at' | 'asc';
 };
 
-export const usePlacesRequest = () =>
-  useAxios<{ data: { places: PlaceModelType[] } }, PaginationType>({
+export const usePlacesRequest = () => {
+  const navigate = useNavigate();
+  const [{ data, loading }, fetch] = useAxios<
+    { data: { places: PlaceModelType[] } },
+    PaginationType
+  >({
     url: '/places',
     method: 'GET',
   });
+
+  const getPlaces = useCallback(async () => {
+    try {
+      await fetch();
+    } catch (e) {
+      navigate(paths.login);
+    }
+  }, []);
+
+  useEffect(() => {
+    getPlaces();
+  }, [getPlaces]);
+  return [{ data, loading }];
+};
 
 export const useNewPlaceRequest = () =>
   useAxios<unknown, NewPlaceParamsType>(

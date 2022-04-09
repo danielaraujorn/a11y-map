@@ -1,12 +1,26 @@
 import { Container } from '../../../components/Container';
 import { MaxWidthContainer } from '../../../components/MaxWidthContainer';
 import { BackButtonAppBar } from '../../../components/BackButtonAppBar';
-import { Box, Card, Typography, CardContent } from '@mui/material';
+import {
+  Box,
+  Card,
+  Typography,
+  CardContent,
+  LinearProgress,
+} from '@mui/material';
+import { usePlacesRequest } from '../../../api';
 
 export const PointsPresentation = () => {
+  const [{ data, loading }] = usePlacesRequest();
+
+  const places = data?.data?.places || [];
+
+  console.log(places);
+
   return (
     <Container>
-      <BackButtonAppBar titleMessage="points" />
+      <BackButtonAppBar titleMessage="places" />
+      {loading && <LinearProgress color="secondary" />}
       <MaxWidthContainer>
         <Box my={2}>
           <Card

@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 
 import { HomePresentation } from '../presentation';
@@ -11,23 +11,10 @@ export const HomeContainer = () => {
     navigate(paths.newPlace);
   }, [navigate]);
 
-  const [{ data, loading }, fetch] = usePlacesRequest();
+  const [{ data, loading }] = usePlacesRequest();
 
   const places = data?.data?.places || [];
 
-  console.log(places);
-
-  const getPlaces = useCallback(async () => {
-    try {
-      await fetch();
-    } catch (e) {
-      navigate(paths.login);
-    }
-  }, []);
-
-  useEffect(() => {
-    getPlaces();
-  }, [getPlaces]);
   return (
     <HomePresentation
       places={places}
