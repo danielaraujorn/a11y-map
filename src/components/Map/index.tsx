@@ -19,7 +19,7 @@ export const Map = ({
   zoomControl?: boolean;
   center?: LatLngExpression;
 }) => {
-  const location = useGeolocation();
+  const { location } = useGeolocation();
   const [mapMoved, setMapMoved] = useState(false);
   const theme = useTheme();
   const scrollWheelZoom = useMediaQuery(theme.breakpoints.up('sm'));

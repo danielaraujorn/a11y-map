@@ -14,7 +14,7 @@ export const Navigation = () => {
         <Route path={paths.signUp} element={<SignUp />} />
         <Route path={paths.newPlace} element={<NewPlace />} />
         <Route path={paths.home} element={<Home />} />
-        <Route path={paths.points} element={<Points />} />
+        <Route path={paths.places} element={<Points />} />
       </Routes>
     </Router>
   );

@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { IntlProvider } from 'react-intl';
+import { SnackbarProvider } from 'notistack';
 import { ThemeProvider as MuiThemeProvider, StylesProvider } from '@mui/styles';
 import { ThemeProvider } from 'styled-components';
-import { IntlProvider } from 'react-intl';
-import { Navigation } from './Navigation';
-import reportWebVitals from './reportWebVitals';
-import './index.css';
-import { theme } from './theme';
+
 import ptMessages from './lang/pt.json';
-import { SnackbarProvider } from 'notistack';
+import reportWebVitals from './reportWebVitals';
+import { GeolocationProvider } from './contexts/GeolocationContext';
+import { Navigation } from './Navigation';
+import { theme } from './theme';
+import './index.css';
 
 const locale = navigator.language;
 const messages: { [key: string]: { [key: string]: string } } = {
@@ -17,17 +19,19 @@ const messages: { [key: string]: { [key: string]: string } } = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <IntlProvider locale={locale} messages={messages[locale] || ptMessages}>
-      <StylesProvider injectFirst>
-        <MuiThemeProvider theme={theme}>
-          <ThemeProvider theme={theme}>
-            <SnackbarProvider>
-              <Navigation />
-            </SnackbarProvider>
-          </ThemeProvider>
-        </MuiThemeProvider>
-      </StylesProvider>
-    </IntlProvider>
+    <GeolocationProvider>
+      <IntlProvider locale={locale} messages={messages[locale] || ptMessages}>
+        <StylesProvider injectFirst>
+          <MuiThemeProvider theme={theme}>
+            <ThemeProvider theme={theme}>
+              <SnackbarProvider>
+                <Navigation />
+              </SnackbarProvider>
+            </ThemeProvider>
+          </MuiThemeProvider>
+        </StylesProvider>
+      </IntlProvider>
+    </GeolocationProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

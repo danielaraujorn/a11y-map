@@ -3,5 +3,5 @@ export const paths = {
   home: '/',
   newPlace: '/new-place',
   signUp: '/sign-up',
-  points: '/points',
+  places: '/places',
 };
