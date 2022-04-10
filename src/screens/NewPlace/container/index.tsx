@@ -3,21 +3,36 @@ import { useCallback, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router';
+import { useSnackbar } from 'notistack';
 
 import { NewPlaceParamsType } from '../../../types/Forms';
 import { NewPlacePresentation } from '../presentation';
-import { StatusEnum } from '../../../types/Models';
+import { PlaceModelType, StatusEnum } from '../../../types/Models';
 import { paths } from '../../../Navigation/paths';
-import { useNewPlaceRequest } from '../../../api';
-import { useSnackbar } from 'notistack';
+import { useCreatePlaceRequest, usePatchPlaceRequest } from '../../../api';
 
-export const NewPlaceContainer = () => {
+const formatDefaultValues = (
+  defaultValues: PlaceModelType
+): NewPlaceParamsType => {
+  const { status, description, latitude, longitude } = defaultValues;
+  return { status, description, latitude, longitude };
+};
+
+export const NewPlaceContainer = ({
+  defaultValues,
+}: {
+  defaultValues?: PlaceModelType;
+}) => {
+  const formattedDefaultValues =
+    defaultValues && formatDefaultValues(defaultValues);
+
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const onCancelButtonClick = useCallback(() => {
     navigate(paths.home);
   }, [navigate]);
-  const [, createPlace] = useNewPlaceRequest();
+  const [, createPlace] = useCreatePlaceRequest();
+  const [, patchPlace] = usePatchPlaceRequest(defaultValues?.id);
   const mapPosition = useRef<LatLng>();
   const { formatMessage } = useIntl();
   const methods = useForm<NewPlaceParamsType>({
@@ -25,18 +40,19 @@ export const NewPlaceContainer = () => {
       // types: [],
       description: '',
       status: StatusEnum.IN_PROGRESS,
+      ...(formattedDefaultValues || {}),
     },
   });
   const onSubmit = useCallback(async formData => {
     const { lat: latitude, lng: longitude } = mapPosition.current || {};
-    console.log(mapPosition.current);
     const params: NewPlaceParamsType = {
       ...formData,
       latitude,
       longitude,
     };
     try {
-      await createPlace({ params });
+      if (defaultValues?.id) await patchPlace({ params });
+      else await createPlace({ params });
       enqueueSnackbar(formatMessage({ id: 'success.default' }));
       navigate(paths.home);
     } catch (e) {
@@ -47,10 +63,16 @@ export const NewPlaceContainer = () => {
   }, []);
   const setPosition = useCallback((map: MapType) => {
     mapPosition.current = map.getCenter();
-    console.log(map.getCenter());
   }, []);
+  const defaultCenter = defaultValues && {
+    lat: defaultValues.latitude,
+    lng: defaultValues.longitude,
+  };
+
   return (
     <NewPlacePresentation
+      update={!!defaultValues}
+      center={defaultCenter}
       setPosition={setPosition}
       onSubmit={onSubmit}
       methods={methods}

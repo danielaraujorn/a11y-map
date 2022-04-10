@@ -11,9 +11,9 @@ export type LoginParamsType = {
 };
 
 export type NewPlaceParamsType = {
-  validator_comments: string;
+  validator_comments?: string;
   description?: string;
   status: StatusEnum;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
 };

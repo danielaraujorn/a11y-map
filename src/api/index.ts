@@ -73,7 +73,7 @@ export const usePlacesRequest = () => {
   return [{ data, loading }];
 };
 
-export const useNewPlaceRequest = () =>
+export const useCreatePlaceRequest = () =>
   useAxios<unknown, NewPlaceParamsType>(
     {
       url: '/places',
@@ -81,3 +81,34 @@ export const useNewPlaceRequest = () =>
     },
     { manual: true }
   );
+
+export const usePatchPlaceRequest = (id?: string) =>
+  useAxios<unknown, NewPlaceParamsType>(
+    {
+      url: `/places/${id}`,
+      method: 'PATCH',
+    },
+    { manual: true }
+  );
+
+export const usePlaceRequest = (id: string) => {
+  const navigate = useNavigate();
+  const [{ data, loading }, fetch] = useAxios<{ data: PlaceModelType }>({
+    url: `/places/${id}`,
+    method: 'GET',
+  });
+
+  const getPlaces = useCallback(async () => {
+    try {
+      await fetch();
+    } catch (e) {
+      navigate(paths.login);
+    }
+  }, []);
+
+  useEffect(() => {
+    getPlaces();
+  }, [getPlaces]);
+
+  return [{ data, loading }];
+};

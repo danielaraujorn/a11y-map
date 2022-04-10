@@ -7,13 +7,15 @@ import { paths } from '../../Navigation/paths';
 
 export const BackButtonAppBar = ({
   titleMessage,
+  backButtonPath,
 }: {
   titleMessage: string;
+  backButtonPath?: string;
 }) => {
   const navigate = useNavigate();
   const onBackButtonClick = useCallback(() => {
-    navigate(paths.home);
-  }, [navigate]);
+    navigate(backButtonPath || paths.home);
+  }, [navigate, backButtonPath]);
   const { formatMessage } = useIntl();
   return (
     <AppBar position="static">

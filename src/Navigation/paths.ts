@@ -1,7 +1,8 @@
 export const paths = {
   login: '/login',
   home: '/',
-  newPlace: '/new-place',
-  signUp: '/sign-up',
   places: '/places',
+  newPlace: '/places/new',
+  place: (id: string) => `/places/${id}`,
+  signUp: '/sign-up',
 };

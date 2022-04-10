@@ -14,7 +14,7 @@ import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
 import { usePlacesRequest } from '../../../api';
 
-export const PointsPresentation = () => {
+export const PlacesPresentation = () => {
   const navigate = useNavigate();
 
   const [{ data, loading }] = usePlacesRequest();
@@ -36,7 +36,7 @@ export const PointsPresentation = () => {
               ({ description, id, latitude: lat, longitude: lng, status }) => (
                 <Box my={2} key={id}>
                   <Card
-                    onClick={() => navigate(paths.newPlace)}
+                    onClick={() => navigate(paths.place(id))}
                     style={{ cursor: 'pointer' }}
                   >
                     <CardContent>

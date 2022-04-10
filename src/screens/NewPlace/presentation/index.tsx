@@ -1,17 +1,10 @@
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Button,
-  Box,
-} from '@mui/material';
-import { ArrowLeft } from '@mui/icons-material';
+import { Button, Box } from '@mui/material';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
-import { Map as MapType } from 'leaflet';
+import { LatLngExpression, Map as MapType } from 'leaflet';
 import { MessageDescriptor } from 'react-intl';
 
 import { Container } from '../../../components/Container';
+import { BackButtonAppBar } from '../../../components/BackButtonAppBar';
 import { ButtonContainer } from '../../../components/ButtonContainer';
 import { Form } from '../../../components/Form';
 import { Input } from '../../../components/Input';
@@ -21,6 +14,7 @@ import { MaxWidthContainer } from '../../../components/MaxWidthContainer';
 import { NewPlaceParamsType } from '../../../types/Forms';
 import { SelectInput } from '../../../components/SelectInput';
 import { StatusEnum } from '../../../types/Models';
+import { paths } from '../../../Navigation/paths';
 
 type NewPlacePresentationPropType = {
   formatMessage: (descriptor: MessageDescriptor) => string;
@@ -28,6 +22,8 @@ type NewPlacePresentationPropType = {
   onSubmit: (params: NewPlaceParamsType) => void;
   onCancelButtonClick: () => void;
   setPosition: (map: MapType) => void;
+  center?: LatLngExpression;
+  update?: boolean;
 };
 
 export const NewPlacePresentation = ({
@@ -36,18 +32,14 @@ export const NewPlacePresentation = ({
   methods,
   setPosition,
   onSubmit,
+  center,
+  update,
 }: NewPlacePresentationPropType) => (
   <Container>
-    <AppBar position="static">
-      <Toolbar>
-        <IconButton onClick={onCancelButtonClick}>
-          <ArrowLeft />
-        </IconButton>
-        <Typography component="h1" variant="h6">
-          {formatMessage({ id: 'newPlace.headerTitle' })}
-        </Typography>
-      </Toolbar>
-    </AppBar>
+    <BackButtonAppBar
+      backButtonPath={update ? paths.places : undefined}
+      titleMessage={update ? 'place' : 'newPlace.headerTitle'}
+    />
     <MaxWidthContainer>
       <FormProvider {...methods}>
         <Form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -68,6 +60,7 @@ export const NewPlacePresentation = ({
               }}
             />
             <Map
+              center={center}
               onMove={setPosition}
               whenCreated={setPosition}
               zoomControl={false}
@@ -123,7 +116,9 @@ export const NewPlacePresentation = ({
                   {formatMessage({ id: 'cancel' })}
                 </Button>
                 <Button variant="contained" type="submit">
-                  {formatMessage({ id: 'newPlace.create' })}
+                  {formatMessage({
+                    id: update ? 'newPlace.save' : 'newPlace.create',
+                  })}
                 </Button>
               </ButtonContainer>
             </MarginWhenMobile>
