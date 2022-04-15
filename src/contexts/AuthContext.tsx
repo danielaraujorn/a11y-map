@@ -1,31 +1,32 @@
 import { createContext, ReactElement, useCallback, useState } from 'react';
 
+import { UserType } from '../types/Models';
+
 export const AuthContext = createContext<{
-  logged: boolean;
+  user?: UserType;
   done: boolean;
-  setLogged?: (logged: boolean) => void;
+  setUser?: (newValue?: UserType) => void;
 }>({
-  logged: false,
   done: false,
 });
 
 export const AuthProvider = ({ children }: { children: ReactElement }) => {
-  const [logged, setLogged] = useState<boolean>(false);
+  const [user, setUser] = useState<UserType | undefined>();
   const [done, setDone] = useState<boolean>(false);
 
-  const updateLogged = useCallback(
-    async (newValue: boolean) => {
-      setLogged(newValue);
+  const updateUser = useCallback(
+    async (newValue?: UserType) => {
+      setUser(newValue);
       setDone(true);
     },
-    [setLogged, setDone]
+    [setUser, setDone]
   );
   return (
     <AuthContext.Provider
       value={{
-        logged,
+        user,
         done,
-        setLogged: updateLogged,
+        setUser: updateUser,
       }}
     >
       {children}

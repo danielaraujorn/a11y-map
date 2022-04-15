@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosPromise } from 'axios';
 import { makeUseAxios } from 'axios-hooks';
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +8,7 @@ import {
   NewPlaceParamsType,
   SignUpParamsType,
 } from '../types/Forms';
-import { PlaceModelType } from '../types/Models';
+import { PlaceModelType, UserType } from '../types/Models';
 import { paths } from '../Navigation/paths';
 import { useAuth } from '../hooks/useAuth';
 
@@ -16,27 +16,31 @@ type ErrorType = {
   toJSON: () => { status: number };
 };
 
-const useVerifyAuthOnGet = (fetch: () => void) => {
+const useVerifyAuthOnGet = <ReturnType>(
+  fetch: () => ReturnType,
+  callback?: (returned: ReturnType) => void
+) => {
   const navigate = useNavigate();
-  const { setLogged } = useAuth();
+  const { setUser } = useAuth();
   const get = useCallback(async () => {
     try {
-      await fetch();
-      setLogged?.(true);
+      const request = await fetch();
+      callback?.(request);
     } catch (e) {
-      const { status } = (<ErrorType>e).toJSON();
+      const error = <Partial<ErrorType>>e;
+      const { status } = error?.toJSON?.() || {};
       if (status === 401) {
         navigate(paths.login);
-        setLogged?.(false);
+        setUser?.();
       }
     }
-  }, [setLogged, navigate, fetch]);
+  }, [setUser, navigate, fetch]);
 
   useEffect(() => {
-    if (setLogged) {
+    if (setUser) {
       get();
     }
-  }, [get, setLogged]);
+  }, [get, setUser]);
 };
 
 export const useAxios = makeUseAxios({
@@ -89,6 +93,27 @@ export const usePlacesRequest = () => {
   });
 
   useVerifyAuthOnGet(fetch);
+  return [{ data, loading }];
+};
+
+export const useOwnUser = () => {
+  const [{ data, loading }, fetch] = useAxios<
+    { data: UserType },
+    unknown,
+    ErrorType
+  >({
+    url: '/users/own',
+    method: 'GET',
+  });
+
+  const { setUser } = useAuth();
+
+  useVerifyAuthOnGet<AxiosPromise<{ data: UserType }>>(fetch, async request => {
+    const {
+      data: { data: user },
+    } = await request;
+    setUser?.(user);
+  });
   return [{ data, loading }];
 };
 

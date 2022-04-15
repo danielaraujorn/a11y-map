@@ -4,6 +4,11 @@ export enum StatusEnum {
   NEED_CHANGES = 'needChanges',
 }
 
+export enum RoleEnum {
+  NORMAL = 'normal',
+  ADMIN = 'admin',
+}
+
 export type PlaceModelType = {
   description: string;
   id: string;
@@ -14,4 +19,12 @@ export type PlaceModelType = {
   status: StatusEnum;
   updated_at: string;
   validatorComments?: string;
+};
+
+export type UserType = {
+  email: string;
+  id: string;
+  inserted_at: string;
+  updated_at: string;
+  role: RoleEnum;
 };

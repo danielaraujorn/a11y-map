@@ -1,21 +1,25 @@
+import { LinearProgress } from '@mui/material';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { paths } from './paths';
+
 import { Home } from '../screens/Home';
 import { Login } from '../screens/Login';
 import { NewPlace } from '../screens/NewPlace';
-import { SignUp } from '../screens/SignUp';
 import { Places } from '../screens/Places';
 import { Place } from '../screens/Place';
+import { SignUp } from '../screens/SignUp';
+import { paths } from './paths';
 import { useAuth } from '../hooks/useAuth';
-import { LinearProgress } from '@mui/material';
-import { usePlacesRequest } from '../api';
+import { useOwnUser } from '../api';
 
 export const Navigation = () => {
-  usePlacesRequest();
-  const { logged, done } = useAuth();
+  useOwnUser();
+  const { user, done } = useAuth();
+
+  console.log(user);
 
   if (!done) return <LinearProgress />;
-  if (logged)
+
+  if (user)
     return (
       <Routes>
         <Route path={paths.newPlace} element={<NewPlace />} />
@@ -25,6 +29,7 @@ export const Navigation = () => {
         <Route path="*" element={<Navigate replace to={paths.home} />} />
       </Routes>
     );
+
   return (
     <Routes>
       <Route path={paths.login} element={<Login />} />
