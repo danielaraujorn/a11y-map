@@ -1,5 +1,5 @@
 import { Add as AddIcon } from '@mui/icons-material';
-import { Box, Button, Fab, LinearProgress, Typography } from '@mui/material';
+import { Box, Button, Fab, LinearProgress } from '@mui/material';
 import { Marker, Popup } from 'react-leaflet';
 import { useMemo } from 'react';
 

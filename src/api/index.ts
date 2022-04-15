@@ -1,14 +1,43 @@
 import axios from 'axios';
+import { makeUseAxios } from 'axios-hooks';
+import { useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import {
   LoginParamsType,
   NewPlaceParamsType,
   SignUpParamsType,
 } from '../types/Forms';
 import { PlaceModelType } from '../types/Models';
-import { makeUseAxios } from 'axios-hooks';
-import { useCallback, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { paths } from '../Navigation/paths';
+import { useAuth } from '../hooks/useAuth';
+
+type ErrorType = {
+  toJSON: () => { status: number };
+};
+
+const useVerifyAuthOnGet = (fetch: () => void) => {
+  const navigate = useNavigate();
+  const { setLogged } = useAuth();
+  const get = useCallback(async () => {
+    try {
+      await fetch();
+      setLogged?.(true);
+    } catch (e) {
+      const { status } = (<ErrorType>e).toJSON();
+      if (status === 401) {
+        navigate(paths.login);
+        setLogged?.(false);
+      }
+    }
+  }, [setLogged, navigate, fetch]);
+
+  useEffect(() => {
+    if (setLogged) {
+      get();
+    }
+  }, [get, setLogged]);
+};
 
 export const useAxios = makeUseAxios({
   axios: axios.create({
@@ -50,26 +79,16 @@ type PaginationType = {
 };
 
 export const usePlacesRequest = () => {
-  const navigate = useNavigate();
   const [{ data, loading }, fetch] = useAxios<
     { data: { places: PlaceModelType[] } },
-    PaginationType
+    PaginationType,
+    ErrorType
   >({
     url: '/places',
     method: 'GET',
   });
 
-  const getPlaces = useCallback(async () => {
-    try {
-      await fetch();
-    } catch (e) {
-      navigate(paths.login);
-    }
-  }, []);
-
-  useEffect(() => {
-    getPlaces();
-  }, [getPlaces]);
+  useVerifyAuthOnGet(fetch);
   return [{ data, loading }];
 };
 
@@ -92,23 +111,11 @@ export const usePatchPlaceRequest = (id?: string) =>
   );
 
 export const usePlaceRequest = (id: string) => {
-  const navigate = useNavigate();
   const [{ data, loading }, fetch] = useAxios<{ data: PlaceModelType }>({
     url: `/places/${id}`,
     method: 'GET',
   });
 
-  const getPlaces = useCallback(async () => {
-    try {
-      await fetch();
-    } catch (e) {
-      navigate(paths.login);
-    }
-  }, []);
-
-  useEffect(() => {
-    getPlaces();
-  }, [getPlaces]);
-
+  useVerifyAuthOnGet(fetch);
   return [{ data, loading }];
 };

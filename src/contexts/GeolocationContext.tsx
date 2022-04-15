@@ -37,7 +37,6 @@ export const GeolocationProvider = ({
   children: ReactElement;
 }) => {
   const [location, setLocation] = useState<LatLngLiteral>(initialLocation);
-  navigator.geolocation.watchPosition;
   const updateLocation = useCallback(
     async (position: GeolocationPosition) => {
       const { latitude: lat, longitude: lng } = position.coords;
