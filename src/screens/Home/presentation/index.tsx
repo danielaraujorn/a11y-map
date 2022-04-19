@@ -1,14 +1,14 @@
 import { Add as AddIcon } from '@mui/icons-material';
 import { Box, Button, Fab, LinearProgress } from '@mui/material';
 import { Marker, Popup } from 'react-leaflet';
+import { MessageDescriptor } from 'react-intl';
 import { useMemo } from 'react';
 
 import { Container } from '../../../components/Container';
 import { FloatingView } from '../../../components/FloatingView';
 import { Map } from '../../../components/Map';
-import { NavBar } from '../../../components/NavBar';
+import { Header } from '../../../components/Header';
 import { PlaceModelType } from '../../../types/Models';
-import { MessageDescriptor } from 'react-intl';
 
 type HomePresentationPropType = {
   loading: boolean;
@@ -53,7 +53,7 @@ export const HomePresentation = ({
 
   return (
     <Container>
-      <NavBar />
+      <Header />
       <Map>
         <>{markers}</>
       </Map>

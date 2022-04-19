@@ -11,6 +11,8 @@ import {
 import { PlaceModelType, UserType } from '../types/Models';
 import { paths } from '../Navigation/paths';
 import { useAuth } from '../hooks/useAuth';
+import { useSnackbar } from 'notistack';
+import { useIntl } from 'react-intl';
 
 type ErrorType = {
   toJSON: () => { status: number };
@@ -72,6 +74,34 @@ export const useLoginRequest = () =>
     },
     { manual: true }
   );
+
+export const useLogoutRequest = () => {
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
+
+  const [, fetch] = useAxios<unknown, LoginParamsType>(
+    {
+      url: '/users/log_out',
+      method: 'DELETE',
+    },
+    { manual: true }
+  );
+  const logout = useCallback(async () => {
+    try {
+      await fetch();
+      navigate(paths.login);
+      setUser?.();
+    } catch (e) {
+      enqueueSnackbar(formatMessage({ id: 'error.signOut' }), {
+        variant: 'error',
+      });
+    }
+  }, [setUser, navigate, fetch]);
+
+  return logout;
+};
 
 type PaginationType = {
   offset: number;
