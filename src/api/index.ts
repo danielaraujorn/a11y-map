@@ -22,7 +22,6 @@ const useVerifyAuthOnGet = <ReturnType>(
   fetch: () => ReturnType,
   callback?: (returned: ReturnType) => void
 ) => {
-  const navigate = useNavigate();
   const { setUser } = useAuth();
   const get = useCallback(async () => {
     try {
@@ -32,11 +31,10 @@ const useVerifyAuthOnGet = <ReturnType>(
       const error = <Partial<ErrorType>>e;
       const { status } = error?.toJSON?.() || {};
       if (status === 401) {
-        navigate(paths.login);
         setUser?.();
       }
     }
-  }, [setUser, navigate, fetch]);
+  }, [setUser, fetch]);
 
   useEffect(() => {
     if (setUser) {
