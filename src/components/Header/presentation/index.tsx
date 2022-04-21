@@ -1,6 +1,7 @@
 import { MouseEvent } from 'react';
 import {
   AccountCircle,
+  HowToReg,
   Logout,
   // Menu as MenuIcon,
   // Search as SearchIcon,
@@ -68,9 +69,11 @@ type HeaderPresentationPropType = {
   mobileMoreAnchorEl: HTMLButtonElement | undefined;
   handleMenu: (event: MouseEvent<HTMLButtonElement>) => void;
   logout: () => void;
+  isAdmin?: boolean;
 };
 
 export const HeaderPresentation = ({
+  isAdmin,
   formatMessage,
   navigate,
   handleMobileMenuClose,
@@ -135,7 +138,19 @@ export const HeaderPresentation = ({
       open={Boolean(mobileMoreAnchorEl)}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={() => navigate(paths.places)}>
+      {isAdmin && (
+        <MenuItem sx={{ pr: 3 }} onClick={() => navigate(paths.validators)}>
+          <IconButton
+            disableRipple
+            aria-label={formatMessage({ id: 'user.validators' })}
+            color="inherit"
+          >
+            <HowToReg />
+          </IconButton>
+          <p>{formatMessage({ id: 'user.validators' })}</p>
+        </MenuItem>
+      )}
+      <MenuItem sx={{ pr: 3 }} onClick={() => navigate(paths.places)}>
         <IconButton
           disableRipple
           aria-label={formatMessage({ id: 'place.my_places' })}
@@ -145,7 +160,7 @@ export const HeaderPresentation = ({
         </IconButton>
         <p>{formatMessage({ id: 'place.my_places' })}</p>
       </MenuItem>
-      <MenuItem onClick={logout}>
+      <MenuItem sx={{ pr: 3 }} onClick={logout}>
         <IconButton
           disableRipple
           aria-label={formatMessage({ id: 'auth.signOut' })}

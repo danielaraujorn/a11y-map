@@ -1,1 +1,1 @@
-export { PlacesPresentation as Places } from './presentation';
+export { PlacesContainer as Places } from './container';

@@ -5,4 +5,5 @@ export const paths = {
   newPlace: '/places/new',
   place: (id: string) => `/places/${id}`,
   signUp: '/sign-up',
+  validators: '/validators',
 };

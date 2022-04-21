@@ -26,6 +26,7 @@
   "status.inProgress": "Em progresso",
   "status.validated": "Validado",
   "status.needChanges": "Mudanças pendentes",
+  "user.validators": "Validadores",
 
   "success.default": "Salvo com sucesso",
   "success.signUp": "O cadastro foi feito com suceso, verifique sua caixa de email para confirmar sua conta",

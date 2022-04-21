@@ -1,4 +1,4 @@
-import axios, { AxiosPromise } from 'axios';
+import axios from 'axios';
 import { makeUseAxios } from 'axios-hooks';
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +8,7 @@ import {
   NewPlaceParamsType,
   SignUpParamsType,
 } from '../types/Forms';
-import { PlaceModelType, UserType } from '../types/Models';
+import { PlaceModelType, RoleEnum, UserType } from '../types/Models';
 import { paths } from '../Navigation/paths';
 import { useAuth } from '../hooks/useAuth';
 import { useSnackbar } from 'notistack';
@@ -16,31 +16,6 @@ import { useIntl } from 'react-intl';
 
 type ErrorType = {
   toJSON: () => { status: number };
-};
-
-const useVerifyAuthOnGet = <ReturnType>(
-  fetch: () => ReturnType,
-  callback?: (returned: ReturnType) => void
-) => {
-  const { setUser } = useAuth();
-  const get = useCallback(async () => {
-    try {
-      const request = await fetch();
-      callback?.(request);
-    } catch (e) {
-      const error = <Partial<ErrorType>>e;
-      const { status } = error?.toJSON?.() || {};
-      if (status === 401) {
-        setUser?.();
-      }
-    }
-  }, [setUser, fetch]);
-
-  useEffect(() => {
-    if (setUser) {
-      get();
-    }
-  }, [get, setUser]);
 };
 
 export const useAxios = makeUseAxios({
@@ -64,8 +39,13 @@ export const useSignUpRequest = () =>
     { manual: true }
   );
 
-export const useLoginRequest = () =>
-  useAxios<unknown, LoginParamsType>(
+export const useLoginRequest = () => {
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
+
+  const [, fetch] = useAxios<{ data: UserType }, LoginParamsType>(
     {
       url: '/users/log_in',
       method: 'POST',
@@ -73,13 +53,33 @@ export const useLoginRequest = () =>
     { manual: true }
   );
 
+  const login = useCallback(
+    async params => {
+      try {
+        const {
+          data: { data: user },
+        } = await fetch({ params });
+        setUser?.(user);
+        navigate(paths.home);
+      } catch (e) {
+        enqueueSnackbar(formatMessage({ id: 'error.signIn' }), {
+          variant: 'error',
+        });
+      }
+    },
+    [setUser, navigate, fetch]
+  );
+
+  return login;
+};
+
 export const useLogoutRequest = () => {
   const navigate = useNavigate();
   const { setUser } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
-  const [, fetch] = useAxios<unknown, LoginParamsType>(
+  const [, fetch] = useAxios(
     {
       url: '/users/log_out',
       method: 'DELETE',
@@ -110,19 +110,18 @@ type PaginationType = {
   sort?: 'inserted_at' | 'asc';
 };
 
-export const usePlacesRequest = () => {
-  const [{ data, loading }, fetch] = useAxios<
-    { data: { places: PlaceModelType[] } },
-    PaginationType,
-    ErrorType
-  >({
+export const usePlacesRequest = () =>
+  useAxios<{ data: { places: PlaceModelType[] } }, PaginationType, ErrorType>({
     url: '/places',
     method: 'GET',
   });
 
-  useVerifyAuthOnGet(fetch);
-  return [{ data, loading }];
-};
+export const useValidatorsRequest = () =>
+  useAxios<{ data: { users: UserType[] } }, PaginationType, ErrorType>({
+    url: '/users',
+    method: 'GET',
+    params: { role: RoleEnum.VALIDATOR },
+  });
 
 export const useOwnUser = () => {
   const [{ data, loading }, fetch] = useAxios<
@@ -136,12 +135,27 @@ export const useOwnUser = () => {
 
   const { setUser } = useAuth();
 
-  useVerifyAuthOnGet<AxiosPromise<{ data: UserType }>>(fetch, async request => {
-    const {
-      data: { data: user },
-    } = await request;
-    setUser?.(user);
-  });
+  const get = useCallback(async () => {
+    try {
+      const {
+        data: { data: user },
+      } = await fetch();
+      setUser?.(user);
+    } catch (e) {
+      const error = <Partial<ErrorType>>e;
+      const { status } = error?.toJSON?.() || {};
+      if (status === 401) {
+        setUser?.();
+      }
+    }
+  }, [setUser, fetch]);
+
+  useEffect(() => {
+    if (setUser) {
+      get();
+    }
+  }, [get, setUser]);
+
   return [{ data, loading }];
 };
 
@@ -163,12 +177,8 @@ export const usePatchPlaceRequest = (id?: string) =>
     { manual: true }
   );
 
-export const usePlaceRequest = (id: string) => {
-  const [{ data, loading }, fetch] = useAxios<{ data: PlaceModelType }>({
+export const usePlaceRequest = (id: string) =>
+  useAxios<{ data: PlaceModelType }>({
     url: `/places/${id}`,
     method: 'GET',
   });
-
-  useVerifyAuthOnGet(fetch);
-  return [{ data, loading }];
-};

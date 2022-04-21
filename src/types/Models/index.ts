@@ -7,6 +7,7 @@ export enum StatusEnum {
 export enum RoleEnum {
   NORMAL = 'normal',
   ADMIN = 'admin',
+  VALIDATOR = 'validator',
 }
 
 export type PlaceModelType = {
