@@ -116,12 +116,18 @@ export const usePlacesRequest = () =>
     method: 'GET',
   });
 
-export const useValidatorsRequest = () =>
-  useAxios<{ data: { users: UserType[] } }, PaginationType, ErrorType>({
-    url: '/users',
-    method: 'GET',
-    params: { role: RoleEnum.VALIDATOR },
-  });
+export const useUsersRequest = () =>
+  useAxios<
+    { data: { users: UserType[] } },
+    PaginationType & { roles: RoleEnum; email: string },
+    ErrorType
+  >(
+    {
+      url: '/users',
+      method: 'GET',
+    },
+    { manual: true }
+  );
 
 export const useOwnUser = () => {
   const [{ data, loading }, fetch] = useAxios<

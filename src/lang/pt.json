@@ -27,6 +27,7 @@
   "status.validated": "Validado",
   "status.needChanges": "Mudanças pendentes",
   "user.validators": "Validadores",
+  "user.searchEmail": "Procurar email",
 
   "success.default": "Salvo com sucesso",
   "success.signUp": "O cadastro foi feito com suceso, verifique sua caixa de email para confirmar sua conta",

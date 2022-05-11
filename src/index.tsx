@@ -13,6 +13,7 @@ import { Navigation } from './Navigation';
 import { theme } from './theme';
 import './index.css';
 import { AuthProvider } from './contexts/AuthContext';
+import { ConfirmationProvider } from './contexts/ConfirmationContext';
 
 const locale = navigator.language;
 const messages: { [key: string]: { [key: string]: string } } = {
@@ -29,7 +30,9 @@ ReactDOM.render(
               <ThemeProvider theme={theme}>
                 <SnackbarProvider>
                   <Router>
-                    <Navigation />
+                    <ConfirmationProvider>
+                      <Navigation />
+                    </ConfirmationProvider>
                   </Router>
                 </SnackbarProvider>
               </ThemeProvider>
