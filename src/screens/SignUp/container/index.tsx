@@ -19,10 +19,17 @@ export const SignUpContainer = () => {
     async ({ email, password }) => {
       try {
         await register({ params: { email, password } });
-        enqueueSnackbar(formatMessage({ id: 'success.signUp' }));
+        enqueueSnackbar(
+          formatMessage(
+            { id: 'auth.success.signUp' },
+            {
+              variant: 'success',
+            }
+          )
+        );
         navigate(paths.login);
       } catch (e) {
-        enqueueSnackbar(formatMessage({ id: 'error.signUp' }), {
+        enqueueSnackbar(formatMessage({ id: 'auth.error.signUp' }), {
           variant: 'error',
         });
       }

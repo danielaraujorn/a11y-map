@@ -4,14 +4,15 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { Home } from '../screens/Home';
 import { Login } from '../screens/Login';
 import { NewPlace } from '../screens/NewPlace';
+import { NewValidator } from '../screens/NewValidator';
 import { Places } from '../screens/Places';
 import { Place } from '../screens/Place';
 import { SignUp } from '../screens/SignUp';
+import { RoleEnum } from '../types/Models';
+import { Validators } from '../screens/Validators';
 import { paths } from './paths';
 import { useAuth } from '../hooks/useAuth';
 import { useOwnUser } from '../api';
-import { RoleEnum } from '../types/Models';
-import { Validators } from '../screens/Validators';
 
 export const Navigation = () => {
   useOwnUser();
@@ -28,6 +29,9 @@ export const Navigation = () => {
         <Route path={paths.places} element={<Places />} />
         <Route path={paths.place(':id')} element={<Place />} />
         {isAdmin && <Route path={paths.validators} element={<Validators />} />}
+        {isAdmin && (
+          <Route path={paths.newValidator} element={<NewValidator />} />
+        )}
         <Route path="*" element={<Navigate replace to={paths.home} />} />
       </Routes>
     );

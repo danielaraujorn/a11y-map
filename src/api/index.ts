@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { makeUseAxios } from 'axios-hooks';
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -11,8 +11,10 @@ import {
 import { PlaceModelType, RoleEnum, UserType } from '../types/Models';
 import { paths } from '../Navigation/paths';
 import { useAuth } from '../hooks/useAuth';
-import { useSnackbar } from 'notistack';
 import { useIntl } from 'react-intl';
+import { useSnackbar } from 'notistack';
+
+const manual = true;
 
 type ErrorType = {
   toJSON: () => { status: number };
@@ -36,7 +38,7 @@ export const useSignUpRequest = () =>
       url: '/users/register',
       method: 'POST',
     },
-    { manual: true }
+    { manual }
   );
 
 export const useLoginRequest = () => {
@@ -50,7 +52,7 @@ export const useLoginRequest = () => {
       url: '/users/log_in',
       method: 'POST',
     },
-    { manual: true }
+    { manual }
   );
 
   const login = useCallback(
@@ -62,7 +64,7 @@ export const useLoginRequest = () => {
         setUser?.(user);
         navigate(paths.home);
       } catch (e) {
-        enqueueSnackbar(formatMessage({ id: 'error.signIn' }), {
+        enqueueSnackbar(formatMessage({ id: 'auth.error.signIn' }), {
           variant: 'error',
         });
       }
@@ -84,7 +86,7 @@ export const useLogoutRequest = () => {
       url: '/users/log_out',
       method: 'DELETE',
     },
-    { manual: true }
+    { manual }
   );
   const logout = useCallback(async () => {
     try {
@@ -92,7 +94,7 @@ export const useLogoutRequest = () => {
       navigate(paths.login);
       setUser?.();
     } catch (e) {
-      enqueueSnackbar(formatMessage({ id: 'error.signOut' }), {
+      enqueueSnackbar(formatMessage({ id: 'auth.error.signOut' }), {
         variant: 'error',
       });
     }
@@ -126,7 +128,7 @@ export const useUsersRequest = () =>
       url: '/users',
       method: 'GET',
     },
-    { manual: true }
+    { manual }
   );
 
 export const useOwnUser = () => {
@@ -171,7 +173,7 @@ export const useCreatePlaceRequest = () =>
       url: '/places',
       method: 'POST',
     },
-    { manual: true }
+    { manual }
   );
 
 export const usePatchPlaceRequest = (id?: string) =>
@@ -180,7 +182,7 @@ export const usePatchPlaceRequest = (id?: string) =>
       url: `/places/${id}`,
       method: 'PATCH',
     },
-    { manual: true }
+    { manual }
   );
 
 export const usePlaceRequest = (id: string) =>
@@ -188,3 +190,28 @@ export const usePlaceRequest = (id: string) =>
     url: `/places/${id}`,
     method: 'GET',
   });
+
+export const useUserRolePatchRequest = (): ((
+  id: string,
+  params: { role: RoleEnum }
+) => Promise<
+  AxiosResponse<{
+    data: UserType;
+  }>
+>) => {
+  const [, fetch] = useAxios<{ data: UserType }>(
+    {
+      method: 'PATCH',
+    },
+    { manual }
+  );
+
+  const changeRole = useCallback(
+    async (id, params) => {
+      return fetch({ url: `/users/${id}/role`, params });
+    },
+    [fetch]
+  );
+
+  return changeRole;
+};

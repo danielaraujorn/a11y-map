@@ -1,4 +1,4 @@
-import { StatusEnum } from '../Models';
+import { RoleEnum, StatusEnum } from '../Models';
 
 export type SignUpParamsType = {
   email: string;
@@ -16,4 +16,9 @@ export type NewPlaceParamsType = {
   status: StatusEnum;
   latitude: number;
   longitude: number;
+};
+
+export type NewValidatorParamsType = {
+  email: string;
+  role: RoleEnum;
 };

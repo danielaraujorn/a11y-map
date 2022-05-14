@@ -1,52 +1,84 @@
+import { useCallback, useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
 
 import { RoleEnum } from '../../../types/Models';
 import { ValidatorsPresentation } from '../presentation';
-import { useGeolocation } from '../../../hooks/useGeolocation';
-import { useUsersRequest } from '../../../api';
-import { useCallback, useEffect, useState } from 'react';
+import { paths } from '../../../Navigation/paths';
 import { useConfirmation } from '../../../hooks/useConfirmation';
+import { useSnackbar } from 'notistack';
+import { useUserRolePatchRequest, useUsersRequest } from '../../../api';
+
+const ROLES_TO_FILTER = [RoleEnum.VALIDATOR, RoleEnum.ADMIN];
 
 export const ValidatorsContainer = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
   const { formatMessage } = useIntl();
 
+  const onAddButtonClick = useCallback(() => {
+    navigate(paths.newValidator);
+  }, [navigate]);
+
   const { showConfirmation } = useConfirmation();
 
-  const [{ data, loading }, fetch] = useUsersRequest();
+  const [{ data, loading }, getUsers] = useUsersRequest();
   const users = data?.data?.users || [];
 
   const [debouncedEmail] = useDebounce(email, 1000);
 
+  const changeRole = useUserRolePatchRequest();
+
   useEffect(() => {
-    fetch({
+    getUsers({
       params: {
-        roles: [RoleEnum.VALIDATOR, RoleEnum.ADMIN],
+        roles: ROLES_TO_FILTER,
         ...(debouncedEmail ? { email: debouncedEmail } : {}),
       },
     });
   }, [debouncedEmail]);
 
-  // @todo: "excluir", i18n, exibir snackbar de erro e sucesso
-  // @todo: fazer tela de adicionar usuario
-  const onDelete = useCallback(async (id: string) => {
+  const deleteValidator = useCallback(async (id: string) => {
     try {
-      await showConfirmation({
-        title: 'Confirma essa ação?',
-        description:
-          'Vocẽ irá remover as permissões de validador deste usuario',
+      await changeRole(id, { role: RoleEnum.NORMAL });
+      enqueueSnackbar(formatMessage({ id: 'user.success.removeValidator' }), {
+        variant: 'success',
       });
-      console.log(id);
+      getUsers({
+        params: {
+          roles: ROLES_TO_FILTER,
+        },
+      });
     } catch {
-      console.log('negou');
+      enqueueSnackbar(formatMessage({ id: 'user.error.removeValidator' }), {
+        variant: 'error',
+      });
     }
   }, []);
 
+  const onDelete = useCallback(
+    async (id: string) => {
+      try {
+        await showConfirmation({
+          title: formatMessage({ id: 'defaultConfirmationQuestion' }),
+          description: formatMessage({
+            id: 'user.confirmationDescripion.removeValidatorRole',
+          }),
+        });
+        deleteValidator(id);
+      } catch (e) {
+        if (e) console.error(e);
+      }
+    },
+    [deleteValidator]
+  );
+
   return (
     <ValidatorsPresentation
+      onAddButtonClick={onAddButtonClick}
       navigate={navigate}
       formatMessage={formatMessage}
       users={users}

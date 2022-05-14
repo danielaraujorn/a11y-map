@@ -53,7 +53,14 @@ export const NewPlaceContainer = ({
     try {
       if (defaultValues?.id) await patchPlace({ params });
       else await createPlace({ params });
-      enqueueSnackbar(formatMessage({ id: 'success.default' }));
+      enqueueSnackbar(
+        formatMessage(
+          { id: 'success.default' },
+          {
+            variant: 'success',
+          }
+        )
+      );
       navigate(paths.home);
     } catch (e) {
       enqueueSnackbar(formatMessage({ id: 'error.default' }), {

@@ -35,7 +35,7 @@ export const HomePresentation = ({
                 <Box component="span">{description}</Box>
               </Typography> */}
               <Button onClick={() => goToPlace(id)} variant="contained">
-                {formatMessage({ id: 'place.edit' })}
+                {formatMessage({ id: 'edit' })}
               </Button>
             </Box>
           </Popup>

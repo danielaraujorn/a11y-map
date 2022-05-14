@@ -38,7 +38,7 @@ export const NewPlacePresentation = ({
   <Container>
     <BackButtonAppBar
       backButtonPath={update ? paths.places : undefined}
-      titleMessage={update ? 'place' : 'newPlace.headerTitle'}
+      titleMessage={update ? 'place' : 'place.new.headerTitle'}
     />
     <MaxWidthContainer>
       <FormProvider {...methods}>
@@ -117,7 +117,7 @@ export const NewPlacePresentation = ({
                 </Button>
                 <Button variant="contained" type="submit">
                   {formatMessage({
-                    id: update ? 'newPlace.save' : 'newPlace.create',
+                    id: update ? 'save' : 'create',
                   })}
                 </Button>
               </ButtonContainer>
