@@ -70,7 +70,7 @@ export const ValidatorsContainer = () => {
         });
         deleteValidator(id);
       } catch (e) {
-        if (e) console.error(e);
+        return;
       }
     },
     [deleteValidator]
