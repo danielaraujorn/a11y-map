@@ -77,14 +77,22 @@ export const useLoginRequest = () => {
 };
 
 export const useForgotPassword = () => {
-  const [, fetch] = useAxios<
-    { data: { places: PlaceModelType[] } },
-    ForgotPasswordParamsType,
-    ErrorType
-  >(
+  const [, fetch] = useAxios<unknown, ForgotPasswordParamsType, ErrorType>(
     {
       url: '/users/reset_password',
       method: 'POST',
+    },
+    { manual }
+  );
+
+  return fetch;
+};
+
+export const useNewPasswordRequest = (token: string) => {
+  const [, fetch] = useAxios<unknown, ForgotPasswordParamsType, ErrorType>(
+    {
+      url: `/users/reset_password/${token}`,
+      method: 'PATCH',
     },
     { manual }
   );

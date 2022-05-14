@@ -26,3 +26,8 @@ export type NewValidatorParamsType = {
 export type ForgotPasswordParamsType = {
   email: string;
 };
+
+export type NewPasswordParamsType = {
+  new_password: string;
+  new_password_confirmation: string;
+};

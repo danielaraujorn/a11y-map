@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { ForgotPassword } from '../screens/ForgotPassword';
 import { Home } from '../screens/Home';
 import { Login } from '../screens/Login';
+import { NewPassword } from '../screens/NewPassword';
 import { NewPlace } from '../screens/NewPlace';
 import { NewValidator } from '../screens/NewValidator';
 import { Places } from '../screens/Places';
@@ -42,6 +43,7 @@ export const Navigation = () => {
       <Route path={paths.login} element={<Login />} />
       <Route path={paths.signUp} element={<SignUp />} />
       <Route path={paths.forgotPassword} element={<ForgotPassword />} />
+      <Route path={paths.newPassword} element={<NewPassword />} />
       <Route path="*" element={<Navigate replace to={paths.login} />} />
     </Routes>
   );
