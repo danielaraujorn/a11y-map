@@ -1,5 +1,5 @@
+import NewPlace from '../../NewPlace';
 import { LinearProgress } from '@mui/material';
-import { NewPlace } from '../../NewPlace';
 import { PlaceModelType } from '../../../types/Models';
 
 type PlacePresentationType = {

@@ -1,1 +1,1 @@
-export { PlacesContainer as Places } from './container';
+export { PlacesContainer as default } from './container';

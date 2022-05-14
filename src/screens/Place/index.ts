@@ -1,1 +1,1 @@
-export { PlaceContainer as Place } from './container';
+export { PlaceContainer as default } from './container';

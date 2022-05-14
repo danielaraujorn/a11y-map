@@ -1,1 +1,1 @@
-export { NewValidatorContainer as NewValidator } from './container';
+export { NewValidatorContainer as default } from './container';

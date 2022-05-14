@@ -1,1 +1,1 @@
-export { SignUpContainer as SignUp } from './container';
+export { SignUpContainer as default } from './container';

@@ -1,1 +1,1 @@
-export { ForgotPasswordContainer as ForgotPassword } from './container';
+export { ForgotPasswordContainer as default } from './container';
