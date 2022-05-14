@@ -17,8 +17,13 @@ export const LoginContainer = () => {
     navigate(paths.signUp);
   }, [navigate]);
 
+  const forgotPassword = useCallback(() => {
+    navigate(paths.forgotPassword);
+  }, [navigate]);
+
   return (
     <LoginPresentation
+      forgotPassword={forgotPassword}
       onSubmit={login}
       formatMessage={formatMessage}
       methods={methods}

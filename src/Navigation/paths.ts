@@ -7,4 +7,6 @@ export const paths = {
   signUp: '/sign-up',
   validators: '/validators',
   newValidator: '/validators/new',
+  forgotPassword: '/forgot-password',
+  newPassword: '/new-password',
 };

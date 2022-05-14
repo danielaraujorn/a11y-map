@@ -14,12 +14,15 @@
   "save": "Salvar",
   "create": "Criar",
   "edit": "Edit",
+  "goBack": "Voltar",
 
   "defaultConfirmationQuestion": "Confirma essa ação?",
 
   "place.new.headerTitle": "Novo ponto",
   "place.my_places": "Meus locais",
 
+  "auth.recoverPassword": "Recuperar senha",
+  "auth.forgotPassword": "Esqueci a senha",
   "auth.login": "Entrar",
   "auth.loginTitle": "Entrar na conta",
   "auth.signUp": "Cadastrar",
@@ -31,6 +34,8 @@
   "auth.error.signUp": "Não foi possivel criar a conta, verifique seus dados e tente novamente",
   "auth.error.signIn": "Não foi possivel entrar na conta, verifique seus dados e tente novamente",
   "auth.error.signOut": "Não foi possivel sair da conta, tente novamente",
+  "auth.success.forgotPassword": "Enviaremos um email com os passos para redefinir sua senha",
+  "auth.error.forgotPassword": "Não foi possivel executar essa ação. Verifique o email e tente novamente",
 
   "status.inProgress": "Em progresso",
   "status.validated": "Validado",

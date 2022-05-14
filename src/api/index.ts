@@ -4,6 +4,7 @@ import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
+  ForgotPasswordParamsType,
   LoginParamsType,
   NewPlaceParamsType,
   SignUpParamsType,
@@ -73,6 +74,22 @@ export const useLoginRequest = () => {
   );
 
   return login;
+};
+
+export const useForgotPassword = () => {
+  const [, fetch] = useAxios<
+    { data: { places: PlaceModelType[] } },
+    ForgotPasswordParamsType,
+    ErrorType
+  >(
+    {
+      url: '/users/reset_password',
+      method: 'POST',
+    },
+    { manual }
+  );
+
+  return fetch;
 };
 
 export const useLogoutRequest = () => {

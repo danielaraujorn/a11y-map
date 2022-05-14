@@ -1,6 +1,7 @@
 import { LinearProgress } from '@mui/material';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
+import { ForgotPassword } from '../screens/ForgotPassword';
 import { Home } from '../screens/Home';
 import { Login } from '../screens/Login';
 import { NewPlace } from '../screens/NewPlace';
@@ -40,6 +41,7 @@ export const Navigation = () => {
     <Routes>
       <Route path={paths.login} element={<Login />} />
       <Route path={paths.signUp} element={<SignUp />} />
+      <Route path={paths.forgotPassword} element={<ForgotPassword />} />
       <Route path="*" element={<Navigate replace to={paths.login} />} />
     </Routes>
   );

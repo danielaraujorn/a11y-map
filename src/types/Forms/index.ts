@@ -22,3 +22,7 @@ export type NewValidatorParamsType = {
   email: string;
   role: RoleEnum;
 };
+
+export type ForgotPasswordParamsType = {
+  email: string;
+};
