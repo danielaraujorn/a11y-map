@@ -11,17 +11,18 @@ import {
 import { Delete } from '@mui/icons-material';
 import { MessageDescriptor } from 'react-intl';
 
-import { BackButtonAppBar } from '../../../components/BackButtonAppBar';
 import { Container } from '../../../components/Container';
 import { FloatingView } from '../../../components/FloatingView';
+import { Header } from '../../../components/Header';
 import { MaxWidthContainer } from '../../../components/MaxWidthContainer';
 import { UserType } from '../../../types/Models';
+import { paths } from '../../../Navigation/paths';
 
 type ValidatorsPresentationPropType = {
   onAddButtonClick: () => void;
   email?: string;
   setEmail: (value: string) => void;
-  loading: boolean;
+  loading?: boolean;
   navigate: (path: string) => void;
   users: UserType[];
   formatMessage: (descriptor: MessageDescriptor) => string;
@@ -38,7 +39,7 @@ export const ValidatorsPresentation = ({
   onDelete,
 }: ValidatorsPresentationPropType) => (
   <Container>
-    <BackButtonAppBar titleMessage="user.validators" />
+    <Header titleMessage="user.validators" backButtonPath={paths.home} />
     {loading && <LinearProgress color="secondary" />}
     <MaxWidthContainer>
       <Box my={2}>

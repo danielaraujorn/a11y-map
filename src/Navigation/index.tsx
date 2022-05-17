@@ -1,6 +1,6 @@
 import { LinearProgress } from '@mui/material';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useMemo } from 'react';
 
 import { RoleEnum } from '../types/Models';
 import { paths } from './paths';
@@ -22,6 +22,16 @@ export const Navigation = () => {
   useOwnUser();
   const { user, done } = useAuth();
 
+  const publicRoutes = useMemo(
+    () => (
+      <>
+        <Route path={paths.home} element={<Home />} />
+        <Route path="*" element={<Navigate replace to={paths.home} />} />
+      </>
+    ),
+    []
+  );
+
   if (!done) return <LinearProgress />;
   const isAdmin = user?.role === RoleEnum.ADMIN;
 
@@ -30,7 +40,6 @@ export const Navigation = () => {
       <Suspense fallback={<LinearProgress />}>
         <Routes>
           <Route path={paths.newPlace} element={<NewPlace />} />
-          <Route path={paths.home} element={<Home />} />
           <Route path={paths.places} element={<Places />} />
           <Route path={paths.place(':id')} element={<Place />} />
           {isAdmin && (
@@ -39,7 +48,7 @@ export const Navigation = () => {
           {isAdmin && (
             <Route path={paths.newValidator} element={<NewValidator />} />
           )}
-          <Route path="*" element={<Navigate replace to={paths.home} />} />
+          {publicRoutes}
         </Routes>
       </Suspense>
     );
@@ -51,7 +60,7 @@ export const Navigation = () => {
         <Route path={paths.signUp} element={<SignUp />} />
         <Route path={paths.forgotPassword} element={<ForgotPassword />} />
         <Route path={paths.newPassword} element={<NewPassword />} />
-        <Route path="*" element={<Navigate replace to={paths.login} />} />
+        {publicRoutes}
       </Routes>
     </Suspense>
   );

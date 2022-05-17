@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
 import { useLogoutRequest } from '../../../api';
@@ -7,7 +7,15 @@ import { RoleEnum } from '../../../types/Models';
 
 import { HeaderPresentation } from '../presentation';
 
-export const HeaderContainer = () => {
+type HeaderContainerProps = {
+  titleMessage: string;
+  backButtonPath?: string;
+};
+
+export const HeaderContainer = ({
+  titleMessage,
+  backButtonPath,
+}: HeaderContainerProps) => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<
     HTMLButtonElement | undefined
   >(undefined);
@@ -24,8 +32,15 @@ export const HeaderContainer = () => {
   const { user } = useAuth();
   const role = user?.role;
 
+  const onBackButtonClick = useCallback(() => {
+    backButtonPath && navigate(backButtonPath);
+  }, [navigate, backButtonPath]);
+
   return (
     <HeaderPresentation
+      onBackButtonClick={backButtonPath ? onBackButtonClick : undefined}
+      titleMessage={titleMessage}
+      isLogged={!!user}
       isAdmin={role === RoleEnum.ADMIN}
       navigate={navigate}
       formatMessage={formatMessage}

@@ -1,18 +1,28 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
+import { useSnackbar } from 'notistack';
 
 import { HomePresentation } from '../presentation';
 import { paths } from '../../../Navigation/paths';
 import { usePlacesRequest } from '../../../api';
 import { useIntl } from 'react-intl';
+import { useAuth } from '../../../hooks/useAuth';
 
 export const HomeContainer = () => {
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const onAddButtonClick = useCallback(() => {
-    navigate(paths.newPlace);
-  }, [navigate]);
+    if (user) {
+      navigate(paths.newPlace);
+    } else {
+      closeSnackbar();
+      enqueueSnackbar(formatMessage({ id: 'auth.error.loginNeeded' }));
+      navigate(paths.login);
+    }
+  }, [navigate, user]);
 
   const [{ data, loading }] = usePlacesRequest();
 

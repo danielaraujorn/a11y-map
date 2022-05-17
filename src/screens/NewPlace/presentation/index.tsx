@@ -5,9 +5,9 @@ import { LoadingButton } from '@mui/lab';
 import { MessageDescriptor } from 'react-intl';
 
 import { Container } from '../../../components/Container';
-import { BackButtonAppBar } from '../../../components/BackButtonAppBar';
 import { ButtonContainer } from '../../../components/ButtonContainer';
 import { Form } from '../../../components/Form';
+import { Header } from '../../../components/Header';
 import { Input } from '../../../components/Input';
 import { Map } from '../../../components/Map';
 import { MarginWhenMobile } from '../../../components/MarginWhenMobile';
@@ -39,8 +39,8 @@ export const NewPlacePresentation = ({
   loading,
 }: NewPlacePresentationPropType) => (
   <Container>
-    <BackButtonAppBar
-      backButtonPath={update ? paths.places : undefined}
+    <Header
+      backButtonPath={update ? paths.places : paths.home}
       titleMessage={update ? 'place' : 'place.new.headerTitle'}
     />
     <MaxWidthContainer>

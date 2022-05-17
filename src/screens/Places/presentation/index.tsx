@@ -8,8 +8,8 @@ import {
 import { LatLngLiteral } from 'leaflet';
 import { MessageDescriptor } from 'react-intl';
 
-import { BackButtonAppBar } from '../../../components/BackButtonAppBar';
 import { Container } from '../../../components/Container';
+import { Header } from '../../../components/Header';
 import { MaxWidthContainer } from '../../../components/MaxWidthContainer';
 import { PlaceModelType } from '../../../types/Models';
 import { paths } from '../../../Navigation/paths';
@@ -30,7 +30,7 @@ export const PlacesPresentation = ({
   places,
 }: PlacesPresentationPropType) => (
   <Container>
-    <BackButtonAppBar titleMessage="places" />
+    <Header titleMessage="places" backButtonPath={paths.home} />
     {loading && <LinearProgress color="secondary" />}
     {!loading && (
       <MaxWidthContainer>

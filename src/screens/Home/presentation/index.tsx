@@ -53,7 +53,7 @@ export const HomePresentation = ({
 
   return (
     <Container>
-      <Header />
+      <Header titleMessage="a11y" />
       <Map>
         <>{markers}</>
       </Map>

@@ -1,6 +1,7 @@
 import { MouseEvent } from 'react';
 import {
   AccountCircle,
+  ArrowLeft,
   HowToReg,
   Logout,
   // Menu as MenuIcon,
@@ -10,6 +11,7 @@ import {
 import {
   AppBar,
   Box,
+  Button,
   IconButton,
   // InputBase,
   Menu,
@@ -69,10 +71,14 @@ type HeaderPresentationPropType = {
   mobileMoreAnchorEl: HTMLButtonElement | undefined;
   handleMenu: (event: MouseEvent<HTMLButtonElement>) => void;
   logout: () => void;
+  isLogged?: boolean;
   isAdmin?: boolean;
+  titleMessage: string;
+  onBackButtonClick?: () => void;
 };
 
 export const HeaderPresentation = ({
+  isLogged,
   isAdmin,
   formatMessage,
   navigate,
@@ -80,8 +86,10 @@ export const HeaderPresentation = ({
   mobileMoreAnchorEl,
   handleMenu,
   logout,
+  titleMessage,
+  onBackButtonClick,
 }: HeaderPresentationPropType) => (
-  <Box sx={{ flexGrow: 1 }}>
+  <Box sx={{ width: '100%' }}>
     <AppBar position="static">
       <Toolbar>
         {/* <IconButton
@@ -93,13 +101,13 @@ export const HeaderPresentation = ({
         >
           <MenuIcon />
         </IconButton> */}
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{ display: { xs: 'none', sm: 'block' } }}
-        >
-          A11Y-MAP
+        {onBackButtonClick && (
+          <IconButton onClick={onBackButtonClick}>
+            <ArrowLeft />
+          </IconButton>
+        )}
+        <Typography component="h1" variant="h6">
+          {formatMessage({ id: titleMessage })}
         </Typography>
         {/* <Search>
           <SearchIconWrapper>
@@ -111,16 +119,26 @@ export const HeaderPresentation = ({
           />
         </Search> */}
         <Box sx={{ flexGrow: 1 }} />
-        <IconButton
-          size="large"
-          edge="end"
-          color="inherit"
-          aria-label="open menu"
-          sx={{ ml: 2 }}
-          onClick={handleMenu}
-        >
-          <AccountCircle />
-        </IconButton>
+        {isLogged ? (
+          <IconButton
+            size="large"
+            edge="end"
+            color="inherit"
+            aria-label="open menu"
+            sx={{ ml: 2 }}
+            onClick={handleMenu}
+          >
+            <AccountCircle />
+          </IconButton>
+        ) : (
+          <Button
+            variant="outlined"
+            color="inherit"
+            onClick={() => navigate(paths.login)}
+          >
+            {formatMessage({ id: 'auth.loginTitle' })}
+          </Button>
+        )}
       </Toolbar>
     </AppBar>
     <Menu

@@ -4,10 +4,10 @@ import { LoadingButton } from '@mui/lab';
 import { MessageDescriptor } from 'react-intl';
 
 import { Container } from '../../../components/Container';
-import { BackButtonAppBar } from '../../../components/BackButtonAppBar';
 import { ButtonContainer } from '../../../components/ButtonContainer';
 import { EmailInput } from '../../../components/EmailInput';
 import { Form } from '../../../components/Form';
+import { Header } from '../../../components/Header';
 import { MarginWhenMobile } from '../../../components/MarginWhenMobile';
 import { MaxWidthContainer } from '../../../components/MaxWidthContainer';
 import { NewValidatorParamsType } from '../../../types/Forms';
@@ -31,7 +31,7 @@ export const NewValidatorPresentation = ({
   loading,
 }: NewValidatorPresentationPropType) => (
   <Container>
-    <BackButtonAppBar
+    <Header
       backButtonPath={paths.validators}
       titleMessage={'user.newValidator.headerTitle'}
     />

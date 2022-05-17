@@ -25,12 +25,12 @@ export const ValidatorsContainer = () => {
 
   const { showConfirmation } = useConfirmation();
 
-  const [{ data, loading }, getUsers] = useUsersRequest();
+  const [{ data, loading: loadingUsers }, getUsers] = useUsersRequest();
   const users = data?.data?.users || [];
 
   const [debouncedEmail] = useDebounce(email, 1000);
 
-  const changeRole = useUserRolePatchRequest();
+  const [{ loading: loadingDelete }, changeRole] = useUserRolePatchRequest();
 
   useEffect(() => {
     getUsers({
@@ -82,7 +82,7 @@ export const ValidatorsContainer = () => {
       navigate={navigate}
       formatMessage={formatMessage}
       users={users}
-      loading={loading}
+      loading={loadingUsers || loadingDelete}
       email={email}
       setEmail={setEmail}
       onDelete={onDelete}
