@@ -30,47 +30,65 @@ export const LoginPresentation = ({
   onSubmit,
   onSecondaryClick,
   forgotPassword,
-}: LoginPresentationPropType) => (
-  <Container>
-    <VerticalCenter>
-      <MaxWidthContainer>
-        <MarginWhenMobile>
-          <Box mb={4}>
-            <Title>{formatMessage({ id: 'auth.loginTitle' })}</Title>
-          </Box>
-          <FormProvider {...methods}>
-            <Form onSubmit={methods.handleSubmit(onSubmit)}>
-              <Box marginY={2}>
-                <EmailInput />
-              </Box>
-              <Box marginY={2}>
-                <PasswordInput />
-                <Box marginTop={1}>
-                  <Button
-                    disabled={loading}
-                    onClick={forgotPassword}
-                    size="small"
-                  >
-                    {formatMessage({ id: 'auth.forgotPassword' })}
-                  </Button>
+}: LoginPresentationPropType) => {
+  const forgotPasswordButtonTitle = formatMessage({
+    id: 'auth.forgotPassword',
+  });
+  const signUpButtonTitle = formatMessage({
+    id: 'auth.dontHaveAccount',
+  });
+  const loginButtonTitle = formatMessage({
+    id: 'auth.login',
+  });
+
+  return (
+    <Container>
+      <VerticalCenter>
+        <MaxWidthContainer>
+          <MarginWhenMobile>
+            <Box mb={4}>
+              <Title>{formatMessage({ id: 'auth.loginTitle' })}</Title>
+            </Box>
+            <FormProvider {...methods}>
+              <Form onSubmit={methods.handleSubmit(onSubmit)}>
+                <Box marginY={2}>
+                  <EmailInput />
                 </Box>
-              </Box>
-              <ButtonContainer>
-                <Button disabled={loading} onClick={onSecondaryClick}>
-                  {formatMessage({ id: 'auth.dontHaveAccount' })}
-                </Button>
-                <LoadingButton
-                  loading={loading}
-                  variant="contained"
-                  type="submit"
-                >
-                  {formatMessage({ id: 'auth.login' })}
-                </LoadingButton>
-              </ButtonContainer>
-            </Form>
-          </FormProvider>
-        </MarginWhenMobile>
-      </MaxWidthContainer>
-    </VerticalCenter>
-  </Container>
-);
+                <Box marginY={2}>
+                  <PasswordInput />
+                  <Box marginTop={1}>
+                    <Button
+                      aria-label={forgotPasswordButtonTitle}
+                      disabled={loading}
+                      onClick={forgotPassword}
+                      size="small"
+                    >
+                      {forgotPasswordButtonTitle}
+                    </Button>
+                  </Box>
+                </Box>
+                <ButtonContainer>
+                  <Button
+                    aria-label={signUpButtonTitle}
+                    disabled={loading}
+                    onClick={onSecondaryClick}
+                  >
+                    {signUpButtonTitle}
+                  </Button>
+                  <LoadingButton
+                    aria-label={loginButtonTitle}
+                    loading={loading}
+                    variant="contained"
+                    type="submit"
+                  >
+                    {loginButtonTitle}
+                  </LoadingButton>
+                </ButtonContainer>
+              </Form>
+            </FormProvider>
+          </MarginWhenMobile>
+        </MaxWidthContainer>
+      </VerticalCenter>
+    </Container>
+  );
+};

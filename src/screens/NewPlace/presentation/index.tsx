@@ -37,42 +37,50 @@ export const NewPlacePresentation = ({
   center,
   update,
   loading,
-}: NewPlacePresentationPropType) => (
-  <Container>
-    <Header
-      backButtonPath={update ? paths.places : paths.home}
-      titleMessage={update ? 'place' : 'place.new.headerTitle'}
-    />
-    <MaxWidthContainer>
-      <FormProvider {...methods}>
-        <Form onSubmit={methods.handleSubmit(onSubmit)}>
-          <Box
-            height={300}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <div
-              style={{
-                width: 10,
-                height: 10,
-                backgroundColor: 'blue',
-                borderRadius: 5,
-                zIndex: 2000,
-                position: 'absolute',
-              }}
-            />
-            <Map
-              center={center}
-              onMove={setPosition}
-              whenCreated={setPosition}
-              zoomControl={false}
-            />
-          </Box>
-          <Box mt={3}>
-            <MarginWhenMobile>
-              <Box marginY={2}>
-                {/* <SelectInput
+}: NewPlacePresentationPropType) => {
+  const cancelButtonTitle = formatMessage({
+    id: 'cancel',
+  });
+  const submitButtonTitle = formatMessage({
+    id: update ? 'save' : 'create',
+  });
+
+  return (
+    <Container>
+      <Header
+        backButtonPath={update ? paths.places : paths.home}
+        titleMessage={update ? 'place' : 'place.new.headerTitle'}
+      />
+      <MaxWidthContainer>
+        <FormProvider {...methods}>
+          <Form onSubmit={methods.handleSubmit(onSubmit)}>
+            <Box
+              height={300}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <div
+                style={{
+                  width: 10,
+                  height: 10,
+                  backgroundColor: 'blue',
+                  borderRadius: 5,
+                  zIndex: 2000,
+                  position: 'absolute',
+                }}
+              />
+              <Map
+                center={center}
+                onMove={setPosition}
+                whenCreated={setPosition}
+                zoomControl={false}
+              />
+            </Box>
+            <Box mt={3}>
+              <MarginWhenMobile>
+                <Box marginY={2}>
+                  {/* <SelectInput
                   name="types"
                   multiple
                   labelMessage="type"
@@ -82,56 +90,60 @@ export const NewPlacePresentation = ({
                     { value: 2, label: 'Mobilidade' },
                   ]}
                 /> */}
-              </Box>
-              <Box marginY={2}>
-                <Input
-                  name="description"
-                  labelMessage="description"
-                  rules={{ required: true }}
-                  multiline
-                  minRows={4}
-                  maxRows={8}
-                />
-              </Box>
-              <Box marginY={2}>
-                <SelectInput
-                  name="status"
-                  labelMessage="status"
-                  rules={{ required: true }}
-                  options={[
-                    {
-                      value: StatusEnum.IN_PROGRESS,
-                      label: formatMessage({ id: 'status.inProgress' }),
-                    },
-                    {
-                      value: StatusEnum.VALIDATED,
-                      label: formatMessage({ id: 'status.validated' }),
-                    },
-                    {
-                      value: StatusEnum.NEED_CHANGES,
-                      label: formatMessage({ id: 'status.needChanges' }),
-                    },
-                  ]}
-                />
-              </Box>
-              <ButtonContainer>
-                <Button disabled={loading} onClick={onCancelButtonClick}>
-                  {formatMessage({ id: 'cancel' })}
-                </Button>
-                <LoadingButton
-                  loading={loading}
-                  variant="contained"
-                  type="submit"
-                >
-                  {formatMessage({
-                    id: update ? 'save' : 'create',
-                  })}
-                </LoadingButton>
-              </ButtonContainer>
-            </MarginWhenMobile>
-          </Box>
-        </Form>
-      </FormProvider>
-    </MaxWidthContainer>
-  </Container>
-);
+                </Box>
+                <Box marginY={2}>
+                  <Input
+                    name="description"
+                    labelMessage="description"
+                    rules={{ required: true }}
+                    multiline
+                    minRows={4}
+                    maxRows={8}
+                  />
+                </Box>
+                <Box marginY={2}>
+                  <SelectInput
+                    name="status"
+                    labelMessage="status"
+                    rules={{ required: true }}
+                    options={[
+                      {
+                        value: StatusEnum.IN_PROGRESS,
+                        label: formatMessage({ id: 'status.inProgress' }),
+                      },
+                      {
+                        value: StatusEnum.VALIDATED,
+                        label: formatMessage({ id: 'status.validated' }),
+                      },
+                      {
+                        value: StatusEnum.NEED_CHANGES,
+                        label: formatMessage({ id: 'status.needChanges' }),
+                      },
+                    ]}
+                  />
+                </Box>
+                <ButtonContainer>
+                  <Button
+                    aria-label={cancelButtonTitle}
+                    disabled={loading}
+                    onClick={onCancelButtonClick}
+                  >
+                    {cancelButtonTitle}
+                  </Button>
+                  <LoadingButton
+                    aria-label={submitButtonTitle}
+                    loading={loading}
+                    variant="contained"
+                    type="submit"
+                  >
+                    {submitButtonTitle}
+                  </LoadingButton>
+                </ButtonContainer>
+              </MarginWhenMobile>
+            </Box>
+          </Form>
+        </FormProvider>
+      </MaxWidthContainer>
+    </Container>
+  );
+};

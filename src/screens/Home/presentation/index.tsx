@@ -25,6 +25,8 @@ export const HomePresentation = ({
   formatMessage,
   goToPlace,
 }: HomePresentationPropType) => {
+  const editButtonTitle = formatMessage({ id: 'edit' });
+
   const markers = useMemo(
     () =>
       places.map(({ id, latitude, longitude }) => (
@@ -34,8 +36,12 @@ export const HomePresentation = ({
               {/* <Typography>
                 <Box component="span">{description}</Box>
               </Typography> */}
-              <Button onClick={() => goToPlace(id)} variant="contained">
-                {formatMessage({ id: 'edit' })}
+              <Button
+                aria-label={editButtonTitle}
+                onClick={() => goToPlace(id)}
+                variant="contained"
+              >
+                {editButtonTitle}
               </Button>
             </Box>
           </Popup>
@@ -58,7 +64,11 @@ export const HomePresentation = ({
         <>{markers}</>
       </Map>
       <FloatingView>
-        <Fab color="primary" aria-label="add" onClick={onAddButtonClick}>
+        <Fab
+          aria-label={formatMessage({ id: 'place.add' })}
+          color="primary"
+          onClick={onAddButtonClick}
+        >
           <AddIcon />
         </Fab>
       </FloatingView>

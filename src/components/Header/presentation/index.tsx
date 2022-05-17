@@ -88,106 +88,115 @@ export const HeaderPresentation = ({
   logout,
   titleMessage,
   onBackButtonClick,
-}: HeaderPresentationPropType) => (
-  <Box sx={{ width: '100%' }}>
-    <AppBar position="static">
-      <Toolbar>
-        {/* <IconButton
+}: HeaderPresentationPropType) => {
+  const loginButtonTitle = formatMessage({ id: 'auth.loginTitle' });
+  const validatorsButtonTitle = formatMessage({ id: 'user.validators' });
+  const myPlacesButtonTitle = formatMessage({ id: 'place.my_places' });
+  const signOutButtonTitle = formatMessage({ id: 'auth.signOut' });
+
+  return (
+    <Box sx={{ width: '100%' }}>
+      <AppBar position="static">
+        <Toolbar>
+          {/* <IconButton
           size="large"
           edge="start"
           color="inherit"
-          aria-label="open drawer"
           sx={{ mr: 2 }}
         >
           <MenuIcon />
         </IconButton> */}
-        {onBackButtonClick && (
-          <IconButton onClick={onBackButtonClick}>
-            <ArrowLeft />
-          </IconButton>
-        )}
-        <Typography component="h1" variant="h6">
-          {formatMessage({ id: titleMessage })}
-        </Typography>
-        {/* <Search>
+          {onBackButtonClick && (
+            <IconButton
+              aria-label={formatMessage({ id: 'goBack' })}
+              onClick={onBackButtonClick}
+            >
+              <ArrowLeft />
+            </IconButton>
+          )}
+          <Typography component="h1" variant="h6">
+            {formatMessage({ id: titleMessage })}
+          </Typography>
+          {/* <Search>
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
           <StyledInputBase
             placeholder="Search…"
-            inputProps={{ 'aria-label': 'search' }}
           />
         </Search> */}
-        <Box sx={{ flexGrow: 1 }} />
-        {isLogged ? (
-          <IconButton
-            size="large"
-            edge="end"
-            color="inherit"
-            aria-label="open menu"
-            sx={{ ml: 2 }}
-            onClick={handleMenu}
-          >
-            <AccountCircle />
-          </IconButton>
-        ) : (
-          <Button
-            variant="outlined"
-            color="inherit"
-            onClick={() => navigate(paths.login)}
-          >
-            {formatMessage({ id: 'auth.loginTitle' })}
-          </Button>
+          <Box sx={{ flexGrow: 1 }} />
+          {isLogged ? (
+            <IconButton
+              size="large"
+              edge="end"
+              color="inherit"
+              aria-label={formatMessage({ id: 'menu.open' })}
+              sx={{ ml: 2 }}
+              onClick={handleMenu}
+            >
+              <AccountCircle />
+            </IconButton>
+          ) : (
+            <Button
+              aria-label={loginButtonTitle}
+              variant="outlined"
+              color="inherit"
+              onClick={() => navigate(paths.login)}
+            >
+              {loginButtonTitle}
+            </Button>
+          )}
+        </Toolbar>
+      </AppBar>
+      <Menu
+        anchorEl={mobileMoreAnchorEl}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        id={'account-primary-menu'}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={Boolean(mobileMoreAnchorEl)}
+        onClose={handleMobileMenuClose}
+      >
+        {isAdmin && (
+          <MenuItem sx={{ pr: 3 }} onClick={() => navigate(paths.validators)}>
+            <IconButton
+              disableRipple
+              aria-label={validatorsButtonTitle}
+              color="inherit"
+            >
+              <HowToReg />
+            </IconButton>
+            <p>{validatorsButtonTitle}</p>
+          </MenuItem>
         )}
-      </Toolbar>
-    </AppBar>
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={'account-primary-menu'}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={Boolean(mobileMoreAnchorEl)}
-      onClose={handleMobileMenuClose}
-    >
-      {isAdmin && (
-        <MenuItem sx={{ pr: 3 }} onClick={() => navigate(paths.validators)}>
+        <MenuItem sx={{ pr: 3 }} onClick={() => navigate(paths.places)}>
           <IconButton
             disableRipple
-            aria-label={formatMessage({ id: 'user.validators' })}
+            aria-label={myPlacesButtonTitle}
             color="inherit"
           >
-            <HowToReg />
+            <ViewList />
           </IconButton>
-          <p>{formatMessage({ id: 'user.validators' })}</p>
+          <p>{myPlacesButtonTitle}</p>
         </MenuItem>
-      )}
-      <MenuItem sx={{ pr: 3 }} onClick={() => navigate(paths.places)}>
-        <IconButton
-          disableRipple
-          aria-label={formatMessage({ id: 'place.my_places' })}
-          color="inherit"
-        >
-          <ViewList />
-        </IconButton>
-        <p>{formatMessage({ id: 'place.my_places' })}</p>
-      </MenuItem>
-      <MenuItem sx={{ pr: 3 }} onClick={logout}>
-        <IconButton
-          disableRipple
-          aria-label={formatMessage({ id: 'auth.signOut' })}
-          color="inherit"
-        >
-          <Logout />
-        </IconButton>
-        <p>{formatMessage({ id: 'auth.signOut' })}</p>
-      </MenuItem>
-    </Menu>
-  </Box>
-);
+        <MenuItem sx={{ pr: 3 }} onClick={logout}>
+          <IconButton
+            disableRipple
+            aria-label={signOutButtonTitle}
+            color="inherit"
+          >
+            <Logout />
+          </IconButton>
+          <p>{signOutButtonTitle}</p>
+        </MenuItem>
+      </Menu>
+    </Box>
+  );
+};

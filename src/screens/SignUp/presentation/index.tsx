@@ -32,17 +32,25 @@ export const SignUpPresentation = ({
   methods,
   onSubmit,
   onSecondaryClick,
-}: SignUpPresentationPropType) => (
-  <Container>
-    <VerticalCenter>
-      <MaxWidthContainer>
-        <MarginWhenMobile>
-          <Box mb={4}>
-            <Title>{formatMessage({ id: 'auth.signUpTitle' })}</Title>
-          </Box>
-          <FormProvider {...methods}>
-            <Form onSubmit={methods.handleSubmit(onSubmit)}>
-              {/* <Box marginY={2}>
+}: SignUpPresentationPropType) => {
+  const loginButtonTitle = formatMessage({
+    id: 'auth.alreadyHaveAccount',
+  });
+  const signUpButtonTitle = formatMessage({
+    id: 'auth.signUp',
+  });
+
+  return (
+    <Container>
+      <VerticalCenter>
+        <MaxWidthContainer>
+          <MarginWhenMobile>
+            <Box mb={4}>
+              <Title>{formatMessage({ id: 'auth.signUpTitle' })}</Title>
+            </Box>
+            <FormProvider {...methods}>
+              <Form onSubmit={methods.handleSubmit(onSubmit)}>
+                {/* <Box marginY={2}>
                   <Input
                     rules={{ required: true }}
                     name="firstName"
@@ -56,31 +64,37 @@ export const SignUpPresentation = ({
                     labelMessage="lastName"
                   />
                 </Box> */}
-              <Box marginY={2}>
-                <EmailInput />
-              </Box>
-              <Box marginY={2}>
-                <PasswordInput />
-              </Box>
-              <Box marginY={2}>
-                <PasswordConfirmationInput />
-              </Box>
-              <ButtonContainer>
-                <Button disabled={loading} onClick={onSecondaryClick}>
-                  {formatMessage({ id: 'auth.alreadyHaveAccount' })}
-                </Button>
-                <LoadingButton
-                  loading={loading}
-                  variant="contained"
-                  type="submit"
-                >
-                  {formatMessage({ id: 'auth.signUp' })}
-                </LoadingButton>
-              </ButtonContainer>
-            </Form>
-          </FormProvider>
-        </MarginWhenMobile>
-      </MaxWidthContainer>
-    </VerticalCenter>
-  </Container>
-);
+                <Box marginY={2}>
+                  <EmailInput />
+                </Box>
+                <Box marginY={2}>
+                  <PasswordInput />
+                </Box>
+                <Box marginY={2}>
+                  <PasswordConfirmationInput />
+                </Box>
+                <ButtonContainer>
+                  <Button
+                    aria-label={loginButtonTitle}
+                    disabled={loading}
+                    onClick={onSecondaryClick}
+                  >
+                    {loginButtonTitle}
+                  </Button>
+                  <LoadingButton
+                    aria-label={signUpButtonTitle}
+                    loading={loading}
+                    variant="contained"
+                    type="submit"
+                  >
+                    {signUpButtonTitle}
+                  </LoadingButton>
+                </ButtonContainer>
+              </Form>
+            </FormProvider>
+          </MarginWhenMobile>
+        </MaxWidthContainer>
+      </VerticalCenter>
+    </Container>
+  );
+};

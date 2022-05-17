@@ -30,38 +30,52 @@ export const NewPasswordPresentation = ({
   methods,
   onSubmit,
   onSecondaryClick,
-}: NewPasswordPresentationPropType) => (
-  <Container>
-    <VerticalCenter>
-      <MaxWidthContainer>
-        <MarginWhenMobile>
-          <Box mb={4}>
-            <Title>{formatMessage({ id: 'auth.newPassword' })}</Title>
-          </Box>
-          <FormProvider {...methods}>
-            <Form onSubmit={methods.handleSubmit(onSubmit)}>
-              <Box marginY={2}>
-                <PasswordInput />
-              </Box>
-              <Box marginY={2}>
-                <PasswordConfirmationInput />
-              </Box>
-              <ButtonContainer>
-                <Button disabled={loading} onClick={onSecondaryClick}>
-                  {formatMessage({ id: 'auth.goToLogin' })}
-                </Button>
-                <LoadingButton
-                  loading={loading}
-                  variant="contained"
-                  type="submit"
-                >
-                  {formatMessage({ id: 'save' })}
-                </LoadingButton>
-              </ButtonContainer>
-            </Form>
-          </FormProvider>
-        </MarginWhenMobile>
-      </MaxWidthContainer>
-    </VerticalCenter>
-  </Container>
-);
+}: NewPasswordPresentationPropType) => {
+  const loginButtonTitle = formatMessage({
+    id: 'auth.goToLogin',
+  });
+  const saveButtonTitle = formatMessage({
+    id: 'save',
+  });
+
+  return (
+    <Container>
+      <VerticalCenter>
+        <MaxWidthContainer>
+          <MarginWhenMobile>
+            <Box mb={4}>
+              <Title>{formatMessage({ id: 'auth.newPassword' })}</Title>
+            </Box>
+            <FormProvider {...methods}>
+              <Form onSubmit={methods.handleSubmit(onSubmit)}>
+                <Box marginY={2}>
+                  <PasswordInput />
+                </Box>
+                <Box marginY={2}>
+                  <PasswordConfirmationInput />
+                </Box>
+                <ButtonContainer>
+                  <Button
+                    aria-label={loginButtonTitle}
+                    disabled={loading}
+                    onClick={onSecondaryClick}
+                  >
+                    {loginButtonTitle}
+                  </Button>
+                  <LoadingButton
+                    aria-label={saveButtonTitle}
+                    loading={loading}
+                    variant="contained"
+                    type="submit"
+                  >
+                    {saveButtonTitle}
+                  </LoadingButton>
+                </ButtonContainer>
+              </Form>
+            </FormProvider>
+          </MarginWhenMobile>
+        </MaxWidthContainer>
+      </VerticalCenter>
+    </Container>
+  );
+};

@@ -29,55 +29,67 @@ export const NewValidatorPresentation = ({
   methods,
   onSubmit,
   loading,
-}: NewValidatorPresentationPropType) => (
-  <Container>
-    <Header
-      backButtonPath={paths.validators}
-      titleMessage={'user.newValidator.headerTitle'}
-    />
-    <MaxWidthContainer>
-      <FormProvider {...methods}>
-        <Form onSubmit={methods.handleSubmit(onSubmit)}>
-          <Box mt={3}>
-            <MarginWhenMobile>
-              <Box marginY={2}>
-                <EmailInput />
-              </Box>
-              <Box marginY={2}>
-                <SelectInput
-                  name="role"
-                  labelMessage="user.roleType"
-                  rules={{ required: true }}
-                  options={[
-                    {
-                      value: RoleEnum.VALIDATOR,
-                      label: formatMessage({ id: 'user.role.validator' }),
-                    },
-                    {
-                      value: RoleEnum.ADMIN,
-                      label: formatMessage({ id: 'user.role.admin' }),
-                    },
-                  ]}
-                />
-              </Box>
-              <ButtonContainer>
-                <Button disabled={loading} onClick={onCancelButtonClick}>
-                  {formatMessage({ id: 'cancel' })}
-                </Button>
-                <LoadingButton
-                  loading={loading}
-                  variant="contained"
-                  type="submit"
-                >
-                  {formatMessage({
-                    id: 'save',
-                  })}
-                </LoadingButton>
-              </ButtonContainer>
-            </MarginWhenMobile>
-          </Box>
-        </Form>
-      </FormProvider>
-    </MaxWidthContainer>
-  </Container>
-);
+}: NewValidatorPresentationPropType) => {
+  const cancelButtonTitle = formatMessage({
+    id: 'cancel',
+  });
+  const saveButtonTitle = formatMessage({
+    id: 'save',
+  });
+
+  return (
+    <Container>
+      <Header
+        backButtonPath={paths.validators}
+        titleMessage={'user.newValidator.headerTitle'}
+      />
+      <MaxWidthContainer>
+        <FormProvider {...methods}>
+          <Form onSubmit={methods.handleSubmit(onSubmit)}>
+            <Box mt={3}>
+              <MarginWhenMobile>
+                <Box marginY={2}>
+                  <EmailInput />
+                </Box>
+                <Box marginY={2}>
+                  <SelectInput
+                    name="role"
+                    labelMessage="user.roleType"
+                    rules={{ required: true }}
+                    options={[
+                      {
+                        value: RoleEnum.VALIDATOR,
+                        label: formatMessage({ id: 'user.role.validator' }),
+                      },
+                      {
+                        value: RoleEnum.ADMIN,
+                        label: formatMessage({ id: 'user.role.admin' }),
+                      },
+                    ]}
+                  />
+                </Box>
+                <ButtonContainer>
+                  <Button
+                    aria-label={cancelButtonTitle}
+                    disabled={loading}
+                    onClick={onCancelButtonClick}
+                  >
+                    {cancelButtonTitle}
+                  </Button>
+                  <LoadingButton
+                    aria-label={saveButtonTitle}
+                    loading={loading}
+                    variant="contained"
+                    type="submit"
+                  >
+                    {saveButtonTitle}
+                  </LoadingButton>
+                </ButtonContainer>
+              </MarginWhenMobile>
+            </Box>
+          </Form>
+        </FormProvider>
+      </MaxWidthContainer>
+    </Container>
+  );
+};

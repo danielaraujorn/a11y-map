@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import { createContext, ReactElement, useCallback, useState } from 'react';
+import { useIntl } from 'react-intl';
 
 type OptionsType = { title: string; description?: string };
 
@@ -60,6 +61,11 @@ export const ConfirmationProvider = ({
 
   const { title, description } = options || {};
 
+  const { formatMessage } = useIntl();
+
+  const confirmButtonTitle = formatMessage({ id: 'confirm' });
+  const cancelButtonTitle = formatMessage({ id: 'cancel' });
+
   return (
     <ConfirmationContext.Provider
       value={{
@@ -78,9 +84,16 @@ export const ConfirmationProvider = ({
           </DialogContent>
         )}
         <DialogActions>
-          <Button onClick={handleConfirm}>Confirmar</Button>
-          <Button variant="contained" onClick={handleCancel} color="primary">
-            Cancelar
+          <Button aria-label={confirmButtonTitle} onClick={handleConfirm}>
+            {confirmButtonTitle}
+          </Button>
+          <Button
+            aria-label={cancelButtonTitle}
+            variant="contained"
+            onClick={handleCancel}
+            color="primary"
+          >
+            {cancelButtonTitle}
           </Button>
         </DialogActions>
       </Dialog>

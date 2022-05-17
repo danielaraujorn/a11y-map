@@ -6,6 +6,7 @@
   "password": "Senha",
   "places": "Locais",
   "place": "Local",
+  "confirm": "Confirmar",
   "confirmPassword": "Confirme a senha",
   "type": "Tipo",
   "description": "Descrição",
@@ -21,6 +22,9 @@
 
   "place.new.headerTitle": "Novo ponto",
   "place.my_places": "Meus locais",
+  "place.add": "Adicionar novo local",
+
+  "menu.open": "Abrir menu",
 
   "auth.recoverPassword": "Recuperar senha",
   "auth.forgotPassword": "Esqueci a senha",
@@ -42,6 +46,8 @@
   "auth.success.NewPassword": "Sua senha foi alterada com sucesso",
   "auth.error.NewPassword": "Não foi possivel executar essa ação. Verifique se esse link ainda é valido",
   "auth.error.loginNeeded": "É necessário estar logado para executar essa ação",
+  "auth.password.show": "Mostrar senha",
+  "auth.password.hide": "Esconder senha",
 
   "status.inProgress": "Em progresso",
   "status.validated": "Validado",
@@ -49,6 +55,7 @@
 
   "user.roleType": "Tipo de permissão",
   "user.validators": "Validadores",
+  "user.validators.add": "Adicionar novo validador",
   "user.searchEmail": "Procurar email",
   "user.role.admin": "Administrador",
   "user.role.validator": "Validador",

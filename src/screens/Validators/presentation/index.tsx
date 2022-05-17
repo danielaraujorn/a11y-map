@@ -78,7 +78,11 @@ export const ValidatorsPresentation = ({
       </Box>
     </MaxWidthContainer>
     <FloatingView>
-      <Fab color="primary" aria-label="add" onClick={onAddButtonClick}>
+      <Fab
+        aria-label={formatMessage({ id: 'user.validators.add' })}
+        color="primary"
+        onClick={onAddButtonClick}
+      >
         <AddIcon />
       </Fab>
     </FloatingView>

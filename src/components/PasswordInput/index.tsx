@@ -3,6 +3,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { InputController } from '../InputController';
 import { useFormContext } from 'react-hook-form';
+import { useIntl } from 'react-intl';
 
 const PasswordComponent = forwardRef(
   (props: object, ref: React.ForwardedRef<HTMLInputElement>) => {
@@ -12,6 +13,8 @@ const PasswordComponent = forwardRef(
       [setShowPassword]
     );
 
+    const { formatMessage } = useIntl();
+
     return (
       <TextField
         ref={ref}
@@ -19,7 +22,15 @@ const PasswordComponent = forwardRef(
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton onClick={handleClickShowPassword} edge="end">
+              <IconButton
+                aria-label={formatMessage({
+                  id: showPassword
+                    ? 'auth.password.hide'
+                    : 'auth.password.show',
+                })}
+                onClick={handleClickShowPassword}
+                edge="end"
+              >
                 {showPassword ? <VisibilityOff /> : <Visibility />}
               </IconButton>
             </InputAdornment>

@@ -27,35 +27,47 @@ export const ForgotPasswordPresentation = ({
   methods,
   onSubmit,
   onSecondaryClick,
-}: ForgotPasswordPresentationPropType) => (
-  <Container>
-    <VerticalCenter>
-      <MaxWidthContainer>
-        <MarginWhenMobile>
-          <Box mb={4}>
-            <Title>{formatMessage({ id: 'auth.forgotPassword' })}</Title>
-          </Box>
-          <FormProvider {...methods}>
-            <Form onSubmit={methods.handleSubmit(onSubmit)}>
-              <Box marginY={2}>
-                <EmailInput />
-              </Box>
-              <ButtonContainer>
-                <Button disabled={loading} onClick={onSecondaryClick}>
-                  {formatMessage({ id: 'goBack' })}
-                </Button>
-                <LoadingButton
-                  loading={loading}
-                  variant="contained"
-                  type="submit"
-                >
-                  {formatMessage({ id: 'auth.recoverPassword' })}
-                </LoadingButton>
-              </ButtonContainer>
-            </Form>
-          </FormProvider>
-        </MarginWhenMobile>
-      </MaxWidthContainer>
-    </VerticalCenter>
-  </Container>
-);
+}: ForgotPasswordPresentationPropType) => {
+  const goBackButtonTitle = formatMessage({ id: 'goBack' });
+  const recoverPasswordButtonTitle = formatMessage({
+    id: 'auth.recoverPassword',
+  });
+
+  return (
+    <Container>
+      <VerticalCenter>
+        <MaxWidthContainer>
+          <MarginWhenMobile>
+            <Box mb={4}>
+              <Title>{formatMessage({ id: 'auth.forgotPassword' })}</Title>
+            </Box>
+            <FormProvider {...methods}>
+              <Form onSubmit={methods.handleSubmit(onSubmit)}>
+                <Box marginY={2}>
+                  <EmailInput />
+                </Box>
+                <ButtonContainer>
+                  <Button
+                    aria-label={goBackButtonTitle}
+                    disabled={loading}
+                    onClick={onSecondaryClick}
+                  >
+                    {goBackButtonTitle}
+                  </Button>
+                  <LoadingButton
+                    aria-label={recoverPasswordButtonTitle}
+                    loading={loading}
+                    variant="contained"
+                    type="submit"
+                  >
+                    {recoverPasswordButtonTitle}
+                  </LoadingButton>
+                </ButtonContainer>
+              </Form>
+            </FormProvider>
+          </MarginWhenMobile>
+        </MaxWidthContainer>
+      </VerticalCenter>
+    </Container>
+  );
+};
