@@ -1,5 +1,6 @@
 import { Button, Box } from '@mui/material';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
+import { LoadingButton } from '@mui/lab';
 import { MessageDescriptor } from 'react-intl';
 
 import { ButtonContainer } from '../../../components/ButtonContainer';
@@ -17,9 +18,11 @@ type ForgotPasswordPresentationPropType = {
   methods: UseFormReturn<ForgotPasswordParamsType>;
   onSubmit: (params: ForgotPasswordParamsType) => void;
   onSecondaryClick: () => void;
+  loading?: boolean;
 };
 
 export const ForgotPasswordPresentation = ({
+  loading,
   formatMessage,
   methods,
   onSubmit,
@@ -38,12 +41,16 @@ export const ForgotPasswordPresentation = ({
                 <EmailInput />
               </Box>
               <ButtonContainer>
-                <Button onClick={onSecondaryClick}>
+                <Button disabled={loading} onClick={onSecondaryClick}>
                   {formatMessage({ id: 'goBack' })}
                 </Button>
-                <Button variant="contained" type="submit">
+                <LoadingButton
+                  loading={loading}
+                  variant="contained"
+                  type="submit"
+                >
                   {formatMessage({ id: 'auth.recoverPassword' })}
-                </Button>
+                </LoadingButton>
               </ButtonContainer>
             </Form>
           </FormProvider>

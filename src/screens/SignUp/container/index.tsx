@@ -12,7 +12,7 @@ import { useSignUpRequest } from '../../../api';
 export const SignUpContainer = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const [, register] = useSignUpRequest();
+  const [{ loading }, register] = useSignUpRequest();
   const { formatMessage } = useIntl();
   const methods = useForm<SignUpParamsType>();
   const onSubmit = useCallback(
@@ -42,6 +42,7 @@ export const SignUpContainer = () => {
 
   return (
     <SignUpPresentation
+      loading={loading}
       methods={methods}
       formatMessage={formatMessage}
       onSubmit={onSubmit}

@@ -18,7 +18,7 @@ export const NewPasswordContainer = () => {
 
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const changePassword = useNewPasswordRequest(token);
+  const [{ loading }, changePassword] = useNewPasswordRequest(token);
   const { formatMessage } = useIntl();
   const methods = useForm<NewPasswordParamsType>();
 
@@ -53,6 +53,7 @@ export const NewPasswordContainer = () => {
 
   return (
     <NewPasswordPresentation
+      loading={loading}
       methods={methods}
       formatMessage={formatMessage}
       onSubmit={onSubmit}

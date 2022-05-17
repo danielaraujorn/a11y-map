@@ -1,5 +1,6 @@
 import { Button, Box } from '@mui/material';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
+import { LoadingButton } from '@mui/lab';
 import { MessageDescriptor } from 'react-intl';
 
 import { ButtonContainer } from '../../../components/ButtonContainer';
@@ -20,9 +21,11 @@ type NewPasswordPresentationPropType = {
   methods: UseFormReturn<NewPasswordParamsType>;
   onSubmit: (params: NewPasswordParamsType) => void;
   onSecondaryClick: () => void;
+  loading?: boolean;
 };
 
 export const NewPasswordPresentation = ({
+  loading,
   formatMessage,
   methods,
   onSubmit,
@@ -44,12 +47,16 @@ export const NewPasswordPresentation = ({
                 <PasswordConfirmationInput />
               </Box>
               <ButtonContainer>
-                <Button onClick={onSecondaryClick}>
+                <Button disabled={loading} onClick={onSecondaryClick}>
                   {formatMessage({ id: 'auth.goToLogin' })}
                 </Button>
-                <Button variant="contained" type="submit">
+                <LoadingButton
+                  loading={loading}
+                  variant="contained"
+                  type="submit"
+                >
                   {formatMessage({ id: 'save' })}
-                </Button>
+                </LoadingButton>
               </ButtonContainer>
             </Form>
           </FormProvider>

@@ -1,5 +1,6 @@
-import { Button, Box, Link, Typography } from '@mui/material';
+import { Button, Box } from '@mui/material';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
+import { LoadingButton } from '@mui/lab';
 import { MessageDescriptor } from 'react-intl';
 
 import { ButtonContainer } from '../../../components/ButtonContainer';
@@ -19,9 +20,11 @@ type LoginPresentationPropType = {
   onSubmit: (params: LoginParamsType) => void;
   onSecondaryClick: () => void;
   forgotPassword: () => void;
+  loading?: boolean;
 };
 
 export const LoginPresentation = ({
+  loading,
   formatMessage,
   methods,
   onSubmit,
@@ -43,20 +46,26 @@ export const LoginPresentation = ({
               <Box marginY={2}>
                 <PasswordInput />
                 <Box marginTop={1}>
-                  <Link component="button" onClick={forgotPassword}>
-                    <Typography>
-                      {formatMessage({ id: 'auth.forgotPassword' })}
-                    </Typography>
-                  </Link>
+                  <Button
+                    disabled={loading}
+                    onClick={forgotPassword}
+                    size="small"
+                  >
+                    {formatMessage({ id: 'auth.forgotPassword' })}
+                  </Button>
                 </Box>
               </Box>
               <ButtonContainer>
-                <Button onClick={onSecondaryClick}>
+                <Button disabled={loading} onClick={onSecondaryClick}>
                   {formatMessage({ id: 'auth.dontHaveAccount' })}
                 </Button>
-                <Button variant="contained" type="submit">
+                <LoadingButton
+                  loading={loading}
+                  variant="contained"
+                  type="submit"
+                >
                   {formatMessage({ id: 'auth.login' })}
-                </Button>
+                </LoadingButton>
               </ButtonContainer>
             </Form>
           </FormProvider>

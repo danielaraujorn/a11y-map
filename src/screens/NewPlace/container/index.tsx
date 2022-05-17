@@ -31,8 +31,10 @@ export const NewPlaceContainer = ({
   const onCancelButtonClick = useCallback(() => {
     navigate(paths.home);
   }, [navigate]);
-  const [, createPlace] = useCreatePlaceRequest();
-  const [, patchPlace] = usePatchPlaceRequest(defaultValues?.id);
+  const [{ loading: loadingCreate }, createPlace] = useCreatePlaceRequest();
+  const [{ loading: loadingPatch }, patchPlace] = usePatchPlaceRequest(
+    defaultValues?.id
+  );
   const mapPosition = useRef<LatLng>();
   const { formatMessage } = useIntl();
   const methods = useForm<NewPlaceParamsType>({
@@ -78,6 +80,7 @@ export const NewPlaceContainer = ({
 
   return (
     <NewPlacePresentation
+      loading={loadingCreate || loadingPatch}
       update={!!defaultValues}
       center={defaultCenter}
       setPosition={setPosition}

@@ -1,5 +1,6 @@
 import { Button, Box } from '@mui/material';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
+import { LoadingButton } from '@mui/lab';
 import { MessageDescriptor } from 'react-intl';
 
 import { Container } from '../../../components/Container';
@@ -19,6 +20,7 @@ type NewValidatorPresentationPropType = {
   methods: UseFormReturn<NewValidatorParamsType>;
   onSubmit: (params: NewValidatorParamsType) => void;
   onCancelButtonClick: () => void;
+  loading?: boolean;
 };
 
 export const NewValidatorPresentation = ({
@@ -26,6 +28,7 @@ export const NewValidatorPresentation = ({
   formatMessage,
   methods,
   onSubmit,
+  loading,
 }: NewValidatorPresentationPropType) => (
   <Container>
     <BackButtonAppBar
@@ -58,14 +61,18 @@ export const NewValidatorPresentation = ({
                 />
               </Box>
               <ButtonContainer>
-                <Button onClick={onCancelButtonClick}>
+                <Button disabled={loading} onClick={onCancelButtonClick}>
                   {formatMessage({ id: 'cancel' })}
                 </Button>
-                <Button variant="contained" type="submit">
+                <LoadingButton
+                  loading={loading}
+                  variant="contained"
+                  type="submit"
+                >
                   {formatMessage({
                     id: 'save',
                   })}
-                </Button>
+                </LoadingButton>
               </ButtonContainer>
             </MarginWhenMobile>
           </Box>

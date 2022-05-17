@@ -10,7 +10,7 @@ import { paths } from '../../../Navigation/paths';
 import { useForgotPassword } from '../../../api';
 
 export const ForgotPasswordContainer = () => {
-  const fetch = useForgotPassword();
+  const [{ loading }, fetch] = useForgotPassword();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
   const methods = useForm<ForgotPasswordParamsType>();
@@ -38,6 +38,7 @@ export const ForgotPasswordContainer = () => {
 
   return (
     <ForgotPasswordPresentation
+      loading={loading}
       onSubmit={onSubmit}
       formatMessage={formatMessage}
       methods={methods}

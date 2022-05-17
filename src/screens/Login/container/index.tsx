@@ -9,7 +9,7 @@ import { paths } from '../../../Navigation/paths';
 import { useLoginRequest } from '../../../api';
 
 export const LoginContainer = () => {
-  const login = useLoginRequest();
+  const [{ loading }, login] = useLoginRequest();
   const { formatMessage } = useIntl();
   const methods = useForm<LoginParamsType>();
   const navigate = useNavigate();
@@ -23,6 +23,7 @@ export const LoginContainer = () => {
 
   return (
     <LoginPresentation
+      loading={loading}
       forgotPassword={forgotPassword}
       onSubmit={login}
       formatMessage={formatMessage}

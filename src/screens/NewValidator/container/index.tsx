@@ -18,8 +18,9 @@ export const NewValidatorContainer = () => {
     navigate(paths.validators);
   }, [navigate]);
 
-  const [, getUsers] = useUsersRequest();
-  const changeRole = useUserRolePatchRequest();
+  const [{ loading: loadingUsers }, getUsers] = useUsersRequest();
+  const [{ loading: loadingChangeRole }, changeRole] =
+    useUserRolePatchRequest();
 
   const { formatMessage } = useIntl();
   const methods = useForm<NewValidatorParamsType>({
@@ -65,7 +66,7 @@ export const NewValidatorContainer = () => {
   const onSubmit = useCallback(async (params: NewValidatorParamsType) => {
     const { email, role } = params;
     try {
-      const { data } = await getUsers({ params: { email } });
+      const { data } = await getUsers({ params: { email, limit: 1 } });
       const user = data?.data?.users?.[0] || {};
       askForConfirmation(user, role);
     } catch (e) {
@@ -77,6 +78,7 @@ export const NewValidatorContainer = () => {
 
   return (
     <NewValidatorPresentation
+      loading={loadingChangeRole || loadingUsers}
       onSubmit={onSubmit}
       methods={methods}
       formatMessage={formatMessage}

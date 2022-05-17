@@ -1,6 +1,7 @@
 import { Button, Box } from '@mui/material';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
 import { LatLngExpression, Map as MapType } from 'leaflet';
+import { LoadingButton } from '@mui/lab';
 import { MessageDescriptor } from 'react-intl';
 
 import { Container } from '../../../components/Container';
@@ -24,6 +25,7 @@ type NewPlacePresentationPropType = {
   setPosition: (map: MapType) => void;
   center?: LatLngExpression;
   update?: boolean;
+  loading?: boolean;
 };
 
 export const NewPlacePresentation = ({
@@ -34,6 +36,7 @@ export const NewPlacePresentation = ({
   onSubmit,
   center,
   update,
+  loading,
 }: NewPlacePresentationPropType) => (
   <Container>
     <BackButtonAppBar
@@ -112,14 +115,18 @@ export const NewPlacePresentation = ({
                 />
               </Box>
               <ButtonContainer>
-                <Button onClick={onCancelButtonClick}>
+                <Button disabled={loading} onClick={onCancelButtonClick}>
                   {formatMessage({ id: 'cancel' })}
                 </Button>
-                <Button variant="contained" type="submit">
+                <LoadingButton
+                  loading={loading}
+                  variant="contained"
+                  type="submit"
+                >
                   {formatMessage({
                     id: update ? 'save' : 'create',
                   })}
-                </Button>
+                </LoadingButton>
               </ButtonContainer>
             </MarginWhenMobile>
           </Box>

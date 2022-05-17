@@ -42,13 +42,16 @@ export const useSignUpRequest = () =>
     { manual }
   );
 
-export const useLoginRequest = () => {
+export const useLoginRequest = (): [
+  { loading: boolean },
+  (params: LoginParamsType) => void
+] => {
   const navigate = useNavigate();
   const { setUser } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
-  const [, fetch] = useAxios<{ data: UserType }, LoginParamsType>(
+  const [{ loading }, fetch] = useAxios<{ data: UserType }, LoginParamsType>(
     {
       url: '/users/log_in',
       method: 'POST',
@@ -73,11 +76,11 @@ export const useLoginRequest = () => {
     [setUser, navigate, fetch]
   );
 
-  return login;
+  return [{ loading }, login];
 };
 
-export const useForgotPassword = () => {
-  const [, fetch] = useAxios<unknown, ForgotPasswordParamsType, ErrorType>(
+export const useForgotPassword = () =>
+  useAxios<unknown, ForgotPasswordParamsType, ErrorType>(
     {
       url: '/users/reset_password',
       method: 'POST',
@@ -85,20 +88,14 @@ export const useForgotPassword = () => {
     { manual }
   );
 
-  return fetch;
-};
-
-export const useNewPasswordRequest = (token: string) => {
-  const [, fetch] = useAxios<unknown, ForgotPasswordParamsType, ErrorType>(
+export const useNewPasswordRequest = (token: string) =>
+  useAxios<unknown, ForgotPasswordParamsType, ErrorType>(
     {
       url: `/users/reset_password/${token}`,
       method: 'PATCH',
     },
     { manual }
   );
-
-  return fetch;
-};
 
 export const useLogoutRequest = () => {
   const navigate = useNavigate();
@@ -216,15 +213,18 @@ export const usePlaceRequest = (id: string) =>
     method: 'GET',
   });
 
-export const useUserRolePatchRequest = (): ((
-  id: string,
-  params: { role: RoleEnum }
-) => Promise<
-  AxiosResponse<{
-    data: UserType;
-  }>
->) => {
-  const [, fetch] = useAxios<{ data: UserType }>(
+export const useUserRolePatchRequest = (): [
+  { loading?: boolean },
+  (
+    id: string,
+    params: { role: RoleEnum }
+  ) => Promise<
+    AxiosResponse<{
+      data: UserType;
+    }>
+  >
+] => {
+  const [{ loading }, fetch] = useAxios<{ data: UserType }>(
     {
       method: 'PATCH',
     },
@@ -238,5 +238,5 @@ export const useUserRolePatchRequest = (): ((
     [fetch]
   );
 
-  return changeRole;
+  return [{ loading }, changeRole];
 };
