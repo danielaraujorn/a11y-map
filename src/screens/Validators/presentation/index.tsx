@@ -5,10 +5,8 @@ import {
   LinearProgress,
   TextField,
   Paper,
-  IconButton,
   Fab,
 } from '@mui/material';
-import { Delete } from '@mui/icons-material';
 import { MessageDescriptor } from 'react-intl';
 
 import { Container } from '../../../components/Container';

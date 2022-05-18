@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router';
@@ -33,6 +33,17 @@ export const NewValidatorContainer = ({
   const onCancelButtonClick = useCallback(() => {
     navigate(paths.validators);
   }, [navigate]);
+
+  const [{ data }, getAdminUsers] = useUsersRequest();
+  useEffect(() => {
+    getAdminUsers({
+      params: {
+        roles: [RoleEnum.ADMIN],
+        limit: 2,
+      },
+    });
+  }, []);
+  const canRemoveAdmin = (data?.data?.users?.length || 0) >= 2;
 
   const [{ loading: loadingUsers }, getUsers] = useUsersRequest();
   const [{ loading: loadingChangeRole }, changeRole] =
@@ -82,23 +93,36 @@ export const NewValidatorContainer = ({
   const onSubmit = useCallback(
     async (params: NewValidatorParamsType) => {
       const { email, role } = params;
-      try {
-        if (update) {
-          askForConfirmation(defaultValues, role);
-        } else {
-          const { data } = await getUsers({ params: { email, limit: 1 } });
-          const users = data?.data?.users;
-          if (users?.length === 1) {
-            const user = users?.[0] || {};
-            askForConfirmation(user, role);
-          } else {
-            throw new Error();
+      if (
+        defaultValues?.role === RoleEnum.ADMIN &&
+        defaultValues?.role !== role &&
+        !canRemoveAdmin
+      ) {
+        enqueueSnackbar(
+          formatMessage({ id: 'user.admin.shouldExistOneMoreAdmin' }),
+          {
+            variant: 'error',
           }
+        );
+      } else {
+        try {
+          if (update) {
+            askForConfirmation(defaultValues, role);
+          } else {
+            const { data } = await getUsers({ params: { email, limit: 1 } });
+            const users = data?.data?.users;
+            if (users?.length === 1) {
+              const user = users?.[0] || {};
+              askForConfirmation(user, role);
+            } else {
+              throw new Error();
+            }
+          }
+        } catch (e) {
+          enqueueSnackbar(formatMessage({ id: 'user.error.notFound' }), {
+            variant: 'error',
+          });
         }
-      } catch (e) {
-        enqueueSnackbar(formatMessage({ id: 'user.error.notFound' }), {
-          variant: 'error',
-        });
       }
     },
     [update]

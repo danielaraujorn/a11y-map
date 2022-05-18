@@ -54,6 +54,7 @@
   "status.needChanges": "Mudanças pendentes",
 
   "user.roleType": "Tipo de permissão",
+  "user.admin.shouldExistOneMoreAdmin": "Deve existir no mínimo um administrador no sistema",
   "user.validators": "Validadores",
   "user.validators.add": "Adicionar novo validador",
   "user.searchEmail": "Procurar email",
