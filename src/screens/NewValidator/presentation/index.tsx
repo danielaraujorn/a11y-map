@@ -21,6 +21,7 @@ type NewValidatorPresentationPropType = {
   onSubmit: (params: NewValidatorParamsType) => void;
   onCancelButtonClick: () => void;
   loading?: boolean;
+  update?: boolean;
 };
 
 export const NewValidatorPresentation = ({
@@ -29,6 +30,7 @@ export const NewValidatorPresentation = ({
   methods,
   onSubmit,
   loading,
+  update,
 }: NewValidatorPresentationPropType) => {
   const cancelButtonTitle = formatMessage({
     id: 'cancel',
@@ -49,7 +51,7 @@ export const NewValidatorPresentation = ({
             <Box mt={3}>
               <MarginWhenMobile>
                 <Box marginY={2}>
-                  <EmailInput />
+                  <EmailInput disabled={update} />
                 </Box>
                 <Box marginY={2}>
                   <SelectInput
@@ -57,6 +59,14 @@ export const NewValidatorPresentation = ({
                     labelMessage="user.roleType"
                     rules={{ required: true }}
                     options={[
+                      ...(update
+                        ? [
+                            {
+                              value: RoleEnum.NORMAL,
+                              label: formatMessage({ id: 'user.role.normal' }),
+                            },
+                          ]
+                        : []),
                       {
                         value: RoleEnum.VALIDATOR,
                         label: formatMessage({ id: 'user.role.validator' }),

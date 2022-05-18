@@ -26,7 +26,6 @@ type ValidatorsPresentationPropType = {
   navigate: (path: string) => void;
   users: UserType[];
   formatMessage: (descriptor: MessageDescriptor) => string;
-  onDelete: (id: string) => void;
 };
 
 export const ValidatorsPresentation = ({
@@ -36,7 +35,7 @@ export const ValidatorsPresentation = ({
   users,
   email,
   setEmail,
-  onDelete,
+  navigate,
 }: ValidatorsPresentationPropType) => (
   <Container>
     <Header titleMessage="user.validators" backButtonPath={paths.home} />
@@ -51,27 +50,20 @@ export const ValidatorsPresentation = ({
         />
         {users.map(({ email, id, role }) => (
           <Box my={2} key={id}>
-            <Paper sx={{ p: 2 }}>
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Box>
-                  <Typography fontWeight={600} variant="body1">
-                    {email}
-                  </Typography>
-                  <Typography variant="body2">
-                    {formatMessage({
-                      id: `user.role.${role}`,
-                      defaultMessage: role,
-                    })}
-                  </Typography>
-                </Box>
-                <IconButton onClick={() => onDelete(id)}>
-                  <Delete />
-                </IconButton>
-              </Box>
+            <Paper
+              sx={{ p: 2 }}
+              onClick={() => navigate(paths.validator(id))}
+              style={{ cursor: 'pointer' }}
+            >
+              <Typography fontWeight={600} variant="body1">
+                {email}
+              </Typography>
+              <Typography variant="body2">
+                {formatMessage({
+                  id: `user.role.${role}`,
+                  defaultMessage: role,
+                })}
+              </Typography>
             </Paper>
           </Box>
         ))}

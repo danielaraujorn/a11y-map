@@ -17,6 +17,7 @@ const Place = lazy(() => import('../screens/Place'));
 const Places = lazy(() => import('../screens/Places'));
 const SignUp = lazy(() => import('../screens/SignUp'));
 const Validators = lazy(() => import('../screens/Validators'));
+const Validator = lazy(() => import('../screens/Validator'));
 
 export const Navigation = () => {
   useOwnUser();
@@ -32,8 +33,21 @@ export const Navigation = () => {
     []
   );
 
-  if (!done) return <LinearProgress />;
   const isAdmin = user?.role === RoleEnum.ADMIN;
+
+  const roleRoutes = useMemo(() => {
+    if (isAdmin)
+      return (
+        <>
+          <Route path={paths.validators} element={<Validators />} />
+          <Route path={paths.newValidator} element={<NewValidator />} />
+          <Route path={paths.validator(':id')} element={<Validator />} />
+        </>
+      );
+    return <></>;
+  }, [isAdmin]);
+
+  if (!done) return <LinearProgress />;
 
   if (user)
     return (
@@ -42,12 +56,7 @@ export const Navigation = () => {
           <Route path={paths.newPlace} element={<NewPlace />} />
           <Route path={paths.places} element={<Places />} />
           <Route path={paths.place(':id')} element={<Place />} />
-          {isAdmin && (
-            <Route path={paths.validators} element={<Validators />} />
-          )}
-          {isAdmin && (
-            <Route path={paths.newValidator} element={<NewValidator />} />
-          )}
+          {roleRoutes}
           {publicRoutes}
         </Routes>
       </Suspense>

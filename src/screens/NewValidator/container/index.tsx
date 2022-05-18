@@ -11,7 +11,23 @@ import { paths } from '../../../Navigation/paths';
 import { useConfirmation } from '../../../hooks/useConfirmation';
 import { useUserRolePatchRequest, useUsersRequest } from '../../../api';
 
-export const NewValidatorContainer = () => {
+const formatDefaultValues = (
+  defaultValues: UserType
+): NewValidatorParamsType => {
+  const { role, email } = defaultValues;
+  return { role, email };
+};
+
+export const NewValidatorContainer = ({
+  defaultValues,
+}: {
+  defaultValues?: UserType;
+}) => {
+  const update = !!defaultValues;
+
+  const formattedDefaultValues =
+    defaultValues && formatDefaultValues(defaultValues);
+
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const onCancelButtonClick = useCallback(() => {
@@ -24,7 +40,7 @@ export const NewValidatorContainer = () => {
 
   const { formatMessage } = useIntl();
   const methods = useForm<NewValidatorParamsType>({
-    defaultValues: { role: RoleEnum.VALIDATOR },
+    defaultValues: { role: RoleEnum.VALIDATOR, ...formattedDefaultValues },
   });
 
   const { showConfirmation } = useConfirmation();
@@ -63,21 +79,34 @@ export const NewValidatorContainer = () => {
     []
   );
 
-  const onSubmit = useCallback(async (params: NewValidatorParamsType) => {
-    const { email, role } = params;
-    try {
-      const { data } = await getUsers({ params: { email, limit: 1 } });
-      const user = data?.data?.users?.[0] || {};
-      askForConfirmation(user, role);
-    } catch (e) {
-      enqueueSnackbar(formatMessage({ id: 'user.error.notFound' }), {
-        variant: 'error',
-      });
-    }
-  }, []);
+  const onSubmit = useCallback(
+    async (params: NewValidatorParamsType) => {
+      const { email, role } = params;
+      try {
+        if (update) {
+          askForConfirmation(defaultValues, role);
+        } else {
+          const { data } = await getUsers({ params: { email, limit: 1 } });
+          const users = data?.data?.users;
+          if (users?.length === 1) {
+            const user = users?.[0] || {};
+            askForConfirmation(user, role);
+          } else {
+            throw new Error();
+          }
+        }
+      } catch (e) {
+        enqueueSnackbar(formatMessage({ id: 'user.error.notFound' }), {
+          variant: 'error',
+        });
+      }
+    },
+    [update]
+  );
 
   return (
     <NewValidatorPresentation
+      update={update}
       loading={loadingChangeRole || loadingUsers}
       onSubmit={onSubmit}
       methods={methods}

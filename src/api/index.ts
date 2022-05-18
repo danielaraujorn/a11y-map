@@ -153,6 +153,12 @@ export const useUsersRequest = () =>
     { manual }
   );
 
+export const useUserRequest = (id: string) =>
+  useAxios<{ data: UserType }>({
+    url: `/users/${id}`,
+    method: 'GET',
+  });
+
 export const useOwnUser = () => {
   const [{ data, loading }, fetch] = useAxios<
     { data: UserType },
