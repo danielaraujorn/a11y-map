@@ -29,7 +29,7 @@ ReactDOM.render(
           <StylesProvider injectFirst>
             <MuiThemeProvider theme={theme}>
               <ThemeProvider theme={theme}>
-                <SnackbarProvider>
+                <SnackbarProvider preventDuplicate>
                   <Router>
                     <ConfirmationProvider>
                       <Navigation />

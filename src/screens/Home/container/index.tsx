@@ -12,13 +12,12 @@ export const HomeContainer = () => {
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   const onAddButtonClick = useCallback(() => {
     if (user) {
       navigate(paths.newPlace);
     } else {
-      closeSnackbar();
       enqueueSnackbar(formatMessage({ id: 'auth.error.loginNeeded' }));
       navigate(paths.login);
     }

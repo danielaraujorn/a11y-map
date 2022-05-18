@@ -11,7 +11,7 @@ import { useForgotPassword } from '../../../api';
 
 export const ForgotPasswordContainer = () => {
   const [{ loading }, fetch] = useForgotPassword();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
   const methods = useForm<ForgotPasswordParamsType>();
   const navigate = useNavigate();
@@ -29,7 +29,6 @@ export const ForgotPasswordContainer = () => {
       });
       navigate(paths.login);
     } catch {
-      closeSnackbar();
       enqueueSnackbar(formatMessage({ id: 'auth.error.forgotPassword' }), {
         variant: 'error',
       });
