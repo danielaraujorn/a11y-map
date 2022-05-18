@@ -61,11 +61,8 @@
   "user.role.validator": "Validador",
   "user.role.normal": "Comum",
   "user.confirmationDescripion.addValidatorRole": "Caso confirme, \"{email}\" irá receber permissões de \"{role}\"",
-  "user.confirmationDescripion.removeValidatorRole": "Caso confirme, o usuário irá perder as permissões de validador",
-  "user.success.addValidator": "A permissão foi adicionada com sucesso",
-  "user.success.removeValidator": "A permissão foi removida com sucesso",
-  "user.error.addValidator": "Não foi possivel adicionar a permissão.",
-  "user.error.removeValidator": "Não foi possivel remover a permissão.",
+  "user.success.addValidator": "A permissão foi atualizada com sucesso",
+  "user.error.addValidator": "Não foi possivel atualizar a permissão.",
   "user.newValidator.headerTitle": "Novo validador",
   "user.error.notFound": "Não foi possivel encontrar o usuario, verifique o email e tente novamente",
 
