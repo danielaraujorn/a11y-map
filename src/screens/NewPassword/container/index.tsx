@@ -23,7 +23,6 @@ export const NewPasswordContainer = () => {
   const methods = useForm<NewPasswordParamsType>();
 
   const onSubmit = useCallback(async ({ password, passwordConfirmation }) => {
-    console.log({ password, passwordConfirmation, token });
     try {
       await changePassword({
         params: {

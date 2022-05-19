@@ -1,16 +1,17 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useUserRequest } from '../../../api';
-import { paths } from '../../../Navigation/paths';
-import { ValidatorPresentation } from '../presentation';
 
-export const ValidatorContainer = () => {
+import { DeficiencyPresentation } from '../presentation';
+import { paths } from '../../../Navigation/paths';
+import { useDeficiencyRequest } from '../../../api';
+
+export const DeficiencyContainer = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   useEffect(() => {
     if (!id) navigate(paths.home);
   });
-  const [{ data, loading }] = useUserRequest(id || '');
+  const [{ data, loading }] = useDeficiencyRequest(id || '');
 
-  return <ValidatorPresentation loading={loading} data={data?.data} />;
+  return <DeficiencyPresentation loading={loading} data={data?.data} />;
 };

@@ -18,6 +18,9 @@ const Places = lazy(() => import('../screens/Places'));
 const SignUp = lazy(() => import('../screens/SignUp'));
 const Validators = lazy(() => import('../screens/Validators'));
 const Validator = lazy(() => import('../screens/Validator'));
+const Deficiencies = lazy(() => import('../screens/Deficiencies'));
+const NewDeficiency = lazy(() => import('../screens/NewDeficiency'));
+const Deficiency = lazy(() => import('../screens/Deficiency'));
 
 export const Navigation = () => {
   useOwnUser();
@@ -39,6 +42,9 @@ export const Navigation = () => {
     if (isAdmin)
       return (
         <>
+          <Route path={paths.deficiencies} element={<Deficiencies />} />
+          <Route path={paths.newDeficiency} element={<NewDeficiency />} />
+          <Route path={paths.deficiency(':id')} element={<Deficiency />} />
           <Route path={paths.validators} element={<Validators />} />
           <Route path={paths.newValidator} element={<NewValidator />} />
           <Route path={paths.validator(':id')} element={<Validator />} />

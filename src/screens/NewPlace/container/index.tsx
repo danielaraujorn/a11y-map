@@ -57,7 +57,7 @@ export const NewPlaceContainer = ({
       else await createPlace({ params });
       enqueueSnackbar(
         formatMessage(
-          { id: 'success.default' },
+          { id: 'success.default.save' },
           {
             variant: 'success',
           }

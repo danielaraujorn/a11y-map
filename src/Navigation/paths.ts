@@ -10,4 +10,7 @@ export const paths = {
   newValidator: '/validators/new',
   forgotPassword: '/forgot-password',
   newPassword: '/new-password',
+  deficiencies: '/deficiencies',
+  deficiency: (id: string) => `/deficiencies/${id}`,
+  newDeficiency: '/deficiencies/new',
 };

@@ -6,10 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import {
   ForgotPasswordParamsType,
   LoginParamsType,
+  NewDeficiencyParamsType,
   NewPlaceParamsType,
   SignUpParamsType,
 } from '../types/Forms';
 import {
+  DeficiencyType,
   PlaceModelType,
   RoleEnum,
   StatusEnum,
@@ -263,3 +265,59 @@ export const useUserRolePatchRequest = (): [
 
   return [{ loading }, changeRole];
 };
+
+export const useDeficienciesRequest = () =>
+  useAxios<
+    { data: { deficiencies: DeficiencyType[] }; total: number },
+    PaginationType,
+    ErrorType
+  >(
+    {
+      url: '/deficiencies',
+      method: 'GET',
+    },
+    { manual }
+  );
+
+export const useDeficiencyPatchRequest = (): [
+  { loading?: boolean },
+  (
+    id: string,
+    params: NewDeficiencyParamsType
+  ) => Promise<
+    AxiosResponse<{
+      data: DeficiencyType;
+    }>
+  >
+] => {
+  const [{ loading }, fetch] = useAxios<{ data: DeficiencyType }>(
+    {
+      method: 'PATCH',
+    },
+    { manual }
+  );
+
+  const update = useCallback(
+    async (id, params) => {
+      return fetch({ url: `/deficiencies/${id}`, params });
+    },
+    [fetch]
+  );
+
+  return [{ loading }, update];
+};
+
+export const useCreateDeficiencyRequest = () =>
+  useAxios<unknown, NewDeficiencyParamsType>(
+    {
+      url: '/deficiencies',
+      method: 'POST',
+    },
+    { manual }
+  );
+
+export const useDeficiencyRequest = (id: string) =>
+  useAxios<{ data: DeficiencyType }>({
+    url: `/deficiencies/${id}`,
+    method: 'GET',
+  });

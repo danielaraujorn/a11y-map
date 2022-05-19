@@ -31,3 +31,8 @@ export type NewPasswordParamsType = {
   new_password: string;
   new_password_confirmation: string;
 };
+
+export type NewDeficiencyParamsType = {
+  name: string;
+  description?: string;
+};

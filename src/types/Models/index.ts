@@ -29,3 +29,9 @@ export type UserType = {
   updated_at: string;
   role: RoleEnum;
 };
+
+export type DeficiencyType = {
+  id: string;
+  name: string;
+  description: string;
+};

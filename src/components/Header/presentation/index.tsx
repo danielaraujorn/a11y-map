@@ -1,5 +1,6 @@
 import { MouseEvent } from 'react';
 import {
+  Accessible,
   AccountCircle,
   ArrowLeft,
   HowToReg,
@@ -91,6 +92,7 @@ export const HeaderPresentation = ({
 }: HeaderPresentationPropType) => {
   const loginButtonTitle = formatMessage({ id: 'auth.loginTitle' });
   const validatorsButtonTitle = formatMessage({ id: 'user.validators' });
+  const deficienciesButtonTitle = formatMessage({ id: 'deficiencies' });
   const myPlacesButtonTitle = formatMessage({ id: 'place.not_validated' });
   const signOutButtonTitle = formatMessage({ id: 'auth.signOut' });
 
@@ -165,16 +167,31 @@ export const HeaderPresentation = ({
         onClose={handleMobileMenuClose}
       >
         {isAdmin && (
-          <MenuItem sx={{ pr: 3 }} onClick={() => navigate(paths.validators)}>
-            <IconButton
-              disableRipple
-              aria-label={validatorsButtonTitle}
-              color="inherit"
+          <>
+            <MenuItem sx={{ pr: 3 }} onClick={() => navigate(paths.validators)}>
+              <IconButton
+                disableRipple
+                aria-label={validatorsButtonTitle}
+                color="inherit"
+              >
+                <HowToReg />
+              </IconButton>
+              <p>{validatorsButtonTitle}</p>
+            </MenuItem>
+            <MenuItem
+              sx={{ pr: 3 }}
+              onClick={() => navigate(paths.deficiencies)}
             >
-              <HowToReg />
-            </IconButton>
-            <p>{validatorsButtonTitle}</p>
-          </MenuItem>
+              <IconButton
+                disableRipple
+                aria-label={deficienciesButtonTitle}
+                color="inherit"
+              >
+                <Accessible />
+              </IconButton>
+              <p>{deficienciesButtonTitle}</p>
+            </MenuItem>
+          </>
         )}
         <MenuItem sx={{ pr: 3 }} onClick={() => navigate(paths.places)}>
           <IconButton
