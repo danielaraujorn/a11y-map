@@ -21,7 +21,7 @@
   "defaultConfirmationQuestion": "Confirma essa ação?",
 
   "place.new.headerTitle": "Novo ponto",
-  "place.my_places": "Meus locais",
+  "place.not_validated": "Locais pendentes",
   "place.add": "Adicionar novo local",
 
   "menu.open": "Abrir menu",

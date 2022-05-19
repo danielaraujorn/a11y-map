@@ -91,7 +91,7 @@ export const HeaderPresentation = ({
 }: HeaderPresentationPropType) => {
   const loginButtonTitle = formatMessage({ id: 'auth.loginTitle' });
   const validatorsButtonTitle = formatMessage({ id: 'user.validators' });
-  const myPlacesButtonTitle = formatMessage({ id: 'place.my_places' });
+  const myPlacesButtonTitle = formatMessage({ id: 'place.not_validated' });
   const signOutButtonTitle = formatMessage({ id: 'auth.signOut' });
 
   return (

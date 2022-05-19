@@ -9,7 +9,12 @@ import {
   NewPlaceParamsType,
   SignUpParamsType,
 } from '../types/Forms';
-import { PlaceModelType, RoleEnum, UserType } from '../types/Models';
+import {
+  PlaceModelType,
+  RoleEnum,
+  StatusEnum,
+  UserType,
+} from '../types/Models';
 import { paths } from '../Navigation/paths';
 import { useAuth } from '../hooks/useAuth';
 import { useIntl } from 'react-intl';
@@ -126,18 +131,28 @@ export const useLogoutRequest = () => {
 };
 
 type PaginationType = {
-  offset: number;
-  limit: number;
+  offset?: number;
+  limit?: number;
   inserted_at?: string;
   inserted_at_start?: string;
   inserted_at_end?: string;
   sort?: 'inserted_at' | 'asc';
 };
 
-export const usePlacesRequest = () =>
-  useAxios<{ data: { places: PlaceModelType[] } }, PaginationType, ErrorType>({
+type PlacesRequestParams = PaginationType & {
+  mine?: boolean;
+  statuses?: StatusEnum[];
+};
+
+export const usePlacesRequest = (params?: PlacesRequestParams) =>
+  useAxios<
+    { data: { places: PlaceModelType[] } },
+    PlacesRequestParams,
+    ErrorType
+  >({
     url: '/places',
     method: 'GET',
+    params,
   });
 
 export const useUsersRequest = () =>
