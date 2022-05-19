@@ -144,20 +144,22 @@ type PlacesRequestParams = PaginationType & {
   statuses?: StatusEnum[];
 };
 
-export const usePlacesRequest = (params?: PlacesRequestParams) =>
+export const usePlacesRequest = (options?: { manual: boolean }) =>
   useAxios<
-    { data: { places: PlaceModelType[] } },
+    { data: { places: PlaceModelType[] }; total: number },
     PlacesRequestParams,
     ErrorType
-  >({
-    url: '/places',
-    method: 'GET',
-    params,
-  });
+  >(
+    {
+      url: '/places',
+      method: 'GET',
+    },
+    options
+  );
 
 export const useUsersRequest = () =>
   useAxios<
-    { data: { users: UserType[] } },
+    { data: { users: UserType[] }; total: number },
     PaginationType & { roles: RoleEnum; email: string },
     ErrorType
   >(

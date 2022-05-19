@@ -9,10 +9,12 @@ import {
 } from '@mui/material';
 import { MessageDescriptor } from 'react-intl';
 
+import { BottomPagination } from '../../../components/BottomPagination';
 import { Container } from '../../../components/Container';
 import { FloatingView } from '../../../components/FloatingView';
 import { Header } from '../../../components/Header';
 import { MaxWidthContainer } from '../../../components/MaxWidthContainer';
+import { PageProps } from '../../../hooks/usePagination';
 import { UserType } from '../../../types/Models';
 import { paths } from '../../../Navigation/paths';
 
@@ -24,9 +26,11 @@ type ValidatorsPresentationPropType = {
   navigate: (path: string) => void;
   users: UserType[];
   formatMessage: (descriptor: MessageDescriptor) => string;
+  pageProps: PageProps;
 };
 
 export const ValidatorsPresentation = ({
+  pageProps,
   onAddButtonClick,
   loading,
   formatMessage,
@@ -65,6 +69,7 @@ export const ValidatorsPresentation = ({
             </Paper>
           </Box>
         ))}
+        <BottomPagination {...pageProps} />
       </Box>
     </MaxWidthContainer>
     <FloatingView>

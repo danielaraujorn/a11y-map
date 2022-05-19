@@ -8,9 +8,11 @@ import {
 import { LatLngLiteral } from 'leaflet';
 import { MessageDescriptor } from 'react-intl';
 
+import { BottomPagination } from '../../../components/BottomPagination';
 import { Container } from '../../../components/Container';
 import { Header } from '../../../components/Header';
 import { MaxWidthContainer } from '../../../components/MaxWidthContainer';
+import { PageProps } from '../../../hooks/usePagination';
 import { PlaceModelType } from '../../../types/Models';
 import { paths } from '../../../Navigation/paths';
 
@@ -20,9 +22,11 @@ type PlacesPresentationPropType = {
   getDistance: (endLocation: LatLngLiteral) => string;
   places: PlaceModelType[];
   formatMessage: (descriptor: MessageDescriptor) => string;
+  pageProps: PageProps;
 };
 
 export const PlacesPresentation = ({
+  pageProps,
   loading,
   navigate,
   formatMessage,
@@ -75,6 +79,7 @@ export const PlacesPresentation = ({
               </Box>
             )
           )}
+          <BottomPagination {...pageProps} />
         </Box>
       </MaxWidthContainer>
     )}

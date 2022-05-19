@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { RoleEnum } from '../../../types/Models';
 import { ValidatorsPresentation } from '../presentation';
 import { paths } from '../../../Navigation/paths';
+import { usePagination } from '../../../hooks/usePagination';
 import { useUsersRequest } from '../../../api';
 
 const ROLES_TO_FILTER = [RoleEnum.VALIDATOR, RoleEnum.ADMIN];
@@ -20,7 +21,11 @@ export const ValidatorsContainer = () => {
   }, [navigate]);
 
   const [{ data, loading: loadingUsers }, getUsers] = useUsersRequest();
+  console.log('teste', data);
+  console.log('eai');
   const users = data?.data?.users || [];
+
+  const { pageProps, pageParams } = usePagination(data?.total);
 
   const [debouncedEmail] = useDebounce(email, 1000);
 
@@ -29,12 +34,14 @@ export const ValidatorsContainer = () => {
       params: {
         roles: ROLES_TO_FILTER,
         ...(debouncedEmail ? { email: debouncedEmail } : {}),
+        ...pageParams,
       },
     });
-  }, [debouncedEmail]);
+  }, [debouncedEmail, pageParams]);
 
   return (
     <ValidatorsPresentation
+      pageProps={pageProps}
       onAddButtonClick={onAddButtonClick}
       navigate={navigate}
       formatMessage={formatMessage}
