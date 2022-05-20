@@ -16,6 +16,7 @@
   "requiredField": "Campo obrigatório",
   "save": "Salvar",
   "create": "Criar",
+  "delete": "Excluir",
   "edit": "Edit",
   "goBack": "Voltar",
 
@@ -70,13 +71,16 @@
 
   "deficiencies": "Deficiencias",
   "deficiencies.update.confirmationDescripion": "Ao alterar essa deficiência todos os locais cadastrados com essa deficiência serão atualizados com os novos dados",
+  "deficiencies.delete.confirmationDescripion": "Ao excluir essa deficiência todos os locais cadastrados com essa deficiência terão essa deficiência removida de sua lista",
 
   "deficiency.add": "Adicionar nova deficiência",
 
   "success.default.save": "Salvo com sucesso",
-  "success.default.create": "Criado com sucesso",
   "error.default.save": "Não foi possivel salvar. Por favor verifique os dados e tente novamente",
+  "success.default.create": "Criado com sucesso",
   "error.default.create": "Não foi possivel criar. Por favor verifique os dados e tente novamente",
+  "success.default.delete": "Excluído com sucesso",
+  "error.default.delete": "Não foi possivel excluir",
 
   "error.passwordConfirmation": "A senha e a confirmação estão diferentes",
   "error.weakPassword": "Utilize letras maiúsculas, minúsculas e números",

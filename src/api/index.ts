@@ -321,3 +321,12 @@ export const useDeficiencyRequest = (id: string) =>
     url: `/deficiencies/${id}`,
     method: 'GET',
   });
+
+export const useDeleteDeficiencyRequest = (id: string) =>
+  useAxios<{ data: DeficiencyType }>(
+    {
+      url: `/deficiencies/${id}`,
+      method: 'DELETE',
+    },
+    { manual: true }
+  );

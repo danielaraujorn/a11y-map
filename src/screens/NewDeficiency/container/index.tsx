@@ -12,6 +12,7 @@ import { useConfirmation } from '../../../hooks/useConfirmation';
 import {
   useDeficiencyPatchRequest,
   useCreateDeficiencyRequest,
+  useDeleteDeficiencyRequest,
 } from '../../../api';
 
 const formatDefaultValues = (
@@ -34,6 +35,8 @@ export const NewDeficiencyContainer = ({
     navigate(paths.deficiencies);
   }, [navigate]);
 
+  const [{ loading: loadingDelete }, deleteDeficiency] =
+    useDeleteDeficiencyRequest(defaultValues?.id || '');
   const [{ loading: loadingPatch }, updateFetch] = useDeficiencyPatchRequest();
   const [{ loading: loadingCreate }, createFetch] =
     useCreateDeficiencyRequest();
@@ -96,6 +99,30 @@ export const NewDeficiencyContainer = ({
     []
   );
 
+  const onDeleteButtonClick = useCallback(async () => {
+    try {
+      await showConfirmation({
+        title: formatMessage({ id: 'defaultConfirmationQuestion' }),
+        description: formatMessage({
+          id: 'deficiencies.delete.confirmationDescripion',
+        }),
+      });
+      try {
+        await deleteDeficiency();
+        enqueueSnackbar(formatMessage({ id: 'success.default.create' }), {
+          variant: 'success',
+        });
+        navigate(paths.deficiencies);
+      } catch (e) {
+        enqueueSnackbar(formatMessage({ id: 'error.default.deleteQ  W' }), {
+          variant: 'error',
+        });
+      }
+    } catch (e) {
+      return;
+    }
+  }, []);
+
   const onSubmit = useCallback(
     (params: NewDeficiencyParamsType) => {
       if (update) {
@@ -110,10 +137,11 @@ export const NewDeficiencyContainer = ({
   return (
     <NewDeficiencyPresentation
       update={update}
-      loading={loadingPatch || loadingCreate}
+      loading={loadingPatch || loadingCreate || loadingDelete}
       onSubmit={onSubmit}
       methods={methods}
       formatMessage={formatMessage}
+      onDeleteButtonClick={onDeleteButtonClick}
       onCancelButtonClick={onCancelButtonClick}
     />
   );

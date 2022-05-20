@@ -18,12 +18,14 @@ type NewDeficiencyPresentationPropType = {
   methods: UseFormReturn<NewDeficiencyParamsType>;
   onSubmit: (params: NewDeficiencyParamsType) => void;
   onCancelButtonClick: () => void;
+  onDeleteButtonClick: () => void;
   loading?: boolean;
   update?: boolean;
 };
 
 export const NewDeficiencyPresentation = ({
   onCancelButtonClick,
+  onDeleteButtonClick,
   formatMessage,
   methods,
   onSubmit,
@@ -35,6 +37,9 @@ export const NewDeficiencyPresentation = ({
   });
   const saveButtonTitle = formatMessage({
     id: update ? 'save' : 'create',
+  });
+  const deleteButtonTitle = formatMessage({
+    id: 'delete',
   });
 
   return (
@@ -66,6 +71,17 @@ export const NewDeficiencyPresentation = ({
                   />
                 </Box>
                 <ButtonContainer>
+                  {update && (
+                    <Button
+                      sx={{ mr: 'auto' }}
+                      color="warning"
+                      aria-label={deleteButtonTitle}
+                      disabled={loading}
+                      onClick={onDeleteButtonClick}
+                    >
+                      {deleteButtonTitle}
+                    </Button>
+                  )}
                   <Button
                     aria-label={cancelButtonTitle}
                     disabled={loading}
