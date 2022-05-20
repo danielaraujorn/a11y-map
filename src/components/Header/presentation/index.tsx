@@ -166,33 +166,36 @@ export const HeaderPresentation = ({
         open={Boolean(mobileMoreAnchorEl)}
         onClose={handleMobileMenuClose}
       >
-        {isAdmin && (
-          <>
-            <MenuItem sx={{ pr: 3 }} onClick={() => navigate(paths.validators)}>
-              <IconButton
-                disableRipple
-                aria-label={validatorsButtonTitle}
-                color="inherit"
-              >
-                <HowToReg />
-              </IconButton>
-              <p>{validatorsButtonTitle}</p>
-            </MenuItem>
-            <MenuItem
-              sx={{ pr: 3 }}
-              onClick={() => navigate(paths.deficiencies)}
+        {isAdmin && [
+          <MenuItem
+            key="validators"
+            sx={{ pr: 3 }}
+            onClick={() => navigate(paths.validators)}
+          >
+            <IconButton
+              disableRipple
+              aria-label={validatorsButtonTitle}
+              color="inherit"
             >
-              <IconButton
-                disableRipple
-                aria-label={deficienciesButtonTitle}
-                color="inherit"
-              >
-                <Accessible />
-              </IconButton>
-              <p>{deficienciesButtonTitle}</p>
-            </MenuItem>
-          </>
-        )}
+              <HowToReg />
+            </IconButton>
+            <p>{validatorsButtonTitle}</p>
+          </MenuItem>,
+          <MenuItem
+            key="deficiencies"
+            sx={{ pr: 3 }}
+            onClick={() => navigate(paths.deficiencies)}
+          >
+            <IconButton
+              disableRipple
+              aria-label={deficienciesButtonTitle}
+              color="inherit"
+            >
+              <Accessible />
+            </IconButton>
+            <p>{deficienciesButtonTitle}</p>
+          </MenuItem>,
+        ]}
         <MenuItem sx={{ pr: 3 }} onClick={() => navigate(paths.places)}>
           <IconButton
             disableRipple
