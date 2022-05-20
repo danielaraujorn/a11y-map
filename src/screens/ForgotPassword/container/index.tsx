@@ -6,11 +6,11 @@ import { useSnackbar } from 'notistack';
 
 import { ForgotPasswordParamsType } from '../../../types/Forms';
 import { ForgotPasswordPresentation } from '../presentation';
+import { api } from '../../../api';
 import { paths } from '../../../Navigation/paths';
-import { useForgotPassword } from '../../../api';
 
 export const ForgotPasswordContainer = () => {
-  const [{ loading }, fetch] = useForgotPassword();
+  const [{ loading }, fetch] = api.auth.useForgotPassword();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
   const methods = useForm<ForgotPasswordParamsType>();

@@ -6,8 +6,8 @@ import { useSnackbar } from 'notistack';
 
 import { NewPasswordParamsType } from '../../../types/Forms';
 import { NewPasswordPresentation } from '../presentation';
+import { api } from '../../../api';
 import { paths } from '../../../Navigation/paths';
-import { useNewPasswordRequest } from '../../../api';
 
 export const NewPasswordContainer = () => {
   const { search } = useLocation();
@@ -18,7 +18,7 @@ export const NewPasswordContainer = () => {
 
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const [{ loading }, changePassword] = useNewPasswordRequest(token);
+  const [{ loading }, changePassword] = api.auth.useNewPassword(token);
   const { formatMessage } = useIntl();
   const methods = useForm<NewPasswordParamsType>();
 

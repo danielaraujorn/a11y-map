@@ -7,13 +7,9 @@ import { useSnackbar } from 'notistack';
 import { NewDeficiencyParamsType } from '../../../types/Forms';
 import { NewDeficiencyPresentation } from '../presentation';
 import { DeficiencyType } from '../../../types/Models';
+import { api } from '../../../api';
 import { paths } from '../../../Navigation/paths';
 import { useConfirmation } from '../../../hooks/useConfirmation';
-import {
-  useDeficiencyPatchRequest,
-  useCreateDeficiencyRequest,
-  useDeleteDeficiencyRequest,
-} from '../../../api';
 
 const formatDefaultValues = (
   defaultValues?: DeficiencyType
@@ -36,10 +32,10 @@ export const NewDeficiencyContainer = ({
   }, [navigate]);
 
   const [{ loading: loadingDelete }, deleteDeficiency] =
-    useDeleteDeficiencyRequest(defaultValues?.id || '');
-  const [{ loading: loadingPatch }, updateFetch] = useDeficiencyPatchRequest();
+    api.deficiencies.useDelete(defaultValues?.id || '');
+  const [{ loading: loadingPatch }, updateFetch] = api.deficiencies.usePatch();
   const [{ loading: loadingCreate }, createFetch] =
-    useCreateDeficiencyRequest();
+    api.deficiencies.useCreate();
 
   const { formatMessage } = useIntl();
   const methods = useForm<NewDeficiencyParamsType>({

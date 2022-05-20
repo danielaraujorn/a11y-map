@@ -7,9 +7,9 @@ import { useSnackbar } from 'notistack';
 import { NewValidatorParamsType } from '../../../types/Forms';
 import { NewValidatorPresentation } from '../presentation';
 import { RoleEnum, UserType } from '../../../types/Models';
+import { api } from '../../../api';
 import { paths } from '../../../Navigation/paths';
 import { useConfirmation } from '../../../hooks/useConfirmation';
-import { useUserRolePatchRequest, useUsersRequest } from '../../../api';
 
 const formatDefaultValues = (
   defaultValues: UserType
@@ -34,7 +34,7 @@ export const NewValidatorContainer = ({
     navigate(paths.validators);
   }, [navigate]);
 
-  const [{ data }, getAdminUsers] = useUsersRequest();
+  const [{ data }, getAdminUsers] = api.users.useList();
   useEffect(() => {
     getAdminUsers({
       params: {
@@ -45,9 +45,8 @@ export const NewValidatorContainer = ({
   }, []);
   const canRemoveAdmin = (data?.data?.users?.length || 0) >= 2;
 
-  const [{ loading: loadingUsers }, getUsers] = useUsersRequest();
-  const [{ loading: loadingChangeRole }, changeRole] =
-    useUserRolePatchRequest();
+  const [{ loading: loadingUsers }, getUsers] = api.users.useList();
+  const [{ loading: loadingChangeRole }, changeRole] = api.users.useUpdate();
 
   const { formatMessage } = useIntl();
   const methods = useForm<NewValidatorParamsType>({

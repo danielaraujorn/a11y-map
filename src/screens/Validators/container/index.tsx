@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { RoleEnum } from '../../../types/Models';
 import { ValidatorsPresentation } from '../presentation';
+import { api } from '../../../api';
 import { paths } from '../../../Navigation/paths';
 import { usePagination } from '../../../hooks/usePagination';
-import { useUsersRequest } from '../../../api';
 
 const ROLES_TO_FILTER = [RoleEnum.VALIDATOR, RoleEnum.ADMIN];
 
@@ -20,7 +20,7 @@ export const ValidatorsContainer = () => {
     navigate(paths.newValidator);
   }, [navigate]);
 
-  const [{ data, loading: loadingUsers }, getUsers] = useUsersRequest();
+  const [{ data, loading: loadingUsers }, getUsers] = api.users.useList();
 
   const users = data?.data?.users || [];
 

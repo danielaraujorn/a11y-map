@@ -4,9 +4,9 @@ import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
 
 import { DeficienciesPresentation } from '../presentation';
+import { api } from '../../../api';
 import { paths } from '../../../Navigation/paths';
 import { usePagination } from '../../../hooks/usePagination';
-import { useDeficienciesRequest } from '../../../api';
 
 export const DeficienciesContainer = () => {
   const [name, setName] = useState('');
@@ -17,7 +17,8 @@ export const DeficienciesContainer = () => {
     navigate(paths.newDeficiency);
   }, [navigate]);
 
-  const [{ data, loading: loadingUsers }, getUsers] = useDeficienciesRequest();
+  const [{ data, loading: loadingUsers }, getUsers] =
+    api.deficiencies.useList();
 
   const deficiencies = data?.data?.deficiencies || [];
 

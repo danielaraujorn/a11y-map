@@ -8,8 +8,8 @@ import { useSnackbar } from 'notistack';
 import { NewPlaceParamsType } from '../../../types/Forms';
 import { NewPlacePresentation } from '../presentation';
 import { PlaceModelType, StatusEnum } from '../../../types/Models';
+import { api } from '../../../api';
 import { paths } from '../../../Navigation/paths';
-import { useCreatePlaceRequest, usePatchPlaceRequest } from '../../../api';
 
 const formatDefaultValues = (
   defaultValues: PlaceModelType
@@ -31,8 +31,8 @@ export const NewPlaceContainer = ({
   const onCancelButtonClick = useCallback(() => {
     navigate(paths.home);
   }, [navigate]);
-  const [{ loading: loadingCreate }, createPlace] = useCreatePlaceRequest();
-  const [{ loading: loadingPatch }, patchPlace] = usePatchPlaceRequest(
+  const [{ loading: loadingCreate }, createPlace] = api.places.useCreate();
+  const [{ loading: loadingPatch }, patchPlace] = api.places.usePatch(
     defaultValues?.id
   );
   const mapPosition = useRef<LatLng>();

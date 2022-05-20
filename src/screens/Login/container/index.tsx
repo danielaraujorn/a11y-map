@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router';
 
 import { LoginParamsType } from '../../../types/Forms';
 import { LoginPresentation } from '../presentation';
+import { api } from '../../../api';
 import { paths } from '../../../Navigation/paths';
-import { useLoginRequest } from '../../../api';
 
 export const LoginContainer = () => {
-  const [{ loading }, login] = useLoginRequest();
+  const [{ loading }, login] = api.auth.useLogin();
   const { formatMessage } = useIntl();
   const methods = useForm<LoginParamsType>();
   const navigate = useNavigate();

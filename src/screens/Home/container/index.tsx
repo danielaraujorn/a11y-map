@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router';
 import { useSnackbar } from 'notistack';
 
 import { HomePresentation } from '../presentation';
+import { api } from '../../../api';
 import { paths } from '../../../Navigation/paths';
-import { usePlacesRequest } from '../../../api';
 import { useIntl } from 'react-intl';
 import { useAuth } from '../../../hooks/useAuth';
 
@@ -23,7 +23,7 @@ export const HomeContainer = () => {
     }
   }, [navigate, user]);
 
-  const [{ data, loading }] = usePlacesRequest();
+  const [{ data, loading }] = api.places.useList();
 
   const places = data?.data?.places || [];
 

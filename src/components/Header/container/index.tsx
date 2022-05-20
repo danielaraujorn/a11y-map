@@ -1,11 +1,11 @@
 import { MouseEvent, useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
-import { useLogoutRequest } from '../../../api';
-import { useAuth } from '../../../hooks/useAuth';
-import { RoleEnum } from '../../../types/Models';
 
+import { RoleEnum } from '../../../types/Models';
 import { HeaderPresentation } from '../presentation';
+import { api } from '../../../api';
+import { useAuth } from '../../../hooks/useAuth';
 
 type HeaderContainerProps = {
   titleMessage: string;
@@ -27,7 +27,7 @@ export const HeaderContainer = ({
 
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
-  const logout = useLogoutRequest();
+  const logout = api.auth.useLogout();
 
   const { user } = useAuth();
   const role = user?.role;

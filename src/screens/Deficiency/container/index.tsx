@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { DeficiencyPresentation } from '../presentation';
+import { api } from '../../../api';
 import { paths } from '../../../Navigation/paths';
-import { useDeficiencyRequest } from '../../../api';
 
 export const DeficiencyContainer = () => {
   const { id } = useParams<{ id: string }>();
@@ -11,7 +11,7 @@ export const DeficiencyContainer = () => {
   useEffect(() => {
     if (!id) navigate(paths.home);
   });
-  const [{ data, loading }] = useDeficiencyRequest(id || '');
+  const [{ data, loading }] = api.deficiencies.useGet(id || '');
 
   return <DeficiencyPresentation loading={loading} data={data?.data} />;
 };

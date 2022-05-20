@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { usePlaceRequest } from '../../../api';
-import { paths } from '../../../Navigation/paths';
+
 import { PlacePresentation } from '../presentation';
+import { api } from '../../../api';
+import { paths } from '../../../Navigation/paths';
 
 export const PlaceContainer = () => {
   const { id } = useParams<{ id: string }>();
@@ -10,7 +11,7 @@ export const PlaceContainer = () => {
   useEffect(() => {
     if (!id) navigate(paths.home);
   });
-  const [{ data, loading }] = usePlaceRequest(id || '');
+  const [{ data, loading }] = api.places.useGet(id || '');
 
   return <PlacePresentation loading={loading} data={data?.data} />;
 };

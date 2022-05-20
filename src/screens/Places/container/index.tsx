@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router-dom';
 
 import { PlacesPresentation } from '../presentation';
 import { StatusEnum } from '../../../types/Models';
+import { api } from '../../../api';
 import { useGeolocation } from '../../../hooks/useGeolocation';
 import { usePagination } from '../../../hooks/usePagination';
-import { usePlacesRequest } from '../../../api';
 
 export const PlacesContainer = () => {
   const navigate = useNavigate();
 
-  const [{ data, loading }, getPlaces] = usePlacesRequest({ manual: true });
+  const [{ data, loading }, getPlaces] = api.places.useList({ manual: true });
 
   const { pageProps, pageParams } = usePagination(data?.total);
 

@@ -6,13 +6,13 @@ import { useSnackbar } from 'notistack';
 
 import { SignUpParamsType } from '../../../types/Forms';
 import { SignUpPresentation } from '../presentation';
+import { api } from '../../../api';
 import { paths } from '../../../Navigation/paths';
-import { useSignUpRequest } from '../../../api';
 
 export const SignUpContainer = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const [{ loading }, register] = useSignUpRequest();
+  const [{ loading }, register] = api.auth.useSignUp();
   const { formatMessage } = useIntl();
   const methods = useForm<SignUpParamsType>();
   const onSubmit = useCallback(

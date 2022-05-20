@@ -3,9 +3,9 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense, useMemo } from 'react';
 
 import { RoleEnum } from '../types/Models';
+import { api } from '../api';
 import { paths } from './paths';
 import { useAuth } from '../hooks/useAuth';
-import { useOwnUser } from '../api';
 
 const ForgotPassword = lazy(() => import('../screens/ForgotPassword'));
 const Home = lazy(() => import('../screens/Home'));
@@ -23,7 +23,7 @@ const NewDeficiency = lazy(() => import('../screens/NewDeficiency'));
 const Deficiency = lazy(() => import('../screens/Deficiency'));
 
 export const Navigation = () => {
-  useOwnUser();
+  api.users.useOwn();
   const { user, done } = useAuth();
 
   const publicRoutes = useMemo(
