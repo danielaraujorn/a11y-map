@@ -28,7 +28,7 @@ export const DeficienciesContainer = () => {
   useEffect(() => {
     getUsers({
       params: {
-        // ...(debouncedName ? { name: debouncedName } : {}),
+        ...(debouncedName ? { name: debouncedName } : {}),
         ...pageParams,
       },
     });
