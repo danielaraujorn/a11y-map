@@ -2,13 +2,15 @@ import { Add as AddIcon } from '@mui/icons-material';
 import { Box, Button, Fab, LinearProgress } from '@mui/material';
 import { Marker, Popup } from 'react-leaflet';
 import { MessageDescriptor } from 'react-intl';
-import { useMemo } from 'react';
+import { Dispatch, SetStateAction, useMemo } from 'react';
 
 import { Container } from '../../../components/Container';
 import { FloatingView } from '../../../components/FloatingView';
 import { Map } from '../../../components/Map';
 import { Header } from '../../../components/Header';
-import { PlaceModelType } from '../../../types/Models';
+import { PlaceModelType, RoleEnum } from '../../../types/Models';
+import { FilterActions } from '../FilterActions';
+import { PlacesFilterType } from '../../../api/places';
 
 type HomePresentationPropType = {
   loading: boolean;
@@ -16,6 +18,9 @@ type HomePresentationPropType = {
   goToPlace: (id: string) => void;
   places: PlaceModelType[];
   formatMessage: (descriptor: MessageDescriptor) => string;
+  filter: PlacesFilterType;
+  setFilter: Dispatch<SetStateAction<PlacesFilterType>>;
+  role?: RoleEnum;
 };
 
 export const HomePresentation = ({
@@ -24,6 +29,9 @@ export const HomePresentation = ({
   places,
   formatMessage,
   goToPlace,
+  filter,
+  setFilter,
+  role,
 }: HomePresentationPropType) => {
   const editButtonTitle = formatMessage({ id: 'edit' });
 
@@ -59,7 +67,14 @@ export const HomePresentation = ({
 
   return (
     <Container>
-      <Header titleMessage="a11y" />
+      <Header
+        titleMessage="a11y"
+        rightActions={
+          role !== RoleEnum.NORMAL && (
+            <FilterActions filter={filter} setFilter={setFilter} />
+          )
+        }
+      />
       <Map>
         <>{markers}</>
       </Map>

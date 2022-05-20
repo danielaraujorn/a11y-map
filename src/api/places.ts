@@ -5,10 +5,12 @@ import { useAxios } from './useAxios';
 
 const manual = true;
 
-type PlacesRequestParams = PaginationType & {
+export type PlacesFilterType = {
   mine?: boolean;
   statuses?: StatusEnum[];
 };
+
+type PlacesRequestParams = PaginationType & PlacesFilterType;
 
 export const useList = (options?: { manual: boolean }) =>
   useAxios<

@@ -1,14 +1,17 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useSnackbar } from 'notistack';
 
 import { HomePresentation } from '../presentation';
+import { PlacesFilterType } from '../../../api/places';
 import { api } from '../../../api';
 import { paths } from '../../../Navigation/paths';
-import { useIntl } from 'react-intl';
 import { useAuth } from '../../../hooks/useAuth';
+import { useIntl } from 'react-intl';
 
 export const HomeContainer = () => {
+  const [filter, setFilter] = useState<PlacesFilterType>({});
+
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -23,12 +26,21 @@ export const HomeContainer = () => {
     }
   }, [navigate, user]);
 
-  const [{ data, loading }] = api.places.useList();
+  const [{ data, loading }, getPlaces] = api.places.useList({ manual: true });
+
+  useEffect(() => {
+    getPlaces({ params: filter });
+  }, [getPlaces, filter]);
 
   const places = data?.data?.places || [];
 
+  const role = user?.role;
+
   return (
     <HomePresentation
+      role={role}
+      filter={filter}
+      setFilter={setFilter}
       formatMessage={formatMessage}
       places={places}
       loading={loading}

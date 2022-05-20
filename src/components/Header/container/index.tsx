@@ -1,4 +1,4 @@
-import { MouseEvent, useCallback, useState } from 'react';
+import { MouseEvent, ReactNode, useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,11 +10,13 @@ import { useAuth } from '../../../hooks/useAuth';
 type HeaderContainerProps = {
   titleMessage: string;
   backButtonPath?: string;
+  rightActions?: ReactNode;
 };
 
 export const HeaderContainer = ({
   titleMessage,
   backButtonPath,
+  rightActions,
 }: HeaderContainerProps) => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<
     HTMLButtonElement | undefined
@@ -42,12 +44,14 @@ export const HeaderContainer = ({
       titleMessage={titleMessage}
       isLogged={!!user}
       isAdmin={role === RoleEnum.ADMIN}
+      isValidator={role === RoleEnum.VALIDATOR}
       navigate={navigate}
       formatMessage={formatMessage}
       handleMenu={handleMenu}
       handleMobileMenuClose={handleMobileMenuClose}
       mobileMoreAnchorEl={mobileMoreAnchorEl}
       logout={logout}
+      rightActions={rightActions}
     />
   );
 };

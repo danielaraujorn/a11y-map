@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, ReactNode } from 'react';
 import {
   Accessible,
   AccountCircle,
@@ -74,8 +74,10 @@ type HeaderPresentationPropType = {
   logout: () => void;
   isLogged?: boolean;
   isAdmin?: boolean;
+  isValidator?: boolean;
   titleMessage: string;
   onBackButtonClick?: () => void;
+  rightActions: ReactNode;
 };
 
 export const HeaderPresentation = ({
@@ -89,6 +91,7 @@ export const HeaderPresentation = ({
   logout,
   titleMessage,
   onBackButtonClick,
+  rightActions,
 }: HeaderPresentationPropType) => {
   const loginButtonTitle = formatMessage({ id: 'auth.loginTitle' });
   const validatorsButtonTitle = formatMessage({ id: 'user.validators' });
@@ -128,17 +131,20 @@ export const HeaderPresentation = ({
           />
         </Search> */}
           <Box sx={{ flexGrow: 1 }} />
+          {rightActions}
           {isLogged ? (
-            <IconButton
-              size="large"
-              edge="end"
-              color="inherit"
-              aria-label={formatMessage({ id: 'menu.open' })}
-              sx={{ ml: 2 }}
-              onClick={handleMenu}
-            >
-              <AccountCircle />
-            </IconButton>
+            <>
+              <IconButton
+                size="large"
+                edge="end"
+                color="inherit"
+                aria-label={formatMessage({ id: 'menu.open' })}
+                sx={{ ml: 2 }}
+                onClick={handleMenu}
+              >
+                <AccountCircle />
+              </IconButton>
+            </>
           ) : (
             <Button
               aria-label={loginButtonTitle}
