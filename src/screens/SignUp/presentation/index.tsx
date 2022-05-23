@@ -5,6 +5,7 @@ import { MessageDescriptor } from 'react-intl';
 
 import { ButtonContainer } from '../../../components/ButtonContainer';
 import { Container } from '../../../components/Container';
+// import { DeficiencyType } from '../../../types/Models';
 import { EmailInput } from '../../../components/EmailInput';
 import { Form } from '../../../components/Form';
 // import { Input } from "../../../components/Input";
@@ -14,6 +15,7 @@ import {
   PasswordInput,
   PasswordConfirmationInput,
 } from '../../../components/PasswordInput';
+// import { SelectInput } from '../../../components/SelectInput';
 import { SignUpParamsType } from '../../../types/Forms';
 import { Title } from '../../../components/Title';
 import { VerticalCenter } from '../../../components/VerticalCenter';
@@ -24,6 +26,7 @@ type SignUpPresentationPropType = {
   onSubmit: (params: SignUpParamsType) => void;
   onSecondaryClick: () => void;
   loading?: boolean;
+  // deficiencies: DeficiencyType[];
 };
 
 export const SignUpPresentation = ({
@@ -32,7 +35,8 @@ export const SignUpPresentation = ({
   methods,
   onSubmit,
   onSecondaryClick,
-}: SignUpPresentationPropType) => {
+}: // deficiencies,
+SignUpPresentationPropType) => {
   const loginButtonTitle = formatMessage({
     id: 'auth.alreadyHaveAccount',
   });
@@ -50,20 +54,6 @@ export const SignUpPresentation = ({
             </Box>
             <FormProvider {...methods}>
               <Form onSubmit={methods.handleSubmit(onSubmit)}>
-                {/* <Box marginY={2}>
-                  <Input
-                    rules={{ required: true }}
-                    name="firstName"
-                    labelMessage="firstName"
-                  />
-                </Box>
-                <Box marginY={2}>
-                  <Input
-                    rules={{ required: true }}
-                    name="lastName"
-                    labelMessage="lastName"
-                  />
-                </Box> */}
                 <Box marginY={2}>
                   <EmailInput />
                 </Box>
@@ -73,6 +63,17 @@ export const SignUpPresentation = ({
                 <Box marginY={2}>
                   <PasswordConfirmationInput />
                 </Box>
+                {/* <Box marginY={2}>
+                  <SelectInput
+                    name="deficiencies"
+                    multiple
+                    labelMessage="deficiencies"
+                    options={deficiencies.map(({ id, name }) => ({
+                      value: id,
+                      label: name,
+                    }))}
+                  />
+                </Box> */}
                 <ButtonContainer>
                   <Button
                     aria-label={loginButtonTitle}

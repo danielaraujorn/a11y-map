@@ -17,8 +17,9 @@ export const DeficienciesContainer = () => {
     navigate(paths.newDeficiency);
   }, [navigate]);
 
-  const [{ data, loading: loadingUsers }, getUsers] =
-    api.deficiencies.useList();
+  const [{ data, loading: loadingUsers }, getUsers] = api.deficiencies.useList({
+    manual: true,
+  });
 
   const deficiencies = data?.data?.deficiencies || [];
 

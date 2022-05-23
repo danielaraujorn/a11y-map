@@ -12,13 +12,18 @@ import { paths } from '../../../Navigation/paths';
 export const SignUpContainer = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const [{ loading }, register] = api.auth.useSignUp();
+  const [{ loading: loadingSignUp }, register] = api.auth.useSignUp();
   const { formatMessage } = useIntl();
-  const methods = useForm<SignUpParamsType>();
+  const methods = useForm<SignUpParamsType>({
+    defaultValues: { deficiencies: [] },
+  });
+  // const [{ data, loading: loadingDeficiencies }] = api.deficiencies.useList();
+  // const deficiencies = data?.data?.deficiencies || [];
+
   const onSubmit = useCallback(
-    async ({ email, password }) => {
+    async params => {
       try {
-        await register({ params: { email, password } });
+        await register({ params });
         enqueueSnackbar(
           formatMessage(
             { id: 'auth.success.signUp' },
@@ -42,7 +47,8 @@ export const SignUpContainer = () => {
 
   return (
     <SignUpPresentation
-      loading={loading}
+      // deficiencies={deficiencies}
+      loading={loadingSignUp}
       methods={methods}
       formatMessage={formatMessage}
       onSubmit={onSubmit}

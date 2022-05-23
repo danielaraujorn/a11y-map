@@ -3,6 +3,7 @@ import { RoleEnum, StatusEnum } from '../Models';
 export type SignUpParamsType = {
   email: string;
   password: string;
+  deficiencies: string[];
 };
 
 export type LoginParamsType = {

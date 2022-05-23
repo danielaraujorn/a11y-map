@@ -70,6 +70,7 @@ export const HomePresentation = ({
       <Header
         titleMessage="a11y"
         rightActions={
+          role &&
           role !== RoleEnum.NORMAL && (
             <FilterActions filter={filter} setFilter={setFilter} />
           )

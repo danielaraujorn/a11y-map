@@ -8,7 +8,7 @@ import { useAxios } from './useAxios';
 
 const manual = true;
 
-export const useList = () =>
+export const useList = (options?: { manual?: boolean }) =>
   useAxios<
     { data: { deficiencies: DeficiencyType[] }; total: number },
     PaginationType,
@@ -18,7 +18,7 @@ export const useList = () =>
       url: '/deficiencies',
       method: 'GET',
     },
-    { manual }
+    options
   );
 
 export const usePatch = (): [
