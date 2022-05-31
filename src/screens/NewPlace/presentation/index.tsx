@@ -22,7 +22,7 @@ type NewPlacePresentationPropType = {
   methods: UseFormReturn<NewPlaceParamsType>;
   onSubmit: (params: NewPlaceParamsType) => void;
   onCancelButtonClick: () => void;
-  setPosition: (map: MapType) => void;
+  setMap: (map: MapType) => void;
   center?: LatLngExpression;
   update?: boolean;
   loading?: boolean;
@@ -32,7 +32,7 @@ export const NewPlacePresentation = ({
   onCancelButtonClick,
   formatMessage,
   methods,
-  setPosition,
+  setMap,
   onSubmit,
   center,
   update,
@@ -70,12 +70,7 @@ export const NewPlacePresentation = ({
                   position: 'absolute',
                 }}
               />
-              <Map
-                center={center}
-                onMove={setPosition}
-                whenCreated={setPosition}
-                zoomControl={false}
-              />
+              <Map center={center} whenCreated={setMap} zoomControl={false} />
             </Box>
             <Box mt={3}>
               <MarginWhenMobile>

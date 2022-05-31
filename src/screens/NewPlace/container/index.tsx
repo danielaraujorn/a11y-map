@@ -1,5 +1,5 @@
-import { LatLng, Map as MapType } from 'leaflet';
-import { useCallback, useRef } from 'react';
+import { Map as MapType } from 'leaflet';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router';
@@ -35,7 +35,7 @@ export const NewPlaceContainer = ({
   const [{ loading: loadingPatch }, patchPlace] = api.places.usePatch(
     defaultValues?.id
   );
-  const mapPosition = useRef<LatLng>();
+  const [map, setMap] = useState<MapType | undefined>();
   const { formatMessage } = useIntl();
   const methods = useForm<NewPlaceParamsType>({
     defaultValues: {
@@ -45,34 +45,36 @@ export const NewPlaceContainer = ({
       ...(formattedDefaultValues || {}),
     },
   });
-  const onSubmit = useCallback(async formData => {
-    const { lat: latitude, lng: longitude } = mapPosition.current || {};
-    const params: NewPlaceParamsType = {
-      ...formData,
-      latitude,
-      longitude,
-    };
-    try {
-      if (defaultValues?.id) await patchPlace({ params });
-      else await createPlace({ params });
-      enqueueSnackbar(
-        formatMessage(
-          { id: 'success.default.save' },
-          {
-            variant: 'success',
-          }
-        )
-      );
-      navigate(paths.home);
-    } catch (e) {
-      enqueueSnackbar(formatMessage({ id: 'error.default' }), {
-        variant: 'error',
-      });
-    }
-  }, []);
-  const setPosition = useCallback((map: MapType) => {
-    mapPosition.current = map.getCenter();
-  }, []);
+  const onSubmit = useCallback(
+    async formData => {
+      console.log(map);
+      const { lat: latitude, lng: longitude } = map?.getCenter() || {};
+      const params: NewPlaceParamsType = {
+        ...formData,
+        latitude,
+        longitude,
+      };
+      try {
+        if (defaultValues?.id) await patchPlace({ params });
+        else await createPlace({ params });
+        enqueueSnackbar(
+          formatMessage(
+            { id: 'success.default.save' },
+            {
+              variant: 'success',
+            }
+          )
+        );
+        navigate(paths.home);
+      } catch (e) {
+        enqueueSnackbar(formatMessage({ id: 'error.default.save' }), {
+          variant: 'error',
+        });
+      }
+    },
+    [map]
+  );
+
   const defaultCenter = defaultValues && {
     lat: defaultValues.latitude,
     lng: defaultValues.longitude,
@@ -83,8 +85,8 @@ export const NewPlaceContainer = ({
       loading={loadingCreate || loadingPatch}
       update={!!defaultValues}
       center={defaultCenter}
-      setPosition={setPosition}
       onSubmit={onSubmit}
+      setMap={setMap}
       methods={methods}
       formatMessage={formatMessage}
       onCancelButtonClick={onCancelButtonClick}

@@ -5,8 +5,6 @@ import {
   ArrowLeft,
   HowToReg,
   Logout,
-  // Menu as MenuIcon,
-  // Search as SearchIcon,
   ViewList,
 } from '@mui/icons-material';
 import {
@@ -14,56 +12,14 @@ import {
   Box,
   Button,
   IconButton,
-  // InputBase,
   Menu,
   MenuItem,
   Toolbar,
   Typography,
 } from '@mui/material';
 import { MessageDescriptor } from 'react-intl';
-// import { styled, alpha } from '@mui/material/styles';
 
 import { paths } from '../../../Navigation/paths';
-
-// const Search = styled('div')(({ theme }) => ({
-//   position: 'relative',
-//   borderRadius: theme.shape.borderRadius,
-//   backgroundColor: alpha(theme.palette.common.white, 0.15),
-//   '&:hover': {
-//     backgroundColor: alpha(theme.palette.common.white, 0.25),
-//   },
-//   marginRight: theme.spacing(2),
-//   marginLeft: 0,
-//   width: '100%',
-//   [theme.breakpoints.up('sm')]: {
-//     marginLeft: theme.spacing(3),
-//     width: 'auto',
-//   },
-// }));
-
-// const SearchIconWrapper = styled('div')(({ theme }) => ({
-//   padding: theme.spacing(0, 2),
-//   height: '100%',
-//   position: 'absolute',
-//   pointerEvents: 'none',
-//   display: 'flex',
-//   alignItems: 'center',
-//   justifyContent: 'center',
-// }));
-
-// const StyledInputBase = styled(InputBase)(({ theme }) => ({
-//   color: 'inherit',
-//   '& .MuiInputBase-input': {
-//     padding: theme.spacing(1, 1, 1, 0),
-//     // vertical padding + font size from searchIcon
-//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-//     transition: theme.transitions.create('width'),
-//     width: '100%',
-//     [theme.breakpoints.up('md')]: {
-//       width: '20ch',
-//     },
-//   },
-// }));
 
 type HeaderPresentationPropType = {
   navigate: (path: string) => void;
@@ -77,7 +33,8 @@ type HeaderPresentationPropType = {
   isValidator?: boolean;
   titleMessage: string;
   onBackButtonClick?: () => void;
-  rightActions: ReactNode;
+  leftActions?: ReactNode;
+  rightActions?: ReactNode;
 };
 
 export const HeaderPresentation = ({
@@ -91,6 +48,7 @@ export const HeaderPresentation = ({
   logout,
   titleMessage,
   onBackButtonClick,
+  leftActions,
   rightActions,
 }: HeaderPresentationPropType) => {
   const loginButtonTitle = formatMessage({ id: 'auth.loginTitle' });
@@ -103,14 +61,6 @@ export const HeaderPresentation = ({
     <Box sx={{ width: '100%' }}>
       <AppBar position="static">
         <Toolbar>
-          {/* <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          sx={{ mr: 2 }}
-        >
-          <MenuIcon />
-        </IconButton> */}
           {onBackButtonClick && (
             <IconButton
               aria-label={formatMessage({ id: 'goBack' })}
@@ -122,15 +72,9 @@ export const HeaderPresentation = ({
           <Typography component="h1" variant="h6">
             {formatMessage({ id: titleMessage })}
           </Typography>
-          {/* <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search…"
-          />
-        </Search> */}
-          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ marginRight: 'auto', flex: 1, display: 'flex' }}>
+            {leftActions}
+          </Box>
           {rightActions}
           {isLogged ? (
             <>

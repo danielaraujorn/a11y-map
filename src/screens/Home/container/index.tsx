@@ -1,3 +1,4 @@
+import { Map as MapType } from 'leaflet';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useSnackbar } from 'notistack';
@@ -11,6 +12,11 @@ import { useIntl } from 'react-intl';
 
 export const HomeContainer = () => {
   const [filter, setFilter] = useState<PlacesFilterType>({});
+  const [map, setMap] = useState<MapType>();
+  const [bounds, setBounds] = useState<{
+    top_right: string[];
+    bottom_left: string[];
+  }>();
 
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
@@ -28,9 +34,58 @@ export const HomeContainer = () => {
 
   const [{ data, loading }, getPlaces] = api.places.useList({ manual: true });
 
+  const onSearch = useCallback(
+    ({ location }) => {
+      console.log(location);
+      const { x, y } = location;
+      map?.setView([y, x], 18, { animate: true });
+    },
+    [map]
+  );
+
+  const whenCreated = useCallback(
+    newMap => {
+      setMap(newMap);
+      updateBounds({ target: newMap });
+    },
+    [setMap]
+  );
+
+  const updateBounds = useCallback(({ target }) => {
+    if (target) {
+      const [left, bottom, right, top] = target
+        .getBounds()
+        .toBBoxString()
+        .split(',');
+      const top_right = [top, right];
+      const bottom_left = [bottom, left];
+      setBounds(prev => {
+        if (top_right !== prev?.top_right || bottom_left !== prev?.bottom_left)
+          return {
+            top_right,
+            bottom_left,
+          };
+        return prev;
+      });
+    }
+  }, []);
+
   useEffect(() => {
-    getPlaces({ params: filter });
-  }, [getPlaces, filter]);
+    map?.addEventListener('moveend', updateBounds);
+    return () => {
+      map?.removeEventListener('moveend', updateBounds);
+    };
+  }, [map]);
+
+  useEffect(() => {
+    if (bounds)
+      getPlaces({
+        params: {
+          ...filter,
+          ...bounds,
+        },
+      });
+  }, [getPlaces, filter, bounds]);
 
   const places = data?.data?.places || [];
 
@@ -38,6 +93,8 @@ export const HomeContainer = () => {
 
   return (
     <HomePresentation
+      whenCreated={whenCreated}
+      onSearch={onSearch}
       role={role}
       filter={filter}
       setFilter={setFilter}

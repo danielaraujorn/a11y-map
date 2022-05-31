@@ -10,12 +10,14 @@ import { useAuth } from '../../../hooks/useAuth';
 type HeaderContainerProps = {
   titleMessage: string;
   backButtonPath?: string;
+  leftActions?: ReactNode;
   rightActions?: ReactNode;
 };
 
 export const HeaderContainer = ({
   titleMessage,
   backButtonPath,
+  leftActions,
   rightActions,
 }: HeaderContainerProps) => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<
@@ -51,6 +53,7 @@ export const HeaderContainer = ({
       handleMobileMenuClose={handleMobileMenuClose}
       mobileMoreAnchorEl={mobileMoreAnchorEl}
       logout={logout}
+      leftActions={leftActions}
       rightActions={rightActions}
     />
   );

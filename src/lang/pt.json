@@ -18,6 +18,8 @@
   "delete": "Excluir",
   "edit": "Edit",
   "goBack": "Voltar",
+  "loading...": "Carregando...",
+  "no_options_found": "Nada encontrado",
 
   "defaultConfirmationQuestion": "Confirma essa ação?",
 
@@ -25,6 +27,7 @@
   "place.not_validated": "Locais pendentes",
   "place.add": "Adicionar novo local",
   "place.filter_not_validated": "Não validados",
+  "places.search_place": "Procurar local",
 
   "menu.open": "Abrir menu",
 

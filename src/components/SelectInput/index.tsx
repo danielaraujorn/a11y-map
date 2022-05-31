@@ -7,33 +7,41 @@ import {
 } from '@mui/material';
 import { Rules } from '../../types/Rules';
 import { InputController } from '../InputController';
+import { forwardRef } from 'react';
 
-const SelectComponent = ({
-  label,
-  disabled,
-  options = [],
-  helperText,
-  error,
-  ...props
-}: {
-  name: string;
-  label: string;
-  helperText?: string;
-  disabled?: boolean;
-  error?: boolean;
-  options?: { value: number | string; label: string }[];
-}) => (
-  <FormControl fullWidth disabled={disabled} error={error}>
-    <InputLabel>{label}</InputLabel>
-    <Select label={label} disabled={disabled} fullWidth {...props}>
-      {options.map(({ value, label }) => (
-        <MenuItem key={value} value={value}>
-          {label}
-        </MenuItem>
-      ))}
-    </Select>
-    {helperText && <FormHelperText error={error}>{helperText}</FormHelperText>}
-  </FormControl>
+const SelectComponent = forwardRef(
+  (
+    {
+      label,
+      disabled,
+      options = [],
+      helperText,
+      error,
+      ...props
+    }: {
+      name: string;
+      label: string;
+      helperText?: string;
+      disabled?: boolean;
+      error?: boolean;
+      options?: { value: number | string; label: string }[];
+    },
+    ref
+  ) => (
+    <FormControl fullWidth disabled={disabled} error={error}>
+      <InputLabel>{label}</InputLabel>
+      <Select ref={ref} label={label} disabled={disabled} fullWidth {...props}>
+        {options.map(({ value, label }) => (
+          <MenuItem key={value} value={value}>
+            {label}
+          </MenuItem>
+        ))}
+      </Select>
+      {helperText && (
+        <FormHelperText error={error}>{helperText}</FormHelperText>
+      )}
+    </FormControl>
+  )
 );
 
 export const SelectInput = ({
