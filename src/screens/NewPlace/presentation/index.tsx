@@ -1,4 +1,4 @@
-import { Button, Box } from '@mui/material';
+import { Button, Box, Typography } from '@mui/material';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
 import { LatLngExpression, Map as MapType } from 'leaflet';
 import { LoadingButton } from '@mui/lab';
@@ -13,9 +13,12 @@ import { Map } from '../../../components/Map';
 import { MarginWhenMobile } from '../../../components/MarginWhenMobile';
 import { MaxWidthContainer } from '../../../components/MaxWidthContainer';
 import { NewPlaceParamsType } from '../../../types/Forms';
+import { RoleEnum, StatusEnum } from '../../../types/Models';
 import { SelectInput } from '../../../components/SelectInput';
-import { StatusEnum } from '../../../types/Models';
 import { paths } from '../../../Navigation/paths';
+
+const isValidator = (role?: RoleEnum) =>
+  role && [RoleEnum.ADMIN, RoleEnum.VALIDATOR].includes(role);
 
 type NewPlacePresentationPropType = {
   formatMessage: (descriptor: MessageDescriptor) => string;
@@ -26,6 +29,8 @@ type NewPlacePresentationPropType = {
   center?: LatLngExpression;
   update?: boolean;
   loading?: boolean;
+  role?: RoleEnum;
+  validator_comments?: string;
 };
 
 export const NewPlacePresentation = ({
@@ -37,6 +42,8 @@ export const NewPlacePresentation = ({
   center,
   update,
   loading,
+  role,
+  validator_comments,
 }: NewPlacePresentationPropType) => {
   const cancelButtonTitle = formatMessage({
     id: 'cancel',
@@ -74,8 +81,8 @@ export const NewPlacePresentation = ({
             </Box>
             <Box mt={3}>
               <MarginWhenMobile>
-                <Box marginY={2}>
-                  {/* <SelectInput
+                {/* <Box marginY={2}>
+                  <SelectInput
                   name="types"
                   multiple
                   labelMessage="type"
@@ -84,8 +91,17 @@ export const NewPlacePresentation = ({
                     { value: 1, label: 'Visual' },
                     { value: 2, label: 'Mobilidade' },
                   ]}
-                /> */}
-                </Box>
+                />
+                </Box> */}
+                {validator_comments && !isValidator(role) && update && (
+                  <Box marginY={2} marginBottom={3}>
+                    <Typography variant="caption">
+                      {formatMessage({ id: 'places.validator_comments' })}
+                      {': '}
+                    </Typography>
+                    <Typography>{validator_comments}</Typography>
+                  </Box>
+                )}
                 <Box marginY={2}>
                   <Input
                     name="description"
@@ -96,27 +112,44 @@ export const NewPlacePresentation = ({
                     maxRows={8}
                   />
                 </Box>
-                <Box marginY={2}>
-                  <SelectInput
-                    name="status"
-                    labelMessage="status"
-                    rules={{ required: true }}
-                    options={[
-                      {
-                        value: StatusEnum.IN_PROGRESS,
-                        label: formatMessage({ id: 'status.inProgress' }),
-                      },
-                      {
-                        value: StatusEnum.VALIDATED,
-                        label: formatMessage({ id: 'status.validated' }),
-                      },
-                      {
-                        value: StatusEnum.NEED_CHANGES,
-                        label: formatMessage({ id: 'status.needChanges' }),
-                      },
-                    ]}
-                  />
-                </Box>
+                {isValidator(role) && update && (
+                  <>
+                    <Box marginY={2}>
+                      <Input
+                        name="validator_comments"
+                        labelMessage="places.validator_comments"
+                        multiline
+                        minRows={4}
+                        maxRows={8}
+                      />
+                    </Box>
+                    <Box marginY={2}>
+                      <SelectInput
+                        name="status"
+                        labelMessage="status"
+                        rules={{ required: true }}
+                        options={[
+                          {
+                            value: StatusEnum.IN_PROGRESS,
+                            label: formatMessage({ id: 'status.inProgress' }),
+                          },
+                          {
+                            value: StatusEnum.VALIDATED,
+                            label: formatMessage({ id: 'status.validated' }),
+                          },
+                          {
+                            value: StatusEnum.NEED_CHANGES,
+                            label: formatMessage({ id: 'status.needChanges' }),
+                          },
+                          {
+                            value: StatusEnum.INVALIDATED,
+                            label: formatMessage({ id: 'status.invalidated' }),
+                          },
+                        ]}
+                      />
+                    </Box>
+                  </>
+                )}
                 <ButtonContainer>
                   <Button
                     aria-label={cancelButtonTitle}

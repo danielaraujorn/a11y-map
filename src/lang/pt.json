@@ -28,6 +28,7 @@
   "place.add": "Adicionar novo local",
   "place.filter_not_validated": "Não validados",
   "places.search_place": "Procurar local",
+  "places.validator_comments": "Comentários do validador",
 
   "menu.open": "Abrir menu",
 
@@ -57,6 +58,7 @@
   "status.inProgress": "Em progresso",
   "status.validated": "Validado",
   "status.needChanges": "Mudanças pendentes",
+  "status.invalidated": " Invalidado",
 
   "user.roleType": "Tipo de permissão",
   "user.admin.shouldExistOneMoreAdmin": "Deve existir no mínimo um administrador no sistema",

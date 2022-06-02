@@ -37,11 +37,19 @@ export const FilterActions = ({
     setFilterAnchorEl(event.currentTarget);
   const handleFilterClose = () => setFilterAnchorEl(undefined);
   const onToggleFilter = useCallback(() => {
-    setFilter(prev =>
-      prev.statuses ? {} : { statuses: [StatusEnum.IN_PROGRESS] }
-    );
+    setFilter(prev => ({
+      statuses: prev.statuses?.includes(StatusEnum.VALIDATED)
+        ? [StatusEnum.IN_PROGRESS]
+        : [
+            StatusEnum.IN_PROGRESS,
+            StatusEnum.NEED_CHANGES,
+            StatusEnum.VALIDATED,
+          ],
+    }));
     handleFilterClose();
   }, [setFilter]);
+
+  const filterSelected = !filter?.statuses?.includes(StatusEnum.VALIDATED);
 
   return (
     <>
@@ -53,7 +61,7 @@ export const FilterActions = ({
         sx={{ ml: 2 }}
         onClick={handleFilter}
       >
-        <Badge badgeContent={Object.values(filter).length} color="secondary">
+        <Badge badgeContent={filterSelected ? 1 : 0} color="secondary">
           <FilterAlt />
         </Badge>
       </IconButton>
@@ -80,7 +88,7 @@ export const FilterActions = ({
                 inputProps={{
                   'aria-label': filterInProgressPlacesTitle,
                 }}
-                checked={!!filter.statuses}
+                checked={filterSelected}
               />
             }
             label={filterInProgressPlacesTitle}

@@ -10,12 +10,14 @@ import { NewPlacePresentation } from '../presentation';
 import { PlaceModelType, StatusEnum } from '../../../types/Models';
 import { api } from '../../../api';
 import { paths } from '../../../Navigation/paths';
+import { useAuth } from '../../../hooks/useAuth';
 
 const formatDefaultValues = (
   defaultValues: PlaceModelType
 ): NewPlaceParamsType => {
-  const { status, description, latitude, longitude } = defaultValues;
-  return { status, description, latitude, longitude };
+  const { status, description, latitude, longitude, validator_comments } =
+    defaultValues;
+  return { status, description, latitude, longitude, validator_comments };
 };
 
 export const NewPlaceContainer = ({
@@ -23,6 +25,8 @@ export const NewPlaceContainer = ({
 }: {
   defaultValues?: PlaceModelType;
 }) => {
+  const { user } = useAuth();
+
   const formattedDefaultValues =
     defaultValues && formatDefaultValues(defaultValues);
 
@@ -40,6 +44,7 @@ export const NewPlaceContainer = ({
   const methods = useForm<NewPlaceParamsType>({
     defaultValues: {
       // types: [],
+      validator_comments: '',
       description: '',
       status: StatusEnum.IN_PROGRESS,
       ...(formattedDefaultValues || {}),
@@ -82,6 +87,8 @@ export const NewPlaceContainer = ({
 
   return (
     <NewPlacePresentation
+      validator_comments={formattedDefaultValues?.validator_comments}
+      role={user?.role}
       loading={loadingCreate || loadingPatch}
       update={!!defaultValues}
       center={defaultCenter}

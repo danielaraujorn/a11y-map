@@ -63,6 +63,7 @@ export const HeaderPresentation = ({
         <Toolbar>
           {onBackButtonClick && (
             <IconButton
+              sx={{ marginRight: 1 }}
               aria-label={formatMessage({ id: 'goBack' })}
               onClick={onBackButtonClick}
             >

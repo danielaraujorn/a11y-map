@@ -5,13 +5,20 @@ import { useSnackbar } from 'notistack';
 
 import { HomePresentation } from '../presentation';
 import { PlacesFilterType } from '../../../api/places';
+import { StatusEnum } from '../../../types/Models';
 import { api } from '../../../api';
 import { paths } from '../../../Navigation/paths';
 import { useAuth } from '../../../hooks/useAuth';
 import { useIntl } from 'react-intl';
 
 export const HomeContainer = () => {
-  const [filter, setFilter] = useState<PlacesFilterType>({});
+  const [filter, setFilter] = useState<PlacesFilterType>({
+    statuses: [
+      StatusEnum.VALIDATED,
+      StatusEnum.IN_PROGRESS,
+      StatusEnum.NEED_CHANGES,
+    ],
+  });
   const [map, setMap] = useState<MapType>();
   const [bounds, setBounds] = useState<{
     top_right: string[];

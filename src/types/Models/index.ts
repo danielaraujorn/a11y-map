@@ -2,6 +2,7 @@ export enum StatusEnum {
   IN_PROGRESS = 'inProgress',
   VALIDATED = 'validated',
   NEED_CHANGES = 'needChanges',
+  INVALIDATED = 'invalidated',
 }
 
 export enum RoleEnum {
@@ -19,7 +20,7 @@ export type PlaceModelType = {
   longitude: number;
   status: StatusEnum;
   updated_at: string;
-  validatorComments?: string;
+  validator_comments?: string;
 };
 
 export type UserType = {
