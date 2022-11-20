@@ -43,7 +43,9 @@ export const NewValidatorPresentation = ({
     <Container>
       <Header
         backButtonPath={paths.validators}
-        titleMessage={'user.newValidator.headerTitle'}
+        titleMessage={
+          update ? 'user.role.validator' : 'user.newValidator.headerTitle'
+        }
       />
       <MaxWidthContainer>
         <FormProvider {...methods}>

@@ -46,7 +46,7 @@ export const NewDeficiencyPresentation = ({
     <Container>
       <Header
         backButtonPath={paths.validators}
-        titleMessage={'user.newValidator.headerTitle'}
+        titleMessage={update ? 'deficiency' : 'deficiencies.new.headerTitle'}
       />
       <MaxWidthContainer>
         <FormProvider {...methods}>

@@ -23,7 +23,7 @@
 
   "defaultConfirmationQuestion": "Confirma essa ação?",
 
-  "place.new.headerTitle": "Novo ponto",
+  "place.new.headerTitle": "Novo local",
   "place.not_validated": "Locais pendentes",
   "place.add": "Adicionar novo local",
   "place.filter_not_validated": "Não validados",
@@ -60,6 +60,14 @@
   "status.needChanges": "Mudanças pendentes",
   "status.invalidated": " Invalidado",
 
+  "barrier.classification": "Classificação",
+  "barrier.good": "Adequado",
+  "barrier.bad": "Sem acesso",
+  "barrier.difficult": "Difícil acesso",
+
+  "image.upload": "Adicionar imagem",
+  "image.description": "Descrição da imagem",
+
   "user.roleType": "Tipo de permissão",
   "user.admin.shouldExistOneMoreAdmin": "Deve existir no mínimo um administrador no sistema",
   "user.validators": "Validadores",
@@ -75,6 +83,8 @@
   "user.error.notFound": "Não foi possivel encontrar o usuario, verifique o email e tente novamente",
 
   "deficiencies": "Deficiencias",
+  "deficiency": "Deficiência",
+  "deficiencies.new.headerTitle": "Nova deficiência",
   "deficiencies.update.confirmationDescripion": "Ao alterar essa deficiência todos os locais cadastrados com essa deficiência serão atualizados com os novos dados",
   "deficiencies.delete.confirmationDescripion": "Ao excluir essa deficiência todos os locais cadastrados com essa deficiência terão essa deficiência removida de sua lista",
 

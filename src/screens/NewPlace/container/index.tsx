@@ -7,7 +7,11 @@ import { useSnackbar } from 'notistack';
 
 import { NewPlaceParamsType } from '../../../types/Forms';
 import { NewPlacePresentation } from '../presentation';
-import { PlaceModelType, StatusEnum } from '../../../types/Models';
+import {
+  BarrierLevelEnum,
+  PlaceModelType,
+  StatusEnum,
+} from '../../../types/Models';
 import { api } from '../../../api';
 import { paths } from '../../../Navigation/paths';
 import { useAuth } from '../../../hooks/useAuth';
@@ -15,9 +19,26 @@ import { useAuth } from '../../../hooks/useAuth';
 const formatDefaultValues = (
   defaultValues: PlaceModelType
 ): NewPlaceParamsType => {
-  const { status, description, latitude, longitude, validator_comments } =
-    defaultValues;
-  return { status, description, latitude, longitude, validator_comments };
+  const {
+    status,
+    description,
+    latitude,
+    longitude,
+    validator_comments,
+    deficiencies,
+    barrier_level,
+    image,
+  } = defaultValues;
+  return {
+    status,
+    description,
+    latitude,
+    longitude,
+    validator_comments,
+    barrier_level,
+    image: image || undefined,
+    deficiencies: deficiencies.map(({ id }) => id),
+  };
 };
 
 export const NewPlaceContainer = ({
@@ -47,21 +68,34 @@ export const NewPlaceContainer = ({
       validator_comments: '',
       description: '',
       status: StatusEnum.IN_PROGRESS,
+      deficiencies: [],
+      barrier_level: BarrierLevelEnum.BAD,
       ...(formattedDefaultValues || {}),
     },
   });
   const onSubmit = useCallback(
-    async formData => {
-      console.log(map);
+    async ({ image, deficiencies, ...data }) => {
       const { lat: latitude, lng: longitude } = map?.getCenter() || {};
-      const params: NewPlaceParamsType = {
-        ...formData,
+      const params: { [key: string]: string | number } = {
+        ...data,
         latitude,
         longitude,
       };
+
+      const formData = new FormData();
+      formData.append('image', image[0]);
+      deficiencies.forEach((deficiency: string) => {
+        formData.append(`deficiencies[][id]`, deficiency);
+      });
+      Object.entries(params).forEach(([key, value]) => {
+        if (value) formData.append(key, String(value));
+      });
+
+      console.log(formData);
+
       try {
-        if (defaultValues?.id) await patchPlace({ params });
-        else await createPlace({ params });
+        if (defaultValues?.id) await patchPlace({ data: formData });
+        else await createPlace({ data: formData });
         enqueueSnackbar(
           formatMessage(
             { id: 'success.default.save' },

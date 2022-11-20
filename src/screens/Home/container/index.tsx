@@ -43,7 +43,6 @@ export const HomeContainer = () => {
 
   const onSearch = useCallback(
     ({ location }) => {
-      console.log(location);
       const { x, y } = location;
       map?.setView([y, x], 18, { animate: true });
     },

@@ -6,6 +6,7 @@ import { MessageDescriptor } from 'react-intl';
 
 import { Container } from '../../../components/Container';
 import { ButtonContainer } from '../../../components/ButtonContainer';
+import { DeficienciesInput } from '../../../components/DeficienciesInput';
 import { Form } from '../../../components/Form';
 import { Header } from '../../../components/Header';
 import { Input } from '../../../components/Input';
@@ -13,9 +14,10 @@ import { Map } from '../../../components/Map';
 import { MarginWhenMobile } from '../../../components/MarginWhenMobile';
 import { MaxWidthContainer } from '../../../components/MaxWidthContainer';
 import { NewPlaceParamsType } from '../../../types/Forms';
-import { RoleEnum, StatusEnum } from '../../../types/Models';
+import { BarrierLevelEnum, RoleEnum, StatusEnum } from '../../../types/Models';
 import { SelectInput } from '../../../components/SelectInput';
 import { paths } from '../../../Navigation/paths';
+import { FileInput } from '../../../components/FileInput';
 
 const isValidator = (role?: RoleEnum) =>
   role && [RoleEnum.ADMIN, RoleEnum.VALIDATOR].includes(role);
@@ -52,6 +54,10 @@ export const NewPlacePresentation = ({
     id: update ? 'save' : 'create',
   });
 
+  const { watch } = methods;
+  const file = watch();
+  console.log(file);
+
   return (
     <Container>
       <Header
@@ -81,6 +87,9 @@ export const NewPlacePresentation = ({
             </Box>
             <Box mt={3}>
               <MarginWhenMobile>
+                <Box marginY={2}>
+                  <DeficienciesInput />
+                </Box>
                 {/* <Box marginY={2}>
                   <SelectInput
                   name="types"
@@ -112,6 +121,42 @@ export const NewPlacePresentation = ({
                     maxRows={8}
                   />
                 </Box>
+                <Box marginY={2}>
+                  <SelectInput
+                    name="barrier_level"
+                    labelMessage="barrier.classification"
+                    rules={{ required: true }}
+                    options={[
+                      {
+                        value: BarrierLevelEnum.BAD,
+                        label: formatMessage({ id: 'barrier.bad' }),
+                      },
+                      {
+                        value: BarrierLevelEnum.DIFFICULT,
+                        label: formatMessage({ id: 'barrier.difficult' }),
+                      },
+                      {
+                        value: BarrierLevelEnum.GOOD,
+                        label: formatMessage({ id: 'barrier.good' }),
+                      },
+                    ]}
+                  />
+                </Box>
+                <Box marginY={2}>
+                  <FileInput
+                    name="image"
+                    labelMessage="image.upload"
+                    rules={{ required: true }}
+                    accept=".jgp,.jpeg,.png"
+                  />
+                </Box>
+                {/* <Box marginY={2}>
+                  <Input
+                    name="image_description"
+                    labelMessage="image.description"
+                    rules={{ required: true }}
+                  />
+                </Box> */}
                 {isValidator(role) && update && (
                   <>
                     <Box marginY={2}>

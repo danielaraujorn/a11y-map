@@ -13,10 +13,13 @@ export type LoginParamsType = {
 
 export type NewPlaceParamsType = {
   validator_comments?: string;
+  barrier_level: number;
   description?: string;
   status: StatusEnum;
   latitude: number;
   longitude: number;
+  deficiencies: string[];
+  image?: Blob[];
 };
 
 export type NewValidatorParamsType = {

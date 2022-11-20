@@ -30,7 +30,14 @@ const SelectComponent = forwardRef(
   ) => (
     <FormControl fullWidth disabled={disabled} error={error}>
       <InputLabel>{label}</InputLabel>
-      <Select ref={ref} label={label} disabled={disabled} fullWidth {...props}>
+      <Select
+        error={error}
+        ref={ref}
+        label={label}
+        disabled={disabled}
+        fullWidth
+        {...props}
+      >
         {options.map(({ value, label }) => (
           <MenuItem key={value} value={value}>
             {label}

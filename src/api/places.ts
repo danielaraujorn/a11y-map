@@ -26,19 +26,21 @@ export const useList = (options?: { manual: boolean }) =>
   );
 
 export const useCreate = () =>
-  useAxios<unknown, NewPlaceParamsType>(
+  useAxios(
     {
       url: '/places',
       method: 'POST',
+      headers: { 'Content-Type': 'multipart/form-data' },
     },
     { manual }
   );
 
 export const usePatch = (id?: string) =>
-  useAxios<unknown, NewPlaceParamsType>(
+  useAxios(
     {
       url: `/places/${id}`,
       method: 'PATCH',
+      headers: { 'Content-Type': 'multipart/form-data' },
     },
     { manual }
   );

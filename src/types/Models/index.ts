@@ -11,9 +11,16 @@ export enum RoleEnum {
   VALIDATOR = 'validator',
 }
 
+export enum BarrierLevelEnum {
+  BAD = 0,
+  DIFFICULT = 5,
+  GOOD = 10,
+}
+
 export type PlaceModelType = {
   description: string;
   id: string;
+  barrier_level: number;
   image: null;
   inserted_at: string;
   latitude: number;
@@ -21,6 +28,7 @@ export type PlaceModelType = {
   status: StatusEnum;
   updated_at: string;
   validator_comments?: string;
+  deficiencies: DeficiencyType[];
 };
 
 export type UserType = {

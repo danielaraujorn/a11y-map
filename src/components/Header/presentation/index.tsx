@@ -51,7 +51,7 @@ export const HeaderPresentation = ({
   leftActions,
   rightActions,
 }: HeaderPresentationPropType) => {
-  const loginButtonTitle = formatMessage({ id: 'auth.loginTitle' });
+  const loginButtonTitle = formatMessage({ id: 'auth.login' });
   const validatorsButtonTitle = formatMessage({ id: 'user.validators' });
   const deficienciesButtonTitle = formatMessage({ id: 'deficiencies' });
   const myPlacesButtonTitle = formatMessage({ id: 'place.not_validated' });
