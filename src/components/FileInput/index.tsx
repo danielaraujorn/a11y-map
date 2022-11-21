@@ -1,7 +1,7 @@
 import { FormControl, FormHelperText, Button } from '@mui/material';
 import { Rules } from '../../types/Rules';
 import { InputController } from '../InputController';
-import { forwardRef } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useInputHelper } from '../../hooks/useInputHelper';
 import { useIntl } from 'react-intl';
@@ -59,12 +59,11 @@ import { Box } from '@mui/system';
 //   );
 // };
 
-const FileName = styled('p')(({ theme }) => ({
+const FilePreview = styled('img')(({ theme }) => ({
   marginTop: theme.spacing(),
-  marginBottom: theme.spacing(2),
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
+  marginBottom: theme.spacing(),
+  maxWidth: '100%',
+  maxHeight: 300,
 }));
 
 export const FileInput = ({
@@ -89,10 +88,9 @@ export const FileInput = ({
     watch,
   } = useFormContext();
   const { formatMessage } = useIntl();
-
   const files = watch(name);
-  const { name: fileName } =
-    files && files.length > 0 ? files[0] : { name: undefined };
+  console.log(watch());
+  const imageSrc = files?.length > 0 && URL.createObjectURL(files[0]);
 
   const { error, helperText } = useInputHelper({
     labelMessage,
@@ -111,6 +109,12 @@ export const FileInput = ({
           style={{ display: 'none' }}
           {...props}
         />
+        {imageSrc && (
+          <>
+            <FilePreview src={imageSrc} />
+            <br />
+          </>
+        )}
         <Button
           color={error ? 'error' : 'secondary'}
           variant="contained"
@@ -118,7 +122,6 @@ export const FileInput = ({
         >
           {formatMessage({ id: labelMessage })}
         </Button>
-        {fileName && <FileName>{fileName}</FileName>}
       </label>
       {helperText && (
         <FormHelperText error={error}>{helperText}</FormHelperText>

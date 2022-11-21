@@ -82,8 +82,9 @@
   "user.newValidator.headerTitle": "Novo validador",
   "user.error.notFound": "Não foi possivel encontrar o usuario, verifique o email e tente novamente",
 
-  "deficiencies": "Deficiencias",
+  "deficiencies": "Deficiências",
   "deficiency": "Deficiência",
+  "deficiencies.related": "Deficiências relacionadas",
   "deficiencies.new.headerTitle": "Nova deficiência",
   "deficiencies.update.confirmationDescripion": "Ao alterar essa deficiência todos os locais cadastrados com essa deficiência serão atualizados com os novos dados",
   "deficiencies.delete.confirmationDescripion": "Ao excluir essa deficiência todos os locais cadastrados com essa deficiência terão essa deficiência removida de sua lista",

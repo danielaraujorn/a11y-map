@@ -10,19 +10,69 @@ import { FilterActions } from '../FilterActions';
 import { FloatingView } from '../../../components/FloatingView';
 import { Map } from '../../../components/Map';
 import { Header } from '../../../components/Header';
-import { PlaceModelType, RoleEnum } from '../../../types/Models';
+import {
+  BarrierLevelEnum,
+  PlaceModelType,
+  RoleEnum,
+  StatusEnum,
+} from '../../../types/Models';
 import { PlacesFilterType } from '../../../api/places';
 import { SearchInput, CandidateType } from '../SearchInput';
 
-import Maker from '../../../icons/marker.svg';
+import RedMaker from '../../../icons/redMarker.svg';
+import YellowMaker from '../../../icons/yellowMarker.svg';
+import GreenMaker from '../../../icons/greenMarker.svg';
+import BlueMaker from '../../../icons/blueMarker.svg';
 
-const Icon = icon({
-  iconUrl: Maker,
+const IconRed = icon({
+  iconUrl: RedMaker,
 
   iconSize: [24, 24],
   iconAnchor: [12, 24],
   popupAnchor: [0, -30],
 });
+
+const IconYellow = icon({
+  iconUrl: YellowMaker,
+
+  iconSize: [24, 24],
+  iconAnchor: [12, 24],
+  popupAnchor: [0, -30],
+});
+
+const IconGreen = icon({
+  iconUrl: GreenMaker,
+
+  iconSize: [24, 24],
+  iconAnchor: [12, 24],
+  popupAnchor: [0, -30],
+});
+
+const IconBlue = icon({
+  iconUrl: BlueMaker,
+
+  iconSize: [24, 24],
+  iconAnchor: [12, 24],
+  popupAnchor: [0, -30],
+});
+
+const icons = {
+  [BarrierLevelEnum.BAD]: IconRed,
+  [BarrierLevelEnum.DIFFICULT]: IconYellow,
+  [BarrierLevelEnum.GOOD]: IconGreen,
+};
+
+const getIcon = ({
+  barrier_level,
+  status,
+}: {
+  barrier_level: BarrierLevelEnum;
+  status: StatusEnum;
+}) => {
+  console.log(barrier_level, status);
+  if (status === StatusEnum.VALIDATED) return icons[barrier_level] || IconRed;
+  return IconBlue;
+};
 
 type HomePresentationPropType = {
   loading: boolean;
@@ -53,8 +103,12 @@ export const HomePresentation = ({
 
   const markers = useMemo(
     () =>
-      places.map(({ id, latitude, longitude }) => (
-        <Marker icon={Icon} key={id} position={[latitude, longitude]}>
+      places.map(({ id, latitude, longitude, barrier_level, status }) => (
+        <Marker
+          icon={getIcon({ barrier_level, status })}
+          key={id}
+          position={[latitude, longitude]}
+        >
           <Popup>
             <Box>
               {/* <Typography>

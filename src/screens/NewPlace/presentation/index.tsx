@@ -54,10 +54,6 @@ export const NewPlacePresentation = ({
     id: update ? 'save' : 'create',
   });
 
-  const { watch } = methods;
-  const file = watch();
-  console.log(file);
-
   return (
     <Container>
       <Header
@@ -157,17 +153,8 @@ export const NewPlacePresentation = ({
                     rules={{ required: true }}
                   />
                 </Box> */}
-                {isValidator(role) && update && (
+                {isValidator(role) && (
                   <>
-                    <Box marginY={2}>
-                      <Input
-                        name="validator_comments"
-                        labelMessage="places.validator_comments"
-                        multiline
-                        minRows={4}
-                        maxRows={8}
-                      />
-                    </Box>
                     <Box marginY={2}>
                       <SelectInput
                         name="status"
@@ -191,6 +178,15 @@ export const NewPlacePresentation = ({
                             label: formatMessage({ id: 'status.invalidated' }),
                           },
                         ]}
+                      />
+                    </Box>
+                    <Box marginY={2}>
+                      <Input
+                        name="validator_comments"
+                        labelMessage="places.validator_comments"
+                        multiline
+                        minRows={4}
+                        maxRows={8}
                       />
                     </Box>
                   </>

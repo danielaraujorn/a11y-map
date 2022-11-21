@@ -8,7 +8,7 @@ export const DeficienciesInput = () => {
     <SelectInput
       name="deficiencies"
       multiple
-      labelMessage="deficiencies"
+      labelMessage="deficiencies.related"
       rules={{ required: true }}
       options={deficiencies.map(({ name, id }) => ({ label: name, value: id }))}
     />

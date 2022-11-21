@@ -81,17 +81,16 @@ export const NewPlaceContainer = ({
         latitude,
         longitude,
       };
+      console.log(data);
 
       const formData = new FormData();
       formData.append('image', image[0]);
       deficiencies.forEach((deficiency: string) => {
-        formData.append(`deficiencies[][id]`, deficiency);
+        formData.append(`deficiencies[]`, deficiency);
       });
       Object.entries(params).forEach(([key, value]) => {
-        if (value) formData.append(key, String(value));
+        if (typeof value !== 'undefined') formData.append(key, String(value));
       });
-
-      console.log(formData);
 
       try {
         if (defaultValues?.id) await patchPlace({ data: formData });
