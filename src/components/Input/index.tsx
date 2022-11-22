@@ -12,6 +12,7 @@ export const Input = ({
   maxRows?: number;
   rules?: Rules;
   errorMessages?: { [ḱey: string]: string };
+  disabled?: boolean;
 }) => {
   return <InputController<typeof TextField> component={TextField} {...props} />;
 };

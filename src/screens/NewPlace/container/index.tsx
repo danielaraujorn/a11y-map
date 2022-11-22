@@ -10,6 +10,7 @@ import { NewPlacePresentation } from '../presentation';
 import {
   BarrierLevelEnum,
   PlaceModelType,
+  RoleEnum,
   StatusEnum,
 } from '../../../types/Models';
 import { api } from '../../../api';
@@ -81,7 +82,6 @@ export const NewPlaceContainer = ({
         latitude,
         longitude,
       };
-      console.log(data);
 
       const formData = new FormData();
       formData.append('image', image[0]);
@@ -124,6 +124,7 @@ export const NewPlaceContainer = ({
       role={user?.role}
       loading={loadingCreate || loadingPatch}
       update={!!defaultValues}
+      mine={defaultValues?.user_id === user?.id}
       center={defaultCenter}
       onSubmit={onSubmit}
       setMap={setMap}

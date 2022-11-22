@@ -62,14 +62,13 @@ const icons = {
   [BarrierLevelEnum.GOOD]: IconGreen,
 };
 
-const getIcon = ({
+export const getIcon = ({
   barrier_level,
   status,
 }: {
   barrier_level: BarrierLevelEnum;
   status: StatusEnum;
 }) => {
-  console.log(barrier_level, status);
   if (status === StatusEnum.VALIDATED) return icons[barrier_level] || IconRed;
   return IconBlue;
 };
@@ -100,6 +99,7 @@ export const HomePresentation = ({
   whenCreated,
 }: HomePresentationPropType) => {
   const editButtonTitle = formatMessage({ id: 'edit' });
+  const seeButtonTitle = formatMessage({ id: 'see' });
 
   const markers = useMemo(
     () =>
@@ -111,15 +111,14 @@ export const HomePresentation = ({
         >
           <Popup>
             <Box>
-              {/* <Typography>
-                <Box component="span">{description}</Box>
-              </Typography> */}
               <Button
                 aria-label={editButtonTitle}
                 onClick={() => goToPlace(id)}
                 variant="contained"
               >
-                {editButtonTitle}
+                {status === StatusEnum.VALIDATED
+                  ? seeButtonTitle
+                  : editButtonTitle}
               </Button>
             </Box>
           </Popup>

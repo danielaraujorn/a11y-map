@@ -1,6 +1,7 @@
 import { Button, Box, Typography } from '@mui/material';
 import { FormProvider, UseFormReturn } from 'react-hook-form';
 import { LatLngExpression, Map as MapType } from 'leaflet';
+import { Marker } from 'react-leaflet';
 import { LoadingButton } from '@mui/lab';
 import { MessageDescriptor } from 'react-intl';
 
@@ -18,6 +19,7 @@ import { BarrierLevelEnum, RoleEnum, StatusEnum } from '../../../types/Models';
 import { SelectInput } from '../../../components/SelectInput';
 import { paths } from '../../../Navigation/paths';
 import { FileInput } from '../../../components/FileInput';
+import { getIcon } from '../../Home/presentation';
 
 const isValidator = (role?: RoleEnum) =>
   role && [RoleEnum.ADMIN, RoleEnum.VALIDATOR].includes(role);
@@ -33,6 +35,7 @@ type NewPlacePresentationPropType = {
   loading?: boolean;
   role?: RoleEnum;
   validator_comments?: string;
+  mine: boolean;
 };
 
 export const NewPlacePresentation = ({
@@ -46,6 +49,7 @@ export const NewPlacePresentation = ({
   loading,
   role,
   validator_comments,
+  mine,
 }: NewPlacePresentationPropType) => {
   const cancelButtonTitle = formatMessage({
     id: 'cancel',
@@ -53,6 +57,11 @@ export const NewPlacePresentation = ({
   const submitButtonTitle = formatMessage({
     id: update ? 'save' : 'create',
   });
+
+  const canEdit = mine || isValidator(role);
+
+  const { watch } = methods;
+  const { barrier_level, status } = watch();
 
   return (
     <Container>
@@ -69,22 +78,42 @@ export const NewPlacePresentation = ({
               justifyContent="center"
               alignItems="center"
             >
-              <div
-                style={{
-                  width: 10,
-                  height: 10,
-                  backgroundColor: 'blue',
-                  borderRadius: 5,
-                  zIndex: 2000,
-                  position: 'absolute',
-                }}
-              />
-              <Map center={center} whenCreated={setMap} zoomControl={false} />
+              {canEdit && (
+                <div
+                  style={{
+                    width: 10,
+                    height: 10,
+                    backgroundColor: 'blue',
+                    borderRadius: 5,
+                    zIndex: 2000,
+                    position: 'absolute',
+                  }}
+                />
+              )}
+              <Map center={center} whenCreated={setMap}>
+                {canEdit ? (
+                  <></>
+                ) : (
+                  <Marker
+                    icon={getIcon({ barrier_level, status })}
+                    position={center || [0, 0]}
+                  />
+                )}
+              </Map>
             </Box>
             <Box mt={3}>
               <MarginWhenMobile>
                 <Box marginY={2}>
-                  <DeficienciesInput />
+                  <FileInput
+                    name="image"
+                    labelMessage="image.upload"
+                    rules={{ required: true }}
+                    accept=".jgp,.jpeg,.png"
+                    disabled={!canEdit}
+                  />
+                </Box>
+                <Box marginY={2}>
+                  <DeficienciesInput disabled={!canEdit} />
                 </Box>
                 {/* <Box marginY={2}>
                   <SelectInput
@@ -109,6 +138,7 @@ export const NewPlacePresentation = ({
                 )}
                 <Box marginY={2}>
                   <Input
+                    disabled={!canEdit}
                     name="description"
                     labelMessage="description"
                     rules={{ required: true }}
@@ -122,6 +152,7 @@ export const NewPlacePresentation = ({
                     name="barrier_level"
                     labelMessage="barrier.classification"
                     rules={{ required: true }}
+                    disabled={!canEdit}
                     options={[
                       {
                         value: BarrierLevelEnum.BAD,
@@ -138,14 +169,6 @@ export const NewPlacePresentation = ({
                     ]}
                   />
                 </Box>
-                <Box marginY={2}>
-                  <FileInput
-                    name="image"
-                    labelMessage="image.upload"
-                    rules={{ required: true }}
-                    accept=".jgp,.jpeg,.png"
-                  />
-                </Box>
                 {/* <Box marginY={2}>
                   <Input
                     name="image_description"
@@ -154,60 +177,63 @@ export const NewPlacePresentation = ({
                   />
                 </Box> */}
                 {isValidator(role) && (
-                  <>
-                    <Box marginY={2}>
-                      <SelectInput
-                        name="status"
-                        labelMessage="status"
-                        rules={{ required: true }}
-                        options={[
-                          {
-                            value: StatusEnum.IN_PROGRESS,
-                            label: formatMessage({ id: 'status.inProgress' }),
-                          },
-                          {
-                            value: StatusEnum.VALIDATED,
-                            label: formatMessage({ id: 'status.validated' }),
-                          },
-                          {
-                            value: StatusEnum.NEED_CHANGES,
-                            label: formatMessage({ id: 'status.needChanges' }),
-                          },
-                          {
-                            value: StatusEnum.INVALIDATED,
-                            label: formatMessage({ id: 'status.invalidated' }),
-                          },
-                        ]}
-                      />
-                    </Box>
-                    <Box marginY={2}>
-                      <Input
-                        name="validator_comments"
-                        labelMessage="places.validator_comments"
-                        multiline
-                        minRows={4}
-                        maxRows={8}
-                      />
-                    </Box>
-                  </>
+                  <Box marginY={2}>
+                    <SelectInput
+                      name="status"
+                      labelMessage="status"
+                      rules={{ required: true }}
+                      options={[
+                        {
+                          value: StatusEnum.IN_PROGRESS,
+                          label: formatMessage({ id: 'status.inProgress' }),
+                        },
+                        {
+                          value: StatusEnum.VALIDATED,
+                          label: formatMessage({ id: 'status.validated' }),
+                        },
+                        {
+                          value: StatusEnum.NEED_CHANGES,
+                          label: formatMessage({ id: 'status.needChanges' }),
+                        },
+                        {
+                          value: StatusEnum.INVALIDATED,
+                          label: formatMessage({ id: 'status.invalidated' }),
+                        },
+                      ]}
+                    />
+                  </Box>
                 )}
-                <ButtonContainer>
-                  <Button
-                    aria-label={cancelButtonTitle}
-                    disabled={loading}
-                    onClick={onCancelButtonClick}
-                  >
-                    {cancelButtonTitle}
-                  </Button>
-                  <LoadingButton
-                    aria-label={submitButtonTitle}
-                    loading={loading}
-                    variant="contained"
-                    type="submit"
-                  >
-                    {submitButtonTitle}
-                  </LoadingButton>
-                </ButtonContainer>
+                {(isValidator(role) || mine) && (
+                  <Box marginY={2}>
+                    <Input
+                      disabled={!isValidator(role)}
+                      name="validator_comments"
+                      labelMessage="places.validator_comments"
+                      multiline
+                      minRows={4}
+                      maxRows={8}
+                    />
+                  </Box>
+                )}
+                {canEdit && (
+                  <ButtonContainer>
+                    <Button
+                      aria-label={cancelButtonTitle}
+                      disabled={loading}
+                      onClick={onCancelButtonClick}
+                    >
+                      {cancelButtonTitle}
+                    </Button>
+                    <LoadingButton
+                      aria-label={submitButtonTitle}
+                      loading={loading}
+                      variant="contained"
+                      type="submit"
+                    >
+                      {submitButtonTitle}
+                    </LoadingButton>
+                  </ButtonContainer>
+                )}
               </MarginWhenMobile>
             </Box>
           </Form>

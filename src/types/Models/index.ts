@@ -29,6 +29,7 @@ export type PlaceModelType = {
   updated_at: string;
   validator_comments?: string;
   deficiencies: DeficiencyType[];
+  user_id: string;
 };
 
 export type UserType = {

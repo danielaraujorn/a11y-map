@@ -1,12 +1,11 @@
 import { FormControl, FormHelperText, Button } from '@mui/material';
 import { Rules } from '../../types/Rules';
-import { InputController } from '../InputController';
-import { forwardRef, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useInputHelper } from '../../hooks/useInputHelper';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
-import { Box } from '@mui/system';
+
+const imagePrefix = process.env.REACT_APP_IMAGES_PREFIX;
 
 // const FileComponent = forwardRef<
 //   HTMLInputElement,
@@ -89,8 +88,12 @@ export const FileInput = ({
   } = useFormContext();
   const { formatMessage } = useIntl();
   const files = watch(name);
-  console.log(watch());
-  const imageSrc = files?.length > 0 && URL.createObjectURL(files[0]);
+  console.log(files);
+  const imageSrc =
+    files &&
+    (Array.isArray(files)
+      ? files?.length > 0 && URL.createObjectURL(files[0])
+      : files.file_name && `${imagePrefix}${files.file_name}`);
 
   const { error, helperText } = useInputHelper({
     labelMessage,
@@ -101,27 +104,31 @@ export const FileInput = ({
   return (
     <FormControl disabled={disabled} error={error}>
       <label htmlFor="upload-photo">
-        <input
-          disabled={disabled}
-          {...register(name, rules)}
-          id="upload-photo"
-          type="file"
-          style={{ display: 'none' }}
-          {...props}
-        />
         {imageSrc && (
           <>
             <FilePreview src={imageSrc} />
             <br />
           </>
         )}
-        <Button
-          color={error ? 'error' : 'secondary'}
-          variant="contained"
-          component="span"
-        >
-          {formatMessage({ id: labelMessage })}
-        </Button>
+        {!disabled && (
+          <>
+            <input
+              disabled={disabled}
+              {...register(name, rules)}
+              id="upload-photo"
+              type="file"
+              style={{ display: 'none' }}
+              {...props}
+            />
+            <Button
+              color={error ? 'error' : 'secondary'}
+              variant="contained"
+              component="span"
+            >
+              {formatMessage({ id: labelMessage })}
+            </Button>
+          </>
+        )}
       </label>
       {helperText && (
         <FormHelperText error={error}>{helperText}</FormHelperText>
