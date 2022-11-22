@@ -63,17 +63,6 @@ SignUpPresentationPropType) => {
                 <Box marginY={2}>
                   <PasswordConfirmationInput />
                 </Box>
-                {/* <Box marginY={2}>
-                  <SelectInput
-                    name="deficiencies"
-                    multiple
-                    labelMessage="deficiencies"
-                    options={deficiencies.map(({ id, name }) => ({
-                      value: id,
-                      label: name,
-                    }))}
-                  />
-                </Box> */}
                 <ButtonContainer>
                   <Button
                     aria-label={loginButtonTitle}
