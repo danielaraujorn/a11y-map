@@ -4,59 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { useInputHelper } from '../../hooks/useInputHelper';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
-
-const imagePrefix = process.env.REACT_APP_IMAGES_PREFIX;
-
-// const FileComponent = forwardRef<
-//   HTMLInputElement,
-//   {
-//     name: string;
-//     label: string;
-//     helperText?: string;
-//     disabled?: boolean;
-//     error?: boolean;
-//   }
-// >(({ label, disabled, helperText, error, ...props }, ref) => (
-//   <FormControl disabled={disabled} error={error}>
-//     <label htmlFor="upload-photo">
-//       <input
-//         ref={ref}
-//         disabled={disabled}
-//         {...props}
-//         style={{ display: 'none' }}
-//         id="upload-photo"
-//         type="file"
-//       />
-//       <Button
-//         color={error ? 'error' : 'secondary'}
-//         variant="contained"
-//         component="span"
-//       >
-//         {label}
-//       </Button>
-//     </label>
-//     {helperText && <FormHelperText error={error}>{helperText}</FormHelperText>}
-//   </FormControl>
-// ));
-
-// export const FileInput = ({
-//   ...props
-// }: {
-//   name: string;
-//   labelMessage: string;
-//   multiple?: boolean;
-//   disabled?: boolean;
-//   value?: unknown;
-//   rules?: Rules;
-//   accept?: string;
-// }) => {
-//   return (
-//     <InputController<typeof FileComponent>
-//       component={FileComponent}
-//       {...props}
-//     />
-//   );
-// };
+import { useMemo } from 'react';
 
 const FilePreview = styled('img')(({ theme }) => ({
   marginTop: theme.spacing(),
@@ -88,12 +36,16 @@ export const FileInput = ({
   } = useFormContext();
   const { formatMessage } = useIntl();
   const files = watch(name);
-  console.log(files);
-  const imageSrc =
-    files &&
-    (Array.isArray(files)
-      ? files?.length > 0 && URL.createObjectURL(files[0])
-      : files.file_name && `${imagePrefix}${files.file_name}`);
+
+  const imageSrc = useMemo(() => {
+    if (files?.length > 0) {
+      console.log('é array');
+      return URL.createObjectURL(files[0]);
+    } else if (files?.file_name) {
+      return `${process.env.REACT_APP_IMAGES_PREFIX}${files.file_name}`;
+    }
+    return undefined;
+  }, [files]);
 
   const { error, helperText } = useInputHelper({
     labelMessage,

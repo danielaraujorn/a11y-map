@@ -36,6 +36,7 @@ type NewPlacePresentationPropType = {
   role?: RoleEnum;
   validator_comments?: string;
   mine: boolean;
+  hasDefaultFile?: boolean;
 };
 
 export const NewPlacePresentation = ({
@@ -50,6 +51,7 @@ export const NewPlacePresentation = ({
   role,
   validator_comments,
   mine,
+  hasDefaultFile,
 }: NewPlacePresentationPropType) => {
   const cancelButtonTitle = formatMessage({
     id: 'cancel',
@@ -103,30 +105,6 @@ export const NewPlacePresentation = ({
             </Box>
             <Box mt={3}>
               <MarginWhenMobile>
-                <Box marginY={2}>
-                  <FileInput
-                    name="image"
-                    labelMessage="image.upload"
-                    rules={{ required: true }}
-                    accept=".jgp,.jpeg,.png"
-                    disabled={!canEdit}
-                  />
-                </Box>
-                <Box marginY={2}>
-                  <DeficienciesInput disabled={!canEdit} />
-                </Box>
-                {/* <Box marginY={2}>
-                  <SelectInput
-                  name="types"
-                  multiple
-                  labelMessage="type"
-                  rules={{ required: true }}
-                  options={[
-                    { value: 1, label: 'Visual' },
-                    { value: 2, label: 'Mobilidade' },
-                  ]}
-                />
-                </Box> */}
                 {validator_comments && !isValidator(role) && update && (
                   <Box marginY={2} marginBottom={3}>
                     <Typography variant="caption">
@@ -136,6 +114,18 @@ export const NewPlacePresentation = ({
                     <Typography>{validator_comments}</Typography>
                   </Box>
                 )}
+                <Box marginY={2}>
+                  <FileInput
+                    name="image"
+                    labelMessage="image.upload"
+                    rules={{ required: !hasDefaultFile }}
+                    accept=".jgp,.jpeg,.png"
+                    disabled={!canEdit}
+                  />
+                </Box>
+                <Box marginY={2}>
+                  <DeficienciesInput disabled={!canEdit} />
+                </Box>
                 <Box marginY={2}>
                   <Input
                     disabled={!canEdit}
@@ -169,13 +159,6 @@ export const NewPlacePresentation = ({
                     ]}
                   />
                 </Box>
-                {/* <Box marginY={2}>
-                  <Input
-                    name="image_description"
-                    labelMessage="image.description"
-                    rules={{ required: true }}
-                  />
-                </Box> */}
                 {isValidator(role) && (
                   <Box marginY={2}>
                     <SelectInput

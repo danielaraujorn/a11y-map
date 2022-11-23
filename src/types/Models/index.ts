@@ -17,11 +17,13 @@ export enum BarrierLevelEnum {
   GOOD = 10,
 }
 
+export type ImageType = { file_name: string };
+
 export type PlaceModelType = {
   description: string;
   id: string;
   barrier_level: number;
-  image: null;
+  image: ImageType;
   inserted_at: string;
   latitude: number;
   longitude: number;

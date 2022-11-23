@@ -10,7 +10,6 @@ import { NewPlacePresentation } from '../presentation';
 import {
   BarrierLevelEnum,
   PlaceModelType,
-  RoleEnum,
   StatusEnum,
 } from '../../../types/Models';
 import { api } from '../../../api';
@@ -35,7 +34,7 @@ const formatDefaultValues = (
     description,
     latitude,
     longitude,
-    validator_comments,
+    validator_comments: validator_comments || undefined,
     barrier_level,
     image: image || undefined,
     deficiencies: deficiencies.map(({ id }) => id),
@@ -74,6 +73,7 @@ export const NewPlaceContainer = ({
       ...(formattedDefaultValues || {}),
     },
   });
+
   const onSubmit = useCallback(
     async ({ image, deficiencies, ...data }) => {
       const { lat: latitude, lng: longitude } = map?.getCenter() || {};
@@ -84,12 +84,13 @@ export const NewPlaceContainer = ({
       };
 
       const formData = new FormData();
-      formData.append('image', image[0]);
+      if (image?.[0]) formData.append('image', image[0]);
       deficiencies.forEach((deficiency: string) => {
         formData.append(`deficiencies[]`, deficiency);
       });
       Object.entries(params).forEach(([key, value]) => {
-        if (typeof value !== 'undefined') formData.append(key, String(value));
+        if (!!value || typeof value === 'number')
+          formData.append(key, String(value));
       });
 
       try {
@@ -128,6 +129,7 @@ export const NewPlaceContainer = ({
       center={defaultCenter}
       onSubmit={onSubmit}
       setMap={setMap}
+      hasDefaultFile={!!defaultValues?.image}
       methods={methods}
       formatMessage={formatMessage}
       onCancelButtonClick={onCancelButtonClick}

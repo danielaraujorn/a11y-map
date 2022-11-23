@@ -1,4 +1,4 @@
-import { RoleEnum, StatusEnum } from '../Models';
+import { ImageType, RoleEnum, StatusEnum } from '../Models';
 
 export type SignUpParamsType = {
   email: string;
@@ -19,7 +19,7 @@ export type NewPlaceParamsType = {
   latitude: number;
   longitude: number;
   deficiencies: string[];
-  image?: Blob[];
+  image?: Blob[] | ImageType;
 };
 
 export type NewValidatorParamsType = {
