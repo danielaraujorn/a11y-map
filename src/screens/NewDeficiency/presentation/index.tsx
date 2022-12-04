@@ -45,7 +45,7 @@ export const NewDeficiencyPresentation = ({
   return (
     <Container>
       <Header
-        backButtonPath={paths.validators}
+        backButtonPath={paths.deficiencies}
         titleMessage={update ? 'deficiency' : 'deficiencies.new.headerTitle'}
       />
       <MaxWidthContainer>

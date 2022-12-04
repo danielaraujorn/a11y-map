@@ -83,14 +83,14 @@
   "user.newValidator.headerTitle": "Novo validador",
   "user.error.notFound": "Não foi possivel encontrar o usuario, verifique o email e tente novamente",
 
-  "deficiencies": "Deficiências",
-  "deficiency": "Deficiência",
-  "deficiencies.related": "Deficiências relacionadas",
-  "deficiencies.new.headerTitle": "Nova deficiência",
-  "deficiencies.update.confirmationDescripion": "Ao alterar essa deficiência todos os locais cadastrados com essa deficiência serão atualizados com os novos dados",
-  "deficiencies.delete.confirmationDescripion": "Ao excluir essa deficiência todos os locais cadastrados com essa deficiência terão essa deficiência removida de sua lista",
+  "deficiencies": "Necessidades específicas",
+  "deficiency": "Necessidade específica",
+  "deficiencies.related": "Necessidades específicas relacionadas",
+  "deficiencies.new.headerTitle": "Nova necessidade específica",
+  "deficiencies.update.confirmationDescripion": "Ao alterar essa necessidade específica todos os locais cadastrados com essa ela serão atualizados com os novos dados",
+  "deficiencies.delete.confirmationDescripion": "Ao excluir essa necessidade específica todos os locais cadastrados com essa ela terão essa a relação removida de sua lista",
 
-  "deficiency.add": "Adicionar nova deficiência",
+  "deficiency.add": "Adicionar nova necessidade específica",
 
   "success.default.save": "Salvo com sucesso",
   "error.default.save": "Não foi possivel salvar. Por favor verifique os dados e tente novamente",
