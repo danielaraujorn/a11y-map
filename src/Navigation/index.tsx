@@ -30,6 +30,7 @@ export const Navigation = () => {
     () => (
       <>
         <Route path={paths.home} element={<Home />} />
+        <Route path={paths.place(':id')} element={<Place />} />
         <Route path="*" element={<Navigate replace to={paths.home} />} />
       </>
     ),
@@ -61,7 +62,6 @@ export const Navigation = () => {
         <Routes>
           <Route path={paths.newPlace} element={<NewPlace />} />
           <Route path={paths.places} element={<Places />} />
-          <Route path={paths.place(':id')} element={<Place />} />
           {roleRoutes}
           {publicRoutes}
         </Routes>
