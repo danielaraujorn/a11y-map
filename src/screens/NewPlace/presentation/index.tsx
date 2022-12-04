@@ -20,9 +20,7 @@ import { SelectInput } from '../../../components/SelectInput';
 import { paths } from '../../../Navigation/paths';
 import { FileInput } from '../../../components/FileInput';
 import { getIcon } from '../../Home/presentation';
-
-const isValidator = (role?: RoleEnum) =>
-  role && [RoleEnum.ADMIN, RoleEnum.VALIDATOR].includes(role);
+import { isValidator } from '../../../utils/isValidator';
 
 type NewPlacePresentationPropType = {
   formatMessage: (descriptor: MessageDescriptor) => string;
@@ -34,7 +32,6 @@ type NewPlacePresentationPropType = {
   update?: boolean;
   loading?: boolean;
   role?: RoleEnum;
-  validator_comments?: string;
   mine: boolean;
   hasDefaultFile?: boolean;
 };
@@ -49,7 +46,6 @@ export const NewPlacePresentation = ({
   update,
   loading,
   role,
-  validator_comments,
   mine,
   hasDefaultFile,
 }: NewPlacePresentationPropType) => {
@@ -59,11 +55,11 @@ export const NewPlacePresentation = ({
   const submitButtonTitle = formatMessage({
     id: update ? 'save' : 'create',
   });
-
-  const canEdit = mine || isValidator(role);
-
   const { watch } = methods;
-  const { barrier_level, status } = watch();
+  const { barrier_level, status, validator_comments } = watch();
+
+  const canEdit =
+    !update || (mine && status !== StatusEnum.VALIDATED) || isValidator(role);
 
   return (
     <Container>
@@ -105,15 +101,18 @@ export const NewPlacePresentation = ({
             </Box>
             <Box mt={3}>
               <MarginWhenMobile>
-                {validator_comments && !isValidator(role) && update && (
-                  <Box marginY={2} marginBottom={3}>
-                    <Typography variant="caption">
-                      {formatMessage({ id: 'places.validator_comments' })}
-                      {': '}
-                    </Typography>
-                    <Typography>{validator_comments}</Typography>
-                  </Box>
-                )}
+                {validator_comments &&
+                  !isValidator(role) &&
+                  mine &&
+                  status !== StatusEnum.VALIDATED && (
+                    <Box marginY={2} marginBottom={3}>
+                      <Typography variant="caption">
+                        {formatMessage({ id: 'places.validator_comments' })}
+                        {': '}
+                      </Typography>
+                      <Typography>{validator_comments}</Typography>
+                    </Box>
+                  )}
                 <Box marginY={2}>
                   <FileInput
                     name="image"
@@ -186,7 +185,7 @@ export const NewPlacePresentation = ({
                     />
                   </Box>
                 )}
-                {(isValidator(role) || mine) && (
+                {isValidator(role) && (
                   <Box marginY={2}>
                     <Input
                       disabled={!isValidator(role)}

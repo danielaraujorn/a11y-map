@@ -15,6 +15,7 @@ import {
 import { api } from '../../../api';
 import { paths } from '../../../Navigation/paths';
 import { useAuth } from '../../../hooks/useAuth';
+import { isValidator } from '../../../utils/isValidator';
 
 const formatDefaultValues = (
   defaultValues: PlaceModelType
@@ -75,7 +76,7 @@ export const NewPlaceContainer = ({
   });
 
   const onSubmit = useCallback(
-    async ({ image, deficiencies, ...data }) => {
+    async ({ image, deficiencies, validator_comments, ...data }) => {
       const { lat: latitude, lng: longitude } = map?.getCenter() || {};
       const params: { [key: string]: string | number } = {
         ...data,
@@ -92,6 +93,8 @@ export const NewPlaceContainer = ({
         if (!!value || typeof value === 'number')
           formData.append(key, String(value));
       });
+      if (isValidator(user?.role))
+        formData.append('validator_comments', String(validator_comments));
 
       try {
         if (defaultValues?.id) await patchPlace({ data: formData });
@@ -121,7 +124,6 @@ export const NewPlaceContainer = ({
 
   return (
     <NewPlacePresentation
-      validator_comments={formattedDefaultValues?.validator_comments}
       role={user?.role}
       loading={loadingCreate || loadingPatch}
       update={!!defaultValues}
