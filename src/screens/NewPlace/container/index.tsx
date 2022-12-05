@@ -93,7 +93,7 @@ export const NewPlaceContainer = ({
         if (!!value || typeof value === 'number')
           formData.append(key, String(value));
       });
-      if (isValidator(user?.role))
+      if (isValidator(user?.role) && validator_comments)
         formData.append('validator_comments', String(validator_comments));
 
       try {
